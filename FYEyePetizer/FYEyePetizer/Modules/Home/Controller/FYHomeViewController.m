@@ -22,15 +22,17 @@
 #import "FYCategorySectionCell.h"
 #import "FYAuthorSectionTableViewCell.h"
 #import "NSString+FY_MD5.h"
+#import "FYDailyViewController.h"
+#import "FYLightTopicViewController.h"
 
 @interface FYHomeViewController ()
 <
 UITableViewDelegate,
 UITableViewDataSource,
-UIScrollViewDelegate
+UIScrollViewDelegate,
+FYLightTopicHeaderDelegate
 >
 
-@property (nonatomic, assign) CGFloat beginY;
 @property (nonatomic, retain) UILabel *timeLabel;
 @property (nonatomic, retain) UIImageView *headerView;
 @property (nonatomic, retain) UITableView *tableView;
@@ -72,7 +74,7 @@ UIScrollViewDelegate
 
 - (void)createView {
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT - 70) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -239,6 +241,7 @@ UIScrollViewDelegate
                 if (nil == cell) {
                     cell = [[FYTextHeaderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:textHeaderCell];
                 }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.text = itemData.text;
                 return cell;
             }else if ([itemList.type isEqualToString:@"video"]){
@@ -247,6 +250,7 @@ UIScrollViewDelegate
                 if (nil == cell) {
                     cell = [[[FYFeedSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:feedCell] autorelease];
                 }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"feed"]]]];
                 cell.title = itemData.title;
                 NSString *time = [NSString stringChangeWithTimeFormat:itemData.duration];
@@ -258,6 +262,7 @@ UIScrollViewDelegate
                 if (nil == cell) {
                     cell = [[FYBannerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:bannerCell];
                 }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:itemData.image]]];
                 return  cell;
             }
@@ -270,6 +275,7 @@ UIScrollViewDelegate
                 if (nil == cell) {
                     cell = [[[FYFooterTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:footerCell] autorelease];
                 }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.text = [NSString stringWithFormat:@"%@  >", [data objectForKey:@"text"]];
                 return cell;
             }else if ([type isEqualToString:@"blankFooter"]) {
@@ -278,6 +284,7 @@ UIScrollViewDelegate
                 if (nil == cell) {
                     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:blankCell];
                 }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.00];
                 return cell;
             }
@@ -291,7 +298,13 @@ UIScrollViewDelegate
             FYLightTopicSectionCell *cell = [tableView dequeueReusableCellWithIdentifier:lightTopicCell];
             if (nil == cell) {
                 cell = [[[FYLightTopicSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:lightTopicCell] autorelease];
+                if ([sectionList.type isEqualToString:@"lightTopicSection"]) {
+                    cell.tapDelegate = self;
+                }else {
+                    
+                }
             }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.topicImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.header objectForKey:@"cover"]]]];
             cell.itemData = itemData;
             return cell;
@@ -304,6 +317,7 @@ UIScrollViewDelegate
                 if (nil == cell) {
                     cell = [[[FYFooterTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:footerCell] autorelease];
                 }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.text = [NSString stringWithFormat:@"%@  >", [data objectForKey:@"text"]];
                 return cell;
             }else if ([type isEqualToString:@"blankFooter"]) {
@@ -312,6 +326,7 @@ UIScrollViewDelegate
                 if (nil == cell) {
                     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:blankCell];
                 }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.00];
                 return cell;
             }
@@ -326,6 +341,7 @@ UIScrollViewDelegate
             if (nil == cell) {
                 cell = [[[FYCategorySectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:catogeryCell] autorelease];
             }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.itemData = itemData;
             cell.title = [itemData.header objectForKey:@"title"];
             cell.subtitle = [itemData.header objectForKey:@"subTitle"];
@@ -339,6 +355,7 @@ UIScrollViewDelegate
                 if (nil == cell) {
                     cell = [[[FYFooterTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:footerCell] autorelease];
                 }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.text = [NSString stringWithFormat:@"%@  >", [data objectForKey:@"text"]];
                 return cell;
             }else if ([type isEqualToString:@"blankFooter"]) {
@@ -347,6 +364,7 @@ UIScrollViewDelegate
                 if (nil == cell) {
                     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:blankCell];
                 }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.00];
                 return cell;
             }
@@ -361,6 +379,7 @@ UIScrollViewDelegate
             if (nil == cell) {
                 cell = [[[FYAuthorSectionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:authorCell] autorelease];
             }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.topicImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.header objectForKey:@"cover"]]]];
             cell.itemData = itemData;
             cell.iconImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.header objectForKey:@"icon"]]]];
@@ -376,6 +395,7 @@ UIScrollViewDelegate
                 if (nil == cell) {
                     cell = [[[FYFooterTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:footerCell] autorelease];
                 }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.text = [NSString stringWithFormat:@"%@  >", [data objectForKey:@"text"]];
                 return cell;
             }else if ([type isEqualToString:@"blankFooter"]) {
@@ -384,6 +404,7 @@ UIScrollViewDelegate
                 if (nil == cell) {
                     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:blankCell];
                 }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.00];
                 return cell;
             }
@@ -395,6 +416,19 @@ UIScrollViewDelegate
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     return  cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    FYHomeSectionList *sectionList = _dataArray[indexPath.section];
+//    FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
+//    FYHomeItemData *itemData = itemList.data;
+    NSString *type = [sectionList.footer objectForKey:@"type"];
+    if ([type isEqualToString:@"forwardFooter"]) {
+        FYDailyViewController *dailyViewController = [[FYDailyViewController alloc] init];
+        dailyViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:dailyViewController animated:YES];
+        [dailyViewController release];
+    }
 }
 
 #pragma mark - scrollView代理方法
@@ -452,7 +486,18 @@ UIScrollViewDelegate
 
 
 - (void)headerButtonAction:(UIButton *)sender {
-    NSLog(@"点击");
+    FYDailyViewController *dailyViewController = [[FYDailyViewController alloc] init];
+    dailyViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:dailyViewController animated:YES];
+    [dailyViewController release];
+}
+
+- (void)getIdFromTouchImage:(NSNumber *)imageId {
+    FYLightTopicViewController *lightTopicViewController = [[FYLightTopicViewController alloc] init];
+    lightTopicViewController.imageId = imageId;
+    lightTopicViewController.tabBarController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:lightTopicViewController animated:YES];
+    [lightTopicViewController release];
 }
 
 - (void)didReceiveMemoryWarning {

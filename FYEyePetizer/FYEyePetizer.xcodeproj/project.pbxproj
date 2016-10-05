@@ -72,6 +72,10 @@
 		49D399041DA10BB400E3F6A2 /* NSString+FYTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D399031DA10BB400E3F6A2 /* NSString+FYTime.m */; };
 		49D399071DA10E7700E3F6A2 /* FYBannerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D399061DA10E7700E3F6A2 /* FYBannerTableViewCell.m */; };
 		49DA3E4D1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E4C1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m */; };
+		49DA3E531DA4DF8C004B38A0 /* FYDailyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E521DA4DF8C004B38A0 /* FYDailyViewController.m */; };
+		49DA3E561DA4DFBC004B38A0 /* FYDailyData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E551DA4DFBC004B38A0 /* FYDailyData.m */; };
+		49DA3E591DA4DFD6004B38A0 /* FYIssueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E581DA4DFD6004B38A0 /* FYIssueList.m */; };
+		49DA3E601DA507F0004B38A0 /* FYLightTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E5F1DA507F0004B38A0 /* FYLightTopicViewController.m */; };
 		DF1C2E547DF522AE2CF3B64B /* libPods-FYEyePetizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AE024C50BAA9AAF4B61819E /* libPods-FYEyePetizer.a */; };
 /* End PBXBuildFile section */
 
@@ -207,6 +211,14 @@
 		49D399061DA10E7700E3F6A2 /* FYBannerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYBannerTableViewCell.m; sourceTree = "<group>"; };
 		49DA3E4B1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYAuthorSectionTableViewCell.h; sourceTree = "<group>"; };
 		49DA3E4C1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYAuthorSectionTableViewCell.m; sourceTree = "<group>"; };
+		49DA3E511DA4DF8C004B38A0 /* FYDailyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYDailyViewController.h; sourceTree = "<group>"; };
+		49DA3E521DA4DF8C004B38A0 /* FYDailyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYDailyViewController.m; sourceTree = "<group>"; };
+		49DA3E541DA4DFBC004B38A0 /* FYDailyData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYDailyData.h; sourceTree = "<group>"; };
+		49DA3E551DA4DFBC004B38A0 /* FYDailyData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYDailyData.m; sourceTree = "<group>"; };
+		49DA3E571DA4DFD6004B38A0 /* FYIssueList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYIssueList.h; sourceTree = "<group>"; };
+		49DA3E581DA4DFD6004B38A0 /* FYIssueList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYIssueList.m; sourceTree = "<group>"; };
+		49DA3E5E1DA507F0004B38A0 /* FYLightTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYLightTopicViewController.h; sourceTree = "<group>"; };
+		49DA3E5F1DA507F0004B38A0 /* FYLightTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYLightTopicViewController.m; sourceTree = "<group>"; };
 		CBF070E9976CEDCA91CE4748 /* Pods-FYEyePetizer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYEyePetizer.release.xcconfig"; path = "Pods/Target Support Files/Pods-FYEyePetizer/Pods-FYEyePetizer.release.xcconfig"; sourceTree = "<group>"; };
 		F73C50F0900C42D89953038A /* Pods-FYEyePetizer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYEyePetizer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FYEyePetizer/Pods-FYEyePetizer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -637,8 +649,80 @@
 		49DA3E4E1DA4C32C004B38A0 /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				49DA3E5B1DA4F751004B38A0 /* DailyDetail */,
+				49DA3E5D1DA507C6004B38A0 /* LightTopicDetail */,
+				49DA3E5C1DA4F763004B38A0 /* VideoDetail */,
 			);
 			path = Details;
+			sourceTree = "<group>";
+		};
+		49DA3E4F1DA4DEF5004B38A0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				49DA3E511DA4DF8C004B38A0 /* FYDailyViewController.h */,
+				49DA3E521DA4DF8C004B38A0 /* FYDailyViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		49DA3E501DA4DF05004B38A0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				49DA3E541DA4DFBC004B38A0 /* FYDailyData.h */,
+				49DA3E551DA4DFBC004B38A0 /* FYDailyData.m */,
+				49DA3E571DA4DFD6004B38A0 /* FYIssueList.h */,
+				49DA3E581DA4DFD6004B38A0 /* FYIssueList.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		49DA3E5B1DA4F751004B38A0 /* DailyDetail */ = {
+			isa = PBXGroup;
+			children = (
+				49DA3E4F1DA4DEF5004B38A0 /* Controller */,
+				49DA3E501DA4DF05004B38A0 /* Model */,
+			);
+			path = DailyDetail;
+			sourceTree = "<group>";
+		};
+		49DA3E5C1DA4F763004B38A0 /* VideoDetail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VideoDetail;
+			sourceTree = "<group>";
+		};
+		49DA3E5D1DA507C6004B38A0 /* LightTopicDetail */ = {
+			isa = PBXGroup;
+			children = (
+				49DA3E611DA50F92004B38A0 /* Controller */,
+				49DA3E621DA50FA1004B38A0 /* Model */,
+				49DA3E631DA50FA6004B38A0 /* View */,
+			);
+			path = LightTopicDetail;
+			sourceTree = "<group>";
+		};
+		49DA3E611DA50F92004B38A0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				49DA3E5E1DA507F0004B38A0 /* FYLightTopicViewController.h */,
+				49DA3E5F1DA507F0004B38A0 /* FYLightTopicViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		49DA3E621DA50FA1004B38A0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		49DA3E631DA50FA6004B38A0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		624681CED395F88BA1B0ED10 /* Frameworks */ = {
@@ -798,6 +882,7 @@
 				49B1F7A81DA392980063AAC4 /* FYTitleTableViewCell.m in Sources */,
 				4957541A1D9E4B200090A18A /* AppDelegate.m in Sources */,
 				495754481D9E52B40090A18A /* FYBaseModel.m in Sources */,
+				49DA3E561DA4DFBC004B38A0 /* FYDailyData.m in Sources */,
 				495754A51D9E544F0090A18A /* FYUser.m in Sources */,
 				495754791D9E532A0090A18A /* HttpClient.m in Sources */,
 				4957544B1D9E52EF0090A18A /* FYBaseView.m in Sources */,
@@ -818,18 +903,21 @@
 				49B1F7931DA3571F0063AAC4 /* FYImageCollectionViewCell.m in Sources */,
 				49B1F79F1DA381090063AAC4 /* FYAuthorData.m in Sources */,
 				49AC55FD1D9FBCE7008C5ADA /* FYHomeSectionList.m in Sources */,
+				49DA3E601DA507F0004B38A0 /* FYLightTopicViewController.m in Sources */,
 				4957546A1D9E530B0090A18A /* NSString+Categories.m in Sources */,
 				495754661D9E530B0090A18A /* NSDate+Categories.m in Sources */,
 				495754691D9E530B0090A18A /* NSNumber+Extend.m in Sources */,
 				495754B11D9E85040090A18A /* FYDiscoveryViewController.m in Sources */,
 				49B1F7AE1DA392CA0063AAC4 /* FYVideoCollectionTableViewCell.m in Sources */,
 				49B1F7A51DA383CE0063AAC4 /* FYAuthorTableViewCell.m in Sources */,
+				49DA3E591DA4DFD6004B38A0 /* FYIssueList.m in Sources */,
 				49B1F7B41DA3AD010063AAC4 /* NSString+FY_MD5.m in Sources */,
 				49C597461DA23B070044C1C3 /* FYViewAllCollectionViewCell.m in Sources */,
 				4957549F1D9E54260090A18A /* AboutMe.text in Sources */,
 				49B1F7961DA3572D0063AAC4 /* FYTagCollectionViewCell.m in Sources */,
 				49AC55F41D9FBB8B008C5ADA /* FYHomeData.m in Sources */,
 				49D399011DA0F9DB00E3F6A2 /* FYTextHeaderTableViewCell.m in Sources */,
+				49DA3E531DA4DF8C004B38A0 /* FYDailyViewController.m in Sources */,
 				49D399071DA10E7700E3F6A2 /* FYBannerTableViewCell.m in Sources */,
 				4957546D1D9E530B0090A18A /* UIButton+Block.m in Sources */,
 				49B1F78D1DA353470063AAC4 /* FYDisData.m in Sources */,

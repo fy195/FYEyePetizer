@@ -39,8 +39,13 @@ UICollectionViewDataSource
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.topicImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        _topicImageView.userInteractionEnabled = YES;
         [self addSubview:_topicImageView];
         [_topicImageView release];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+        [_topicImageView addGestureRecognizer:tap];
+
+        [tap release];
         
         self.cellImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"三角形cell"]];
         [_topicImageView addSubview:_cellImageView];
@@ -127,6 +132,10 @@ UICollectionViewDataSource
     _cellImageView.frame = CGRectMake(0, 0, 20, 20);
     _cellImageView.center = CGPointMake(_topicImageView.width / 2, _topicImageView.height - 7);
     _topicCollectionView.frame = CGRectMake(0, _topicImageView.y + _topicImageView.height, self.width, self.height - _topicImageView.height);
+}
+
+- (void)tapAction:(UITapGestureRecognizer *)sender {
+    [self.tapDelegate getIdFromTouchImage:[_itemData.header objectForKey:@"id"]];
 }
 
 - (void)awakeFromNib {
