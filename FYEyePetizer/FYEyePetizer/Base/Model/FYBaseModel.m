@@ -18,7 +18,7 @@
 }
 
 + (FYBaseModel *)modelWithDic:(NSDictionary *)dic {
-    return [[self alloc] initWithDic:dic];
+    return [[[self alloc] initWithDic:dic] autorelease];
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {

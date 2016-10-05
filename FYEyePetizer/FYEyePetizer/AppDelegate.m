@@ -7,17 +7,100 @@
 //
 
 #import "AppDelegate.h"
-
+#import "FYGuideViewController.h"
+#import "FYHomeViewController.h"
+#import "FYDiscoveryViewController.h"
+#import "FYAuthorPageViewController.h"
+#import "FYMineViewController.h"
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
-
+- (void)dealloc {
+    [_window release];
+    [super dealloc];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    [self.window makeKeyAndVisible];
+    _window.backgroundColor = [UIColor whiteColor];
+    [_window release];
+    
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    if (![user boolForKey:@"notFirst"]) {
+        self.window.rootViewController = [[FYGuideViewController alloc] init];
+    }else {
+        [self createTabBar];
+    }
     return YES;
+}
+
+- (void)createTabBar{
+    FYHomeViewController *homeViewController = [[FYHomeViewController alloc] init];
+    UINavigationController *homeNavigationController = [[UINavigationController alloc] initWithRootViewController:homeViewController];
+    
+    FYDiscoveryViewController *discoveryViewController = [[FYDiscoveryViewController alloc] init];
+    UINavigationController *discoveryNavigationController = [[UINavigationController alloc] initWithRootViewController:discoveryViewController];
+    
+    FYAuthorPageViewController *authorPageViewController = [[FYAuthorPageViewController alloc] init];
+    UINavigationController *authorPageNavigationController = [[UINavigationController alloc] initWithRootViewController:authorPageViewController];
+    
+    FYMineViewController *mineViewController = [[FYMineViewController alloc] init];
+    UINavigationController *mineNavigationController = [[UINavigationController alloc] initWithRootViewController:mineViewController];
+    
+    UITabBarController *rootTabBarController = [[UITabBarController alloc] init];
+    rootTabBarController.viewControllers = @[homeNavigationController,discoveryNavigationController, authorPageNavigationController,mineNavigationController];
+    self.window.rootViewController = rootTabBarController;
+    
+    rootTabBarController.tabBar.tintColor = [UIColor blackColor];
+    rootTabBarController.tabBar.translucent = NO;
+    
+    [homeViewController release];
+    [homeNavigationController release];
+    
+    [discoveryViewController release];
+    [discoveryNavigationController release];
+    
+    [authorPageViewController release];
+    [authorPageNavigationController release];
+
+    [mineViewController release];
+    [mineNavigationController release];
+    
+    [rootTabBarController release];
+    
+    UIImage *homeImage = [UIImage imageNamed:@"三角形1"];
+    homeImage = [homeImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *selectedHomeImage = [UIImage imageNamed:@"三角形"];
+    selectedHomeImage = [selectedHomeImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    homeNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"精选" image:homeImage selectedImage:selectedHomeImage];
+    [homeNavigationController.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Thonburi" size:12.0], NSFontAttributeName, nil]forState:UIControlStateNormal];
+    
+    UIImage *discoveryImage = [UIImage imageNamed:@"圆形1"];
+    discoveryImage = [discoveryImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *selectedDiscoveryImage = [UIImage imageNamed:@"圆形"];
+    selectedDiscoveryImage = [selectedDiscoveryImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    discoveryNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"发现" image:discoveryImage selectedImage:selectedDiscoveryImage];
+    [discoveryNavigationController.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Thonburi" size:12.0], NSFontAttributeName, nil]forState:UIControlStateNormal];
+    
+    UIImage *authorImage = [UIImage imageNamed:@"方形1"];
+    authorImage = [authorImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *selectedAuthorImage = [UIImage imageNamed:@"方形"];
+    selectedAuthorImage = [selectedAuthorImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    authorPageNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"作者" image:authorImage selectedImage:selectedAuthorImage];
+    [authorPageNavigationController.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Thonburi" size:12.0], NSFontAttributeName, nil]forState:UIControlStateNormal];
+    
+    UIImage *mineImage = [UIImage imageNamed:@"菱形1"];
+    mineImage = [mineImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *selectedMineImage = [UIImage imageNamed:@"菱形"];
+    selectedMineImage = [selectedMineImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    mineNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的" image:mineImage selectedImage:selectedMineImage];
+    [mineNavigationController.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Thonburi" size:12.0], NSFontAttributeName, nil]forState:UIControlStateNormal];
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

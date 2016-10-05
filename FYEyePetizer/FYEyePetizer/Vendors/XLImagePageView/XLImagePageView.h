@@ -20,7 +20,7 @@
 
 @interface XLImagePageView : UIView
 
-@property (nonatomic, weak) id<XLImagePageViewDelegate>delegate;
+@property (nonatomic, assign) id<XLImagePageViewDelegate>delegate;
 @property (nonatomic, strong) NSArray *imageArray;
 
 @end

@@ -19,6 +19,6 @@
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *contentImageView;
-@property (nonatomic, weak) id<XLImagePageDetailCellDelegate>delegate; 
+@property (nonatomic, assign) id<XLImagePageDetailCellDelegate>delegate;
 
 @end

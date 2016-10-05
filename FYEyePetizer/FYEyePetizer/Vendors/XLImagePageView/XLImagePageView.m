@@ -24,6 +24,7 @@
 - (void)dealloc {
     _collectionView.dataSource = nil;
     _collectionView.delegate = nil;
+    [super dealloc];
 }
 
 
