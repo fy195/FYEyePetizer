@@ -14,6 +14,7 @@ static NSString *const viewAllCell = @"viewAllCell";
 #import "FYHomeItemList.h"
 #import "NSString+FYTime.h"
 #import "FYViewAllCollectionViewCell.h"
+#import "FYHomeSectionList.h"
 
 @interface FYLightTopicSectionCell ()
 <
@@ -135,7 +136,7 @@ UICollectionViewDataSource
 }
 
 - (void)tapAction:(UITapGestureRecognizer *)sender {
-    [self.tapDelegate getIdFromTouchImage:[_itemData.header objectForKey:@"id"]];
+    [self.tapDelegate getInfoFromTouchImage:[_itemData.header objectForKey:@"id"] sectionListType:_sectionList.type];
 }
 
 - (void)awakeFromNib {

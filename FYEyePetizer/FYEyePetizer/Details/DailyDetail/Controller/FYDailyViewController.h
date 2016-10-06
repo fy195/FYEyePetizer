@@ -9,5 +9,5 @@
 #import "FYBaseViewController.h"
 
 @interface FYDailyViewController : FYBaseViewController
-
+@property (nonatomic, retain) NSNumber *date;
 @end

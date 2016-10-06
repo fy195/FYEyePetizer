@@ -7,7 +7,6 @@
 //
 
 #import "FYHomeViewController.h"
-#import "NSDate+Categories.h"
 #import "FYHomeData.h"
 #import "FYHomeSectionList.h"
 #import "FYHomeItemList.h"
@@ -24,13 +23,19 @@
 #import "NSString+FY_MD5.h"
 #import "FYDailyViewController.h"
 #import "FYLightTopicViewController.h"
+#import "FYRankingViewController.h"
+#import "FYTagViewController.h"
+#import "FYCategoryViewController.h"
+#import "FYAuthorViewController.h"
 
 @interface FYHomeViewController ()
 <
 UITableViewDelegate,
 UITableViewDataSource,
 UIScrollViewDelegate,
-FYLightTopicHeaderDelegate
+FYLightTopicHeaderDelegate,
+FYCategoryCellDelegate,
+FYAuthorCellDelegete
 >
 
 @property (nonatomic, retain) UILabel *timeLabel;
@@ -290,7 +295,7 @@ FYLightTopicHeaderDelegate
             }
         }
     }
-    if ([sectionList.type isEqualToString:@"lightTopicSection"] || [sectionList.type isEqualToString:@"rankListSection"] || [sectionList.type isEqualToString:@"tagSection"]) {
+    if ([sectionList.type isEqualToString:@"lightTopicSection"]) {
         if (indexPath.row < sectionList.itemList.count) {
             FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
             FYHomeItemData *itemData = itemList.data;
@@ -298,15 +303,90 @@ FYLightTopicHeaderDelegate
             FYLightTopicSectionCell *cell = [tableView dequeueReusableCellWithIdentifier:lightTopicCell];
             if (nil == cell) {
                 cell = [[[FYLightTopicSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:lightTopicCell] autorelease];
-                if ([sectionList.type isEqualToString:@"lightTopicSection"]) {
-                    cell.tapDelegate = self;
-                }else {
-                    
-                }
             }
+            cell.tapDelegate = self;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.topicImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.header objectForKey:@"cover"]]]];
             cell.itemData = itemData;
+            cell.sectionList = sectionList;
+            return cell;
+        }else {
+            NSString *type = [sectionList.footer objectForKey:@"type"];
+            NSDictionary *data = [sectionList.footer objectForKey:@"data"];
+            if ([type isEqualToString:@"forwordFooter"]) {
+                static NSString *const footerCell = @"footerCell";
+                FYFooterTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:footerCell];
+                if (nil == cell) {
+                    cell = [[[FYFooterTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:footerCell] autorelease];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.text = [NSString stringWithFormat:@"%@  >", [data objectForKey:@"text"]];
+                return cell;
+            }else if ([type isEqualToString:@"blankFooter"]) {
+                static NSString *const blankCell = @"blankCell";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:blankCell];
+                if (nil == cell) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:blankCell];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.00];
+                return cell;
+            }
+        }
+    }
+    if ([sectionList.type isEqualToString:@"rankListSection"]) {
+        if (indexPath.row < sectionList.itemList.count) {
+            FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
+            FYHomeItemData *itemData = itemList.data;
+            static NSString *const rankingListCell = @"rankingListCell";
+            FYLightTopicSectionCell *cell = [tableView dequeueReusableCellWithIdentifier:rankingListCell];
+            if (nil == cell) {
+                cell = [[[FYLightTopicSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:rankingListCell] autorelease];
+            }
+            cell.tapDelegate = self;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.topicImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.header objectForKey:@"cover"]]]];
+            cell.sectionList = sectionList;
+            cell.itemData = itemData;
+            return cell;
+        }else {
+            NSString *type = [sectionList.footer objectForKey:@"type"];
+            NSDictionary *data = [sectionList.footer objectForKey:@"data"];
+            if ([type isEqualToString:@"forwordFooter"]) {
+                static NSString *const footerCell = @"footerCell";
+                FYFooterTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:footerCell];
+                if (nil == cell) {
+                    cell = [[[FYFooterTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:footerCell] autorelease];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.text = [NSString stringWithFormat:@"%@  >", [data objectForKey:@"text"]];
+                return cell;
+            }else if ([type isEqualToString:@"blankFooter"]) {
+                static NSString *const blankCell = @"blankCell";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:blankCell];
+                if (nil == cell) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:blankCell];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.00];
+                return cell;
+            }
+        }
+    }
+    if ([sectionList.type isEqualToString:@"tagSection"]) {
+        if (indexPath.row < sectionList.itemList.count) {
+            FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
+            FYHomeItemData *itemData = itemList.data;
+            static NSString *const tagCell = @"tagCell";
+            FYLightTopicSectionCell *cell = [tableView dequeueReusableCellWithIdentifier:tagCell];
+            if (nil == cell) {
+                cell = [[[FYLightTopicSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tagCell] autorelease];
+            }
+            cell.tapDelegate = self;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.topicImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.header objectForKey:@"cover"]]]];
+            cell.itemData = itemData;
+            cell.sectionList = sectionList;
             return cell;
         }else {
             NSString *type = [sectionList.footer objectForKey:@"type"];
@@ -345,6 +425,7 @@ FYLightTopicHeaderDelegate
             cell.itemData = itemData;
             cell.title = [itemData.header objectForKey:@"title"];
             cell.subtitle = [itemData.header objectForKey:@"subTitle"];
+            cell.categoryDelegate = self;
             return cell;
         }else {
             NSString *type = [sectionList.footer objectForKey:@"type"];
@@ -385,6 +466,7 @@ FYLightTopicHeaderDelegate
             cell.iconImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.header objectForKey:@"icon"]]]];
             cell.title = [itemData.header objectForKey:@"title"];
             cell.authorDes = [itemData.header objectForKey:@"description"];
+            cell.authorDelegate = self;
             return cell;
         }else {
             NSString *type = [sectionList.footer objectForKey:@"type"];
@@ -420,8 +502,6 @@ FYLightTopicHeaderDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     FYHomeSectionList *sectionList = _dataArray[indexPath.section];
-//    FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
-//    FYHomeItemData *itemData = itemList.data;
     NSString *type = [sectionList.footer objectForKey:@"type"];
     if ([type isEqualToString:@"forwardFooter"]) {
         FYDailyViewController *dailyViewController = [[FYDailyViewController alloc] init];
@@ -488,16 +568,80 @@ FYLightTopicHeaderDelegate
 - (void)headerButtonAction:(UIButton *)sender {
     FYDailyViewController *dailyViewController = [[FYDailyViewController alloc] init];
     dailyViewController.hidesBottomBarWhenPushed = YES;
+    dailyViewController.date = _homeData.date;
     [self.navigationController pushViewController:dailyViewController animated:YES];
     [dailyViewController release];
 }
 
-- (void)getIdFromTouchImage:(NSNumber *)imageId {
-    FYLightTopicViewController *lightTopicViewController = [[FYLightTopicViewController alloc] init];
-    lightTopicViewController.imageId = imageId;
-    lightTopicViewController.tabBarController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:lightTopicViewController animated:YES];
-    [lightTopicViewController release];
+#pragma mark - 代理方法
+- (void)getPgcId:(NSNumber *)pgcId {
+    FYAuthorViewController *authorViewController = [[FYAuthorViewController alloc] init];
+    authorViewController.pgcId = pgcId;
+    authorViewController.hidesBottomBarWhenPushed = YES;
+    for (FYHomeSectionList *sectionList in _dataArray) {
+        for (FYHomeItemList *itemList in sectionList.itemList) {
+            if ([itemList.data.header objectForKey:@"id"] == pgcId) {
+                authorViewController.actionUrl = [itemList.data.header objectForKey:@"actionUrl"];
+            }
+        }
+    }
+    [self.navigationController pushViewController:authorViewController animated:YES];
+    [authorViewController release];
+}
+
+- (void)getCategoryId:(NSNumber *)categoryId {
+    FYCategoryViewController *categoryViewController = [[FYCategoryViewController alloc] init];
+    categoryViewController.categoryId = categoryId;
+    categoryViewController.hidesBottomBarWhenPushed = YES;
+    for (FYHomeSectionList *sectionList in _dataArray) {
+        for (FYHomeItemList *itemList in sectionList.itemList) {
+            if ([itemList.data.header objectForKey:@"id"] == categoryId) {
+                categoryViewController.actionUrl = [itemList.data.header objectForKey:@"actionUrl"];
+            }
+        }
+    }
+    [self.navigationController pushViewController:categoryViewController animated:YES];
+    [categoryViewController release];
+}
+
+- (void)getInfoFromTouchImage:(NSNumber *)imageId sectionListType:(NSString *)type {
+    if ([type isEqualToString:@"lightTopicSection"]) {
+        FYLightTopicViewController *lightTopicViewController = [[FYLightTopicViewController alloc] init];
+        lightTopicViewController.imageId = imageId;
+        for (FYHomeSectionList *sectionList in _dataArray) {
+            for (FYHomeItemList *itemList in sectionList.itemList) {
+                if ([itemList.data.header objectForKey:@"id"] == imageId) {
+                    lightTopicViewController.actionUrl = [itemList.data.header objectForKey:@"actionUrl"];
+                }
+            }
+        }
+        lightTopicViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:lightTopicViewController animated:YES];
+        [lightTopicViewController release];
+        return;
+    }
+    if ([type isEqualToString:@"rankListSection"]) {
+        FYRankingViewController *rankingViewController = [[FYRankingViewController alloc] init];
+        rankingViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:rankingViewController animated:YES];
+        [rankingViewController release];
+        return;
+    }
+    if ([type isEqualToString:@"tagSection"]) {
+        FYTagViewController *tagViewController = [[FYTagViewController alloc] init];
+        tagViewController.hidesBottomBarWhenPushed = YES;
+        tagViewController.imageId = imageId;
+        for (FYHomeSectionList *sectionList in _dataArray) {
+            for (FYHomeItemList *itemList in sectionList.itemList) {
+                if ([itemList.data.header objectForKey:@"id"] == imageId) {
+                    tagViewController.actionUrl = [itemList.data.header objectForKey:@"actionUrl"];
+                }
+            }
+        }
+        [self.navigationController pushViewController:tagViewController animated:YES];
+        [tagViewController release];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {

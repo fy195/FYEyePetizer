@@ -67,9 +67,13 @@ UITableViewDataSource
 }
 
 - (void)getData {
-
+    NSDate *datenow =[NSDate date];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate:datenow];
+    NSDate *localeDate = [datenow  dateByAddingTimeInterval: interval];
+    NSString *timeStamp = [NSString stringWithFormat:@"%ld", (long)[localeDate timeIntervalSince1970]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlString = @"http://baobab.wandoujia.com/api/v2/feed?_s=8ac81bfe34c407e2d759a0439494f0f5&date=1475653034929&f=iphone&net=wifi&num=7&p_product=EYEPETIZER_IOS&u=227c329b8529f03c7ec60f7bba44edcfe0b12021&v=2.7.0&vc=1305";
+    NSString *urlString =[NSString stringWithFormat:@"http://baobab.wandoujia.com/api/v2/feed?_s=%@&date=%@&f=iphone&net=wifi&num=7&p_product=EYEPETIZER_IOS&u=227c329b8529f03c7ec60f7bba44edcfe0b12021&v=2.7.0&vc=1305", [timeStamp fy_stringByMD5Bit32], _date] ;
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         self.allData = [FYDailyData modelWithDic:responseObject];
         [_dataArray addObjectsFromArray:_allData.issueList];

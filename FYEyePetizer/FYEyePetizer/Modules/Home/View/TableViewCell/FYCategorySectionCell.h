@@ -9,10 +9,15 @@
 #import <UIKit/UIKit.h>
 @class FYHomeItemData;
 
+@protocol FYCategoryCellDelegate <NSObject>
+
+@required
+- (void)getCategoryId:(NSNumber *)categoryId;
+@end
 @interface FYCategorySectionCell : UITableViewCell
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;
 @property (nonatomic, retain) FYHomeItemData *itemData;
-
+@property (nonatomic, assign) id<FYCategoryCellDelegate>categoryDelegate;
 @end

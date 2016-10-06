@@ -76,6 +76,15 @@
 		49DA3E561DA4DFBC004B38A0 /* FYDailyData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E551DA4DFBC004B38A0 /* FYDailyData.m */; };
 		49DA3E591DA4DFD6004B38A0 /* FYIssueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E581DA4DFD6004B38A0 /* FYIssueList.m */; };
 		49DA3E601DA507F0004B38A0 /* FYLightTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E5F1DA507F0004B38A0 /* FYLightTopicViewController.m */; };
+		49F1137A1DA5F646009803DB /* FYLightTopicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F113791DA5F646009803DB /* FYLightTopicData.m */; };
+		49F113801DA602B2009803DB /* FYRankingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F1137F1DA602B2009803DB /* FYRankingViewController.m */; };
+		49F113831DA602C3009803DB /* FYRankingData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F113821DA602C3009803DB /* FYRankingData.m */; };
+		49F113891DA634A6009803DB /* FYTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F113881DA634A6009803DB /* FYTagViewController.m */; };
+		49F1138C1DA634BE009803DB /* FYTagSectionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F1138B1DA634BE009803DB /* FYTagSectionData.m */; };
+		49F113921DA6471D009803DB /* FYCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F113911DA6471D009803DB /* FYCategoryViewController.m */; };
+		49F113951DA64730009803DB /* FYCategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F113941DA64730009803DB /* FYCategoryData.m */; };
+		49F1139B1DA64B91009803DB /* FYAuthorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F1139A1DA64B91009803DB /* FYAuthorViewController.m */; };
+		49F1139E1DA64BA1009803DB /* FYAuthorDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F1139D1DA64BA1009803DB /* FYAuthorDetailData.m */; };
 		DF1C2E547DF522AE2CF3B64B /* libPods-FYEyePetizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AE024C50BAA9AAF4B61819E /* libPods-FYEyePetizer.a */; };
 /* End PBXBuildFile section */
 
@@ -219,6 +228,24 @@
 		49DA3E581DA4DFD6004B38A0 /* FYIssueList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYIssueList.m; sourceTree = "<group>"; };
 		49DA3E5E1DA507F0004B38A0 /* FYLightTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYLightTopicViewController.h; sourceTree = "<group>"; };
 		49DA3E5F1DA507F0004B38A0 /* FYLightTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYLightTopicViewController.m; sourceTree = "<group>"; };
+		49F113781DA5F646009803DB /* FYLightTopicData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYLightTopicData.h; sourceTree = "<group>"; };
+		49F113791DA5F646009803DB /* FYLightTopicData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYLightTopicData.m; sourceTree = "<group>"; };
+		49F1137E1DA602B2009803DB /* FYRankingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYRankingViewController.h; sourceTree = "<group>"; };
+		49F1137F1DA602B2009803DB /* FYRankingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYRankingViewController.m; sourceTree = "<group>"; };
+		49F113811DA602C3009803DB /* FYRankingData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYRankingData.h; sourceTree = "<group>"; };
+		49F113821DA602C3009803DB /* FYRankingData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYRankingData.m; sourceTree = "<group>"; };
+		49F113871DA634A6009803DB /* FYTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYTagViewController.h; sourceTree = "<group>"; };
+		49F113881DA634A6009803DB /* FYTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYTagViewController.m; sourceTree = "<group>"; };
+		49F1138A1DA634BE009803DB /* FYTagSectionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYTagSectionData.h; sourceTree = "<group>"; };
+		49F1138B1DA634BE009803DB /* FYTagSectionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYTagSectionData.m; sourceTree = "<group>"; };
+		49F113901DA6471D009803DB /* FYCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYCategoryViewController.h; sourceTree = "<group>"; };
+		49F113911DA6471D009803DB /* FYCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYCategoryViewController.m; sourceTree = "<group>"; };
+		49F113931DA64730009803DB /* FYCategoryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYCategoryData.h; sourceTree = "<group>"; };
+		49F113941DA64730009803DB /* FYCategoryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYCategoryData.m; sourceTree = "<group>"; };
+		49F113991DA64B91009803DB /* FYAuthorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYAuthorViewController.h; sourceTree = "<group>"; };
+		49F1139A1DA64B91009803DB /* FYAuthorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYAuthorViewController.m; sourceTree = "<group>"; };
+		49F1139C1DA64BA1009803DB /* FYAuthorDetailData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYAuthorDetailData.h; sourceTree = "<group>"; };
+		49F1139D1DA64BA1009803DB /* FYAuthorDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYAuthorDetailData.m; sourceTree = "<group>"; };
 		CBF070E9976CEDCA91CE4748 /* Pods-FYEyePetizer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYEyePetizer.release.xcconfig"; path = "Pods/Target Support Files/Pods-FYEyePetizer/Pods-FYEyePetizer.release.xcconfig"; sourceTree = "<group>"; };
 		F73C50F0900C42D89953038A /* Pods-FYEyePetizer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYEyePetizer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FYEyePetizer/Pods-FYEyePetizer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -649,8 +676,12 @@
 		49DA3E4E1DA4C32C004B38A0 /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				49F113961DA64B59009803DB /* AuthorDetail */,
+				49F1138D1DA64491009803DB /* CategoryDetail */,
 				49DA3E5B1DA4F751004B38A0 /* DailyDetail */,
 				49DA3E5D1DA507C6004B38A0 /* LightTopicDetail */,
+				49F1137B1DA60248009803DB /* RankingDetail */,
+				49F113841DA633C5009803DB /* TagDetail */,
 				49DA3E5C1DA4F763004B38A0 /* VideoDetail */,
 			);
 			path = Details;
@@ -697,7 +728,6 @@
 			children = (
 				49DA3E611DA50F92004B38A0 /* Controller */,
 				49DA3E621DA50FA1004B38A0 /* Model */,
-				49DA3E631DA50FA6004B38A0 /* View */,
 			);
 			path = LightTopicDetail;
 			sourceTree = "<group>";
@@ -714,15 +744,118 @@
 		49DA3E621DA50FA1004B38A0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				49F113781DA5F646009803DB /* FYLightTopicData.h */,
+				49F113791DA5F646009803DB /* FYLightTopicData.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		49DA3E631DA50FA6004B38A0 /* View */ = {
+		49F1137B1DA60248009803DB /* RankingDetail */ = {
 			isa = PBXGroup;
 			children = (
+				49F1137C1DA6027F009803DB /* Controller */,
+				49F1137D1DA60286009803DB /* Model */,
 			);
-			path = View;
+			path = RankingDetail;
+			sourceTree = "<group>";
+		};
+		49F1137C1DA6027F009803DB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				49F1137E1DA602B2009803DB /* FYRankingViewController.h */,
+				49F1137F1DA602B2009803DB /* FYRankingViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		49F1137D1DA60286009803DB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				49F113811DA602C3009803DB /* FYRankingData.h */,
+				49F113821DA602C3009803DB /* FYRankingData.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		49F113841DA633C5009803DB /* TagDetail */ = {
+			isa = PBXGroup;
+			children = (
+				49F113851DA6347B009803DB /* Controller */,
+				49F113861DA63483009803DB /* Model */,
+			);
+			path = TagDetail;
+			sourceTree = "<group>";
+		};
+		49F113851DA6347B009803DB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				49F113871DA634A6009803DB /* FYTagViewController.h */,
+				49F113881DA634A6009803DB /* FYTagViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		49F113861DA63483009803DB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				49F1138A1DA634BE009803DB /* FYTagSectionData.h */,
+				49F1138B1DA634BE009803DB /* FYTagSectionData.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		49F1138D1DA64491009803DB /* CategoryDetail */ = {
+			isa = PBXGroup;
+			children = (
+				49F1138E1DA646F2009803DB /* Controller */,
+				49F1138F1DA646FB009803DB /* Model */,
+			);
+			path = CategoryDetail;
+			sourceTree = "<group>";
+		};
+		49F1138E1DA646F2009803DB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				49F113901DA6471D009803DB /* FYCategoryViewController.h */,
+				49F113911DA6471D009803DB /* FYCategoryViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		49F1138F1DA646FB009803DB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				49F113931DA64730009803DB /* FYCategoryData.h */,
+				49F113941DA64730009803DB /* FYCategoryData.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		49F113961DA64B59009803DB /* AuthorDetail */ = {
+			isa = PBXGroup;
+			children = (
+				49F113971DA64B6B009803DB /* Controller */,
+				49F113981DA64B71009803DB /* Model */,
+			);
+			path = AuthorDetail;
+			sourceTree = "<group>";
+		};
+		49F113971DA64B6B009803DB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				49F113991DA64B91009803DB /* FYAuthorViewController.h */,
+				49F1139A1DA64B91009803DB /* FYAuthorViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		49F113981DA64B71009803DB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				49F1139C1DA64BA1009803DB /* FYAuthorDetailData.h */,
+				49F1139D1DA64BA1009803DB /* FYAuthorDetailData.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		624681CED395F88BA1B0ED10 /* Frameworks */ = {
@@ -867,6 +1000,7 @@
 			files = (
 				495754651D9E530B0090A18A /* NSArray+Categories.m in Sources */,
 				4957546F1D9E530B0090A18A /* UIImage+Categories.m in Sources */,
+				49F113801DA602B2009803DB /* FYRankingViewController.m in Sources */,
 				495754391D9E51640090A18A /* UIImageView+XLWebCache.m in Sources */,
 				495754701D9E530B0090A18A /* UIView+Frame.m in Sources */,
 				49B1F7901DA356D40063AAC4 /* FYHorizontalCardCollectionViewCell.m in Sources */,
@@ -875,13 +1009,16 @@
 				495754B41D9E85130090A18A /* FYAuthorPageViewController.m in Sources */,
 				495754681D9E530B0090A18A /* NSDictionary+Categories.m in Sources */,
 				49D399041DA10BB400E3F6A2 /* NSString+FYTime.m in Sources */,
+				49F1138C1DA634BE009803DB /* FYTagSectionData.m in Sources */,
 				49D398EF1DA0ABFC00E3F6A2 /* FYHomePlayInfo.m in Sources */,
 				49B1F7991DA35A9C0063AAC4 /* FYCellCollectionViewCell.m in Sources */,
 				495754741D9E53180090A18A /* DataBaseManager.m in Sources */,
+				49F1139E1DA64BA1009803DB /* FYAuthorDetailData.m in Sources */,
 				49D398F81DA0BD5B00E3F6A2 /* FYLightTopicSectionCell.m in Sources */,
 				49B1F7A81DA392980063AAC4 /* FYTitleTableViewCell.m in Sources */,
 				4957541A1D9E4B200090A18A /* AppDelegate.m in Sources */,
 				495754481D9E52B40090A18A /* FYBaseModel.m in Sources */,
+				49F1139B1DA64B91009803DB /* FYAuthorViewController.m in Sources */,
 				49DA3E561DA4DFBC004B38A0 /* FYDailyData.m in Sources */,
 				495754A51D9E544F0090A18A /* FYUser.m in Sources */,
 				495754791D9E532A0090A18A /* HttpClient.m in Sources */,
@@ -894,6 +1031,7 @@
 				49C597411DA20BCE0044C1C3 /* FYFooterTableViewCell.m in Sources */,
 				4957546B1D9E530B0090A18A /* NSString+Regex.m in Sources */,
 				495754AB1D9E83BA0090A18A /* FYGuideViewController.m in Sources */,
+				49F1137A1DA5F646009803DB /* FYLightTopicData.m in Sources */,
 				49AC55FA1D9FBCC2008C5ADA /* FYHomeItemList.m in Sources */,
 				4957546E1D9E530B0090A18A /* UIColor+Categories.m in Sources */,
 				495754A21D9E543D0090A18A /* FYHomeViewController.m in Sources */,
@@ -904,6 +1042,7 @@
 				49B1F79F1DA381090063AAC4 /* FYAuthorData.m in Sources */,
 				49AC55FD1D9FBCE7008C5ADA /* FYHomeSectionList.m in Sources */,
 				49DA3E601DA507F0004B38A0 /* FYLightTopicViewController.m in Sources */,
+				49F113921DA6471D009803DB /* FYCategoryViewController.m in Sources */,
 				4957546A1D9E530B0090A18A /* NSString+Categories.m in Sources */,
 				495754661D9E530B0090A18A /* NSDate+Categories.m in Sources */,
 				495754691D9E530B0090A18A /* NSNumber+Extend.m in Sources */,
@@ -923,8 +1062,11 @@
 				49B1F78D1DA353470063AAC4 /* FYDisData.m in Sources */,
 				495754B71D9E851F0090A18A /* FYMineViewController.m in Sources */,
 				49D398FE1DA0DB7700E3F6A2 /* FYTopicCollectionViewCell.m in Sources */,
+				49F113891DA634A6009803DB /* FYTagViewController.m in Sources */,
 				495754451D9E528C0090A18A /* FYBaseViewController.m in Sources */,
+				49F113831DA602C3009803DB /* FYRankingData.m in Sources */,
 				4957549A1D9E53C90090A18A /* NSUserDefaultsUtils.m in Sources */,
+				49F113951DA64730009803DB /* FYCategoryData.m in Sources */,
 				49D398FB1DA0BD7200E3F6A2 /* FYCategorySectionCell.m in Sources */,
 				495754171D9E4B200090A18A /* main.m in Sources */,
 				49DA3E4D1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m in Sources */,

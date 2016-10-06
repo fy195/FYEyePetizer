@@ -45,6 +45,7 @@ UICollectionViewDataSource
     if (self) {
         self.topicImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         [self addSubview:_topicImageView];
+        _topicImageView.userInteractionEnabled = YES;
         [_topicImageView release];
         
         self.iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
@@ -72,6 +73,10 @@ UICollectionViewDataSource
         self.cellImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"三角形cell"]];
         [_topicImageView addSubview:_cellImageView];
         [_cellImageView release];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+        [_topicImageView addGestureRecognizer:tap];
+        [tap release];
     }
     return self;
 }
@@ -107,6 +112,10 @@ UICollectionViewDataSource
     }
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"originCell" forIndexPath:indexPath];
     return cell;
+}
+
+- (void)tapAction:(UITapGestureRecognizer *)sender {
+    [self.authorDelegate getPgcId:[_itemData.header objectForKey:@"id"]];
 }
 
 - (void)setTopicImage:(UIImage *)topicImage {

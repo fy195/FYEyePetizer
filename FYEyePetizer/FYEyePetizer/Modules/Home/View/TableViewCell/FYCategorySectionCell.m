@@ -41,6 +41,7 @@ UICollectionViewDataSource
     if (self) {
         self.view = [[UIView alloc] initWithFrame:CGRectZero];
         _view.backgroundColor = [UIColor whiteColor];
+        _view.userInteractionEnabled = YES;
         [self addSubview:_view];
         [_view release];
         
@@ -64,6 +65,10 @@ UICollectionViewDataSource
         [_view addSubview:_button];
         
         self.currentArray = [NSMutableArray array];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+        [_view addGestureRecognizer:tap];
+        [tap release];
     }
     return self;
 }
@@ -92,8 +97,6 @@ UICollectionViewDataSource
     [_pageControl addTarget:self action:@selector(pageControlValueChanged:) forControlEvents:UIControlEventValueChanged];
     [_pageControl release];
     
-    _collectionView.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
-    
 }
 
 - (void)createCollectionView{
@@ -107,13 +110,14 @@ UICollectionViewDataSource
     _collectionView.dataSource = self;
     _collectionView.pagingEnabled = YES;
     _collectionView.backgroundColor = [UIColor whiteColor];
+    _collectionView.showsHorizontalScrollIndicator = NO;
     [self addSubview:_collectionView];
     [_collectionView registerClass:[FYCatogeryCollectionViewCell class] forCellWithReuseIdentifier:categoryCell];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     [flowLayout release];
     [_collectionView release];
     
-   
+    _collectionView.contentOffset = CGPointMake(SCREEN_WIDTH, 0);
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -155,9 +159,12 @@ UICollectionViewDataSource
     }
 }
 
-
 - (void)pageControlValueChanged:(UIPageControl *)pageControl {
     _collectionView.contentOffset = CGPointMake(SCREEN_WIDTH * (pageControl.currentPage + 1), 0);
+}
+
+- (void)tapAction:(UITapGestureRecognizer *)sender {
+    [self.categoryDelegate getCategoryId:[_itemData.header objectForKey:@"id"]];
 }
 
 - (void)layoutSubviews {

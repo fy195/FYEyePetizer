@@ -7,17 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @class FYHomeItemData;
+@class FYHomeSectionList;
 
 @protocol FYLightTopicHeaderDelegate <NSObject>
 
 @required
-- (void)getIdFromTouchImage:(NSNumber *)imageId;
+- (void)getInfoFromTouchImage:(NSNumber *)imageId sectionListType:(NSString *)type;
 @end
 
 @interface FYLightTopicSectionCell : UITableViewCell
 
 @property (nonatomic, retain) UIImage *topicImage;
+@property (nonatomic, retain) FYHomeSectionList *sectionList;
 @property (nonatomic, retain) FYHomeItemData *itemData;
 @property (nonatomic, assign) id<FYLightTopicHeaderDelegate>tapDelegate;
 @end
