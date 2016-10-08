@@ -117,8 +117,12 @@ UICollectionViewDataSource
     if (_currentArray.count > 1) {
         cell.carouselImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:itemList.data.image]]];
     }
-    
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    FYHomeItemList *itemList = _currentArray[indexPath.section];
+    [self.delegate getBannerId:itemList.data.dataId actionUrl:itemList.data.actionUrl];
 }
 
 - (void)setData:(FYHomeItemData *)data {

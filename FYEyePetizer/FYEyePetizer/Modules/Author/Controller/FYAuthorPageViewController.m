@@ -16,11 +16,13 @@ static NSString *const videoCell = @"videoCell";
 #import "FYTitleTableViewCell.h"
 #import "FYVideoCollectionTableViewCell.h"
 #import "NSString+FY_MD5.h"
+#import "FYAuthorViewController.h"
 
 @interface FYAuthorPageViewController ()
 <
 UITableViewDelegate,
-UITableViewDataSource
+UITableViewDataSource,
+FYVideoTableViewCellDelegate
 >
 @property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, retain) FYAuthorData *AllData;
@@ -38,9 +40,7 @@ UITableViewDataSource
     [super dealloc];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+- (void)viewWillAppear:(BOOL)animated {
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0 , 100, 44)];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.font = [UIFont fontWithName:@"Lobster 1.4" size:20];
@@ -48,7 +48,13 @@ UITableViewDataSource
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = @"Eyepetizer";
     self.navigationItem.titleView = titleLabel;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
     self.dataArray = [NSMutableArray array];
+    [self createView];
     [self getData];
 }
 
@@ -59,7 +65,7 @@ UITableViewDataSource
         self.AllData = [FYAuthorData modelWithDic:responseObject];
         [_dataArray addObjectsFromArray:_AllData.itemList];
         self.next = _AllData.nextPageUrl;
-        [self createView];
+        [_tableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"网络请求失败");
     }];
@@ -117,6 +123,7 @@ UITableViewDataSource
         if (nil == cell) {
             cell = [[[FYVideoCollectionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:videoCell] autorelease];
         }
+        cell.delegate = self;
         cell.icon = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.header objectForKey:@"icon"]]]];
         cell.title = [itemData.header objectForKey:@"title"];
         cell.subTitle = [itemData.header objectForKey:@"subTitle"];
@@ -132,10 +139,30 @@ UITableViewDataSource
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    FYHomeItemList *itemList = _dataArray[indexPath.row];
+    if ([itemList.type isEqualToString:@"briefCard"]) {
+        FYHomeItemData *itemdata = itemList.data;
+        FYAuthorViewController *authorController = [[FYAuthorViewController alloc] init];
+        authorController.pgcId = itemdata.dataId;
+        authorController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:authorController animated:YES];
+        [authorController release];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row >= _dataArray.count - 1) {
         _tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(Loading)];
     }
+}
+
+- (void)getPgcId:(NSNumber *)pgcId actionUrl:(NSString *)actionUrl {
+    FYAuthorViewController *authorController = [[FYAuthorViewController alloc] init];
+    authorController.pgcId = pgcId;
+    authorController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:authorController animated:YES];
+    [authorController release];
 }
 
 - (void)Loading{

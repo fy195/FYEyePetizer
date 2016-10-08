@@ -75,6 +75,11 @@ UICollectionViewDataSource
         [_button setTitle:@">" forState:UIControlStateNormal];
         [_button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [_backView addSubview:_button];
+        
+        [self createView];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+        [_backView addGestureRecognizer:tap];
+        [tap release];
     }
     return  self;
 }
@@ -84,7 +89,7 @@ UICollectionViewDataSource
         [_data release];
         _data = [data retain];
     }
-    [self createView];
+    [_videoCollectionView reloadData];
     
 }
 
@@ -217,6 +222,9 @@ UICollectionViewDataSource
     _desLabel.text = _authorDescription;
 }
 
+- (void)tapAction:(UITapGestureRecognizer *)sender {
+    [self.delegate getPgcId:[_data.header objectForKey:@"id"] actionUrl:[_data.header objectForKey:@"actionUrl"]];
+}
 
 - (void)awakeFromNib {
     // Initialization code

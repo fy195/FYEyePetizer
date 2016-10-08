@@ -51,6 +51,7 @@ UITableViewDataSource
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
     self.navigationItem.leftBarButtonItem = leftButton;
     
+    [self createView];
     self.segmentControl = [[UISegmentedControl alloc] initWithItems:@[@"周排行", @"月排行", @"总排行"]];
     _segmentControl.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
     [self.view addSubview:_segmentControl];
@@ -103,11 +104,7 @@ UITableViewDataSource
     NSString *urlString =[NSString stringWithFormat:@"http://baobab.wandoujia.com/api/v3/ranklist?_s=%@&f=iphone&net=wifi&p_product=EYEPETIZER_IOS&strategy=%@&u=227c329b8529f03c7ec60f7bba44edcfe0b12021&v=2.7.0&vc=1305", [timeStamp fy_stringByMD5Bit32], strategy] ;
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         self.allData = [FYRankingData modelWithDic:responseObject];
-        if (nil == _tableView) {
-            [self createView];
-        }else {
-            [_tableView reloadData];
-        }
+        [_tableView reloadData];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"网络请求失败");

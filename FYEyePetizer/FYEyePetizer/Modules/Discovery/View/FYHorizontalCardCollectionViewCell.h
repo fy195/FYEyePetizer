@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 @class FYHomeItemData;
 
+@protocol FYHonrizontalCellDelegate <NSObject>
+
+@required
+- (void) getBannerId:(NSNumber *)bannerId actionUrl: (NSString *)actionUrl;
+@end
+
 @interface FYHorizontalCardCollectionViewCell : UICollectionViewCell
 @property (nonatomic, retain) FYHomeItemData *data;
+@property (nonatomic, assign) id<FYHonrizontalCellDelegate>delegate;
 @end

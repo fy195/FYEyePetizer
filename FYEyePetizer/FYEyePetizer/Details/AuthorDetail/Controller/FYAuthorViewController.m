@@ -17,7 +17,8 @@
 @interface FYAuthorViewController ()
 <
 UITableViewDelegate,
-UITableViewDataSource
+UITableViewDataSource,
+UIScrollViewDelegate
 >
 @property (nonatomic, retain) UISegmentedControl *segmentControl;
 @property (nonatomic, retain) UITableView *tableView;
@@ -27,13 +28,18 @@ UITableViewDataSource
 @property (nonatomic, copy) NSString *dateNext;
 @property (nonatomic, copy) NSString *shareNext;
 @property (nonatomic, copy) NSString *currentStrategy;
-
+@property (nonatomic, retain) UIView *backView;
+@property (nonatomic, assign) CGFloat beginDragY;
+@property (nonatomic, retain) UIScrollView *scrollView;
 @end
 
 @implementation FYAuthorViewController
 - (void)dealloc {
     _tableView.delegate = nil;
     _tableView.dataSource = nil;
+    _scrollView.delegate = nil;
+    [_scrollView release];
+    [_backView release];
     [_dateArray release];
     [_dateNext release];
     [_shareArray release];
@@ -60,28 +66,16 @@ UITableViewDataSource
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
     self.navigationItem.leftBarButtonItem = leftButton;
     
-    NSString *str = [_actionUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSRange start = [str rangeOfString:@"="];
-    NSString *sub = [str substringWithRange:NSMakeRange(start.location, str.length - start.location)];
-    NSString *title = [sub substringFromIndex:1];
-    self.navigationItem.title = title;
-    
     self.dateArray = [NSMutableArray array];
     self.shareArray = [NSMutableArray array];
     
-    self.segmentControl = [[UISegmentedControl alloc] initWithItems:@[@"按时间排序", @"按分享排序"]];
-    _segmentControl.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
-    [self.view addSubview:_segmentControl];
-    [_segmentControl release];
-    _segmentControl.backgroundColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:1.00];
-    _segmentControl.tintColor = [UIColor clearColor];
-    NSDictionary* selectedTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:16],
-                                             NSForegroundColorAttributeName: [UIColor blackColor]};
-    [_segmentControl setTitleTextAttributes:selectedTextAttributes forState:UIControlStateSelected];    NSDictionary* unselectedTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:16],NSForegroundColorAttributeName: [UIColor blackColor]};
-    [_segmentControl setTitleTextAttributes:unselectedTextAttributes forState:UIControlStateNormal];
     
-    _segmentControl.selectedSegmentIndex = 0;
-    [_segmentControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT )];
+    _scrollView.delegate = self;
+    _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT + 180);
+    _scrollView.bounces = NO;
+    [self.view addSubview:_scrollView];
+    
     [self getDataWithPgcId:_pgcId strategy:@"date"];
 }
 
@@ -109,7 +103,6 @@ UITableViewDataSource
         }else {
             [_tableView reloadData];
         }
-        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"网络请求失败");
     }];
@@ -159,12 +152,57 @@ UITableViewDataSource
 }
 
 - (void)createView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, SCREEN_HEIGHT - 104) style:UITableViewStylePlain];
+    self.backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 220)];
+    [_scrollView addSubview:_backView];
+    _backView.backgroundColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:1.00];
+    [_backView release];
+    
+    UIImageView *iconImagView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[_allData.pgcInfo objectForKey:@"icon"]]]]];
+    iconImagView.frame = CGRectMake(0, 0, 60, 60);
+    iconImagView.clipsToBounds = YES;
+    iconImagView.layer.cornerRadius = 30.f;
+    iconImagView.center = CGPointMake(SCREEN_WIDTH / 2, 40);
+    [_backView addSubview:iconImagView];
+    [iconImagView release];
+    
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 20)];
+    nameLabel.center = CGPointMake(SCREEN_WIDTH / 2, iconImagView.y + iconImagView.height + 30);
+    nameLabel.textColor = [UIColor blackColor];
+    nameLabel.textAlignment = NSTextAlignmentCenter;
+    nameLabel.text = [_allData.pgcInfo objectForKey:@"name"];
+    [_backView addSubview:nameLabel];
+    [nameLabel release];
+    
+    UILabel *briefLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
+    briefLabel.textColor = [UIColor lightGrayColor];
+    briefLabel.text = [_allData.pgcInfo objectForKey:@"description"];
+    briefLabel.numberOfLines = 0;
+    [briefLabel sizeToFit];
+    briefLabel.center = CGPointMake(SCREEN_WIDTH / 2, nameLabel.y + nameLabel.height + 20 + briefLabel.height / 2);
+    [_backView addSubview:briefLabel];
+    [briefLabel release];
+    
+    self.segmentControl = [[UISegmentedControl alloc] initWithItems:@[@"按时间排序", @"按分享排序"]];
+    _segmentControl.frame = CGRectMake(0, _backView.y + _backView.height - 40, SCREEN_WIDTH, 40);
+    [_backView addSubview:_segmentControl];
+    [_segmentControl release];
+    _segmentControl.backgroundColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:1.00];
+    _segmentControl.tintColor = [UIColor clearColor];
+    NSDictionary* selectedTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:16],
+                                             NSForegroundColorAttributeName: [UIColor blackColor]};
+    [_segmentControl setTitleTextAttributes:selectedTextAttributes forState:UIControlStateSelected];    NSDictionary* unselectedTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:16],NSForegroundColorAttributeName: [UIColor blackColor]};
+    [_segmentControl setTitleTextAttributes:unselectedTextAttributes forState:UIControlStateNormal];
+    
+    _segmentControl.selectedSegmentIndex = 0;
+    [_segmentControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _backView.y + _backView.height, SCREEN_WIDTH, SCREEN_HEIGHT - 40) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.scrollEnabled = NO;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_tableView];
+    [_scrollView addSubview:_tableView];
     [_tableView release];
 }
 
@@ -178,11 +216,11 @@ UITableViewDataSource
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([_currentStrategy isEqualToString:@"date"]) {
-        if (indexPath.row >= _dateArray.count - 1) {
+        if (indexPath.row >= _dateArray.count - 2) {
             _tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(Loading)];
         }
     }else {
-        if (indexPath.row >= _shareArray.count - 1) {
+        if (indexPath.row >= _shareArray.count - 2) {
             _tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(Loading)];
         }
     }
@@ -231,6 +269,36 @@ UITableViewDataSource
             _tableView.tableFooterView = label;
         }];
         [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    self.beginDragY = scrollView.contentOffset.y;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([scrollView isEqual:_scrollView]) {
+        CGFloat offsetY = scrollView.contentOffset.y;
+        if (offsetY >= 0 && offsetY < 180) {
+            _scrollView.scrollEnabled = YES;
+            _tableView.scrollEnabled = NO;
+        }
+        if (offsetY == 180) {
+            _scrollView.scrollEnabled = NO;
+            _tableView.scrollEnabled = YES;
+        }
+        
+        if (offsetY >= 110) {
+            self.navigationItem.title = [_allData.pgcInfo objectForKey:@"name"];
+        }else {
+            self.navigationItem.title = @"";
+        }
+    }
+    if ([scrollView isEqual:_tableView]) {
+        if (0 == scrollView.contentOffset.y) {
+            _tableView.scrollEnabled = NO;
+            _scrollView.scrollEnabled = YES;
+        }
     }
 }
 

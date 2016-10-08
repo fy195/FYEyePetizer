@@ -47,6 +47,8 @@ FYAuthorCellDelegete
 @property (nonatomic, retain) FYHomeSectionList *sectionList;
 @property (nonatomic, retain) NSMutableArray *dataArray;
 @property (nonatomic, copy) NSString *next;
+@property (nonatomic, retain)UIActivityIndicatorView *activityIndicatorView;
+@property (nonatomic, assign) BOOL isRefresh;
 @end
 
 @implementation FYHomeViewController
@@ -54,6 +56,7 @@ FYAuthorCellDelegete
 - (void)dealloc {
     _tableView.delegate = nil;
     _tableView.dataSource = nil;
+    [_activityIndicatorView release];
     [_timeLabel release];
     [_headerView release];
     [_tableView release];
@@ -71,7 +74,7 @@ FYAuthorCellDelegete
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [self createView];
     self.dataArray = [NSMutableArray array];
     
     [self data];
@@ -157,18 +160,23 @@ FYAuthorCellDelegete
     }];
     _headerButton.backgroundColor = [UIColor clearColor];
     [_headerButton addTarget:self action:@selector(headerButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
+
 }
 
 - (void)data {
+    self.isRefresh = NO;
+    NSDate *datenow =[NSDate date];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate:datenow];
+    NSDate *localeDate = [datenow  dateByAddingTimeInterval: interval];
+    NSString *timeStamp = [NSString stringWithFormat:@"%ld", (long)[localeDate timeIntervalSince1970]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlString = @"http://baobab.wandoujia.com/api/v3/tabs/selected?_s=e5a568187da61b7ccbf7465f4cc9ab35&f=iphone&net=wifi&p_product=EYEPETIZER_IOS&u=227c329b8529f03c7ec60f7bba44edcfe0b12021&v=2.7.0&vc=1305";
+    NSString *urlString = [NSString stringWithFormat:@"http://baobab.wandoujia.com/api/v3/tabs/selected?_s=%@&f=iphone&net=wifi&p_product=EYEPETIZER_IOS&u=227c329b8529f03c7ec60f7bba44edcfe0b12021&v=2.7.0&vc=1305", [timeStamp fy_stringByMD5Bit32]];
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         self.homeData = [FYHomeData modelWithDic:responseObject];
         self.next = _homeData.nextPageUrl;
         [_dataArray addObjectsFromArray:_homeData.sectionList];
-        [self createView];
+        [_tableView reloadData];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"网络请求失败");
@@ -506,6 +514,7 @@ FYAuthorCellDelegete
     if ([type isEqualToString:@"forwardFooter"]) {
         FYDailyViewController *dailyViewController = [[FYDailyViewController alloc] init];
         dailyViewController.hidesBottomBarWhenPushed = YES;
+        dailyViewController.date = _homeData.date;
         [self.navigationController pushViewController:dailyViewController animated:YES];
         [dailyViewController release];
     }
@@ -532,39 +541,85 @@ FYAuthorCellDelegete
     }
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if ([scrollView isEqual:_tableView]) {
+        if (scrollView.contentOffset.y == -200) {
+            _isRefresh = YES;
+            self.activityIndicatorView  = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+            _activityIndicatorView.center = CGPointMake(SCREEN_WIDTH / 2, _headerView.y + _headerView.height - 20);
+            _activityIndicatorView.backgroundColor = [UIColor clearColor];
+            _activityIndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+            [_headerView addSubview:_activityIndicatorView];
+            [_activityIndicatorView release];
+        }
+        [_activityIndicatorView startAnimating];
+        [self Refreshing];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == _dataArray.count -1) {
+    if (indexPath.section == _dataArray.count - 2) {
         _tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(Loading)];
     }
 }
 
+#pragma mark - 刷新加载
 - (void)Loading{
-    NSDate *datenow =[NSDate date];
-    NSTimeZone *zone = [NSTimeZone systemTimeZone];
-    NSInteger interval = [zone secondsFromGMTForDate:datenow];
-    NSDate *localeDate = [datenow  dateByAddingTimeInterval: interval];
-    NSString *timeStamp = [NSString stringWithFormat:@"%ld", (long)[localeDate timeIntervalSince1970]];
-    NSString *timeString = [NSString stringWithFormat:@"&_s=%@&f=iphone&net=wifi&p_product=EYEPETIZER_IOS&u=227c329b8529f03c7ec60f7bba44edcfe0b12021&v=2.7.0&vc=1305", [timeStamp fy_stringByMD5Bit32]];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", _next, timeString];
-    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        FYHomeData *data = [FYHomeData modelWithDic:responseObject];
-        [_dataArray addObjectsFromArray:data.sectionList];
-        _next = data.nextPageUrl;
-        [_tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
-        label.backgroundColor = [UIColor whiteColor];
-        label.textColor = [UIColor blackColor];
-        label.font = [UIFont fontWithName:@"Lobster 1.4" size:20];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.text = @"- The End -";
-        _tableView.tableFooterView = label;
-    }];
-    [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
+    if (!_isRefresh) {
+        NSDate *datenow =[NSDate date];
+        NSTimeZone *zone = [NSTimeZone systemTimeZone];
+        NSInteger interval = [zone secondsFromGMTForDate:datenow];
+        NSDate *localeDate = [datenow  dateByAddingTimeInterval: interval];
+        NSString *timeStamp = [NSString stringWithFormat:@"%ld", (long)[localeDate timeIntervalSince1970]];
+        NSString *timeString = [NSString stringWithFormat:@"&_s=%@&f=iphone&net=wifi&p_product=EYEPETIZER_IOS&u=227c329b8529f03c7ec60f7bba44edcfe0b12021&v=2.7.0&vc=1305", [timeStamp fy_stringByMD5Bit32]];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@", _next, timeString];
+        [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            FYHomeData *data = [FYHomeData modelWithDic:responseObject];
+            [_dataArray addObjectsFromArray:data.sectionList];
+            _next = data.nextPageUrl;
+            [_tableView reloadData];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
+            label.backgroundColor = [UIColor whiteColor];
+            label.textColor = [UIColor blackColor];
+            label.font = [UIFont fontWithName:@"Lobster 1.4" size:20];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.text = @"- The End -";
+            _tableView.tableFooterView = label;
+        }];
+        [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
+    }
 }
 
+- (void)Refreshing {
+    if (_isRefresh) {
+        NSDate *datenow =[NSDate date];
+        NSTimeZone *zone = [NSTimeZone systemTimeZone];
+        NSInteger interval = [zone secondsFromGMTForDate:datenow];
+        NSDate *localeDate = [datenow  dateByAddingTimeInterval: interval];
+        NSString *timeStamp = [NSString stringWithFormat:@"%ld", (long)[localeDate timeIntervalSince1970]];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        NSString *urlString = [NSString stringWithFormat:@"http://baobab.wandoujia.com/api/v3/tabs/selected?_s=%@&f=iphone&net=wifi&p_product=EYEPETIZER_IOS&u=227c329b8529f03c7ec60f7bba44edcfe0b12021&v=2.7.0&vc=1305", [timeStamp fy_stringByMD5Bit32]];
+        [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            self.homeData = [FYHomeData modelWithDic:responseObject];
+            if (_dataArray.count > 0) {
+                [_dataArray removeAllObjects];
+            }
+            self.next = _homeData.nextPageUrl;
+            [_dataArray addObjectsFromArray:_homeData.sectionList];
+            [_tableView reloadData];
+            [_activityIndicatorView stopAnimating];
+            [_activityIndicatorView removeFromSuperview];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"网络请求失败");
+        }];
+        [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
+    }
+    _isRefresh = NO;
+}
 
+#pragma mark - Button点击
 - (void)headerButtonAction:(UIButton *)sender {
     FYDailyViewController *dailyViewController = [[FYDailyViewController alloc] init];
     dailyViewController.hidesBottomBarWhenPushed = YES;
@@ -578,13 +633,6 @@ FYAuthorCellDelegete
     FYAuthorViewController *authorViewController = [[FYAuthorViewController alloc] init];
     authorViewController.pgcId = pgcId;
     authorViewController.hidesBottomBarWhenPushed = YES;
-    for (FYHomeSectionList *sectionList in _dataArray) {
-        for (FYHomeItemList *itemList in sectionList.itemList) {
-            if ([itemList.data.header objectForKey:@"id"] == pgcId) {
-                authorViewController.actionUrl = [itemList.data.header objectForKey:@"actionUrl"];
-            }
-        }
-    }
     [self.navigationController pushViewController:authorViewController animated:YES];
     [authorViewController release];
 }

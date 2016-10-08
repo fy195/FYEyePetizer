@@ -66,7 +66,7 @@ UITableViewDataSource
 
     self.dateArray = [NSMutableArray array];
     self.shareArray = [NSMutableArray array];
-    
+    [self createView];
     self.segmentControl = [[UISegmentedControl alloc] initWithItems:@[@"按时间排序", @"按分享排序"]];
     _segmentControl.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
     [self.view addSubview:_segmentControl];
@@ -103,12 +103,7 @@ UITableViewDataSource
             self.shareNext = _allData.nextPageUrl;
             self.currentStrategy = @"share";
         }
-        if (nil == _tableView) {
-            [self createView];
-        }else {
-            [_tableView reloadData];
-        }
-        
+        [_tableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"网络请求失败");
     }];
@@ -177,11 +172,11 @@ UITableViewDataSource
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([_currentStrategy isEqualToString:@"date"]) {
-        if (indexPath.row >= _dateArray.count - 1) {
+        if (indexPath.row >= _dateArray.count - 2) {
             _tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(Loading)];
         }
     }else {
-        if (indexPath.row >= _shareArray.count - 1) {
+        if (indexPath.row >= _shareArray.count - 2) {
             _tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(Loading)];
         }
     }

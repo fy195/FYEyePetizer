@@ -59,6 +59,8 @@
 		49B1F7AE1DA392CA0063AAC4 /* FYVideoCollectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B1F7AD1DA392CA0063AAC4 /* FYVideoCollectionTableViewCell.m */; };
 		49B1F7B11DA395840063AAC4 /* FYVideoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B1F7B01DA395840063AAC4 /* FYVideoCollectionViewCell.m */; };
 		49B1F7B41DA3AD010063AAC4 /* NSString+FY_MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B1F7B31DA3AD010063AAC4 /* NSString+FY_MD5.m */; };
+		49B82ABF1DA7AA8A00E4CF6E /* FYHonriZontalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B82ABE1DA7AA8A00E4CF6E /* FYHonriZontalViewController.m */; };
+		49B82AC41DA7B12500E4CF6E /* FYChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B82AC31DA7B12500E4CF6E /* FYChannelViewController.m */; };
 		49C597411DA20BCE0044C1C3 /* FYFooterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C597401DA20BCE0044C1C3 /* FYFooterTableViewCell.m */; };
 		49C597461DA23B070044C1C3 /* FYViewAllCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C597451DA23B070044C1C3 /* FYViewAllCollectionViewCell.m */; };
 		49C597491DA2573E0044C1C3 /* FYCatogeryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C597481DA2573E0044C1C3 /* FYCatogeryCollectionViewCell.m */; };
@@ -71,6 +73,9 @@
 		49D399011DA0F9DB00E3F6A2 /* FYTextHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D399001DA0F9DB00E3F6A2 /* FYTextHeaderTableViewCell.m */; };
 		49D399041DA10BB400E3F6A2 /* NSString+FYTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D399031DA10BB400E3F6A2 /* NSString+FYTime.m */; };
 		49D399071DA10E7700E3F6A2 /* FYBannerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D399061DA10E7700E3F6A2 /* FYBannerTableViewCell.m */; };
+		49D7257D1DA897AF00DC1E1C /* FYCampaignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D7257C1DA897AF00DC1E1C /* FYCampaignViewController.m */; };
+		49D725801DA89CB100DC1E1C /* FYCampaignData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D7257F1DA89CB100DC1E1C /* FYCampaignData.m */; };
+		49D725841DA89D6E00DC1E1C /* FYCampaignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D725831DA89D6E00DC1E1C /* FYCampaignTableViewCell.m */; };
 		49DA3E4D1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E4C1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m */; };
 		49DA3E531DA4DF8C004B38A0 /* FYDailyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E521DA4DF8C004B38A0 /* FYDailyViewController.m */; };
 		49DA3E561DA4DFBC004B38A0 /* FYDailyData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E551DA4DFBC004B38A0 /* FYDailyData.m */; };
@@ -194,6 +199,10 @@
 		49B1F7B01DA395840063AAC4 /* FYVideoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYVideoCollectionViewCell.m; sourceTree = "<group>"; };
 		49B1F7B21DA3AD010063AAC4 /* NSString+FY_MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FY_MD5.h"; sourceTree = "<group>"; };
 		49B1F7B31DA3AD010063AAC4 /* NSString+FY_MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FY_MD5.m"; sourceTree = "<group>"; };
+		49B82ABD1DA7AA8A00E4CF6E /* FYHonriZontalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYHonriZontalViewController.h; sourceTree = "<group>"; };
+		49B82ABE1DA7AA8A00E4CF6E /* FYHonriZontalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYHonriZontalViewController.m; sourceTree = "<group>"; };
+		49B82AC21DA7B12500E4CF6E /* FYChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYChannelViewController.h; sourceTree = "<group>"; };
+		49B82AC31DA7B12500E4CF6E /* FYChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYChannelViewController.m; sourceTree = "<group>"; };
 		49C5973F1DA20BCE0044C1C3 /* FYFooterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYFooterTableViewCell.h; sourceTree = "<group>"; };
 		49C597401DA20BCE0044C1C3 /* FYFooterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYFooterTableViewCell.m; sourceTree = "<group>"; };
 		49C597441DA23B070044C1C3 /* FYViewAllCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYViewAllCollectionViewCell.h; sourceTree = "<group>"; };
@@ -218,6 +227,12 @@
 		49D399031DA10BB400E3F6A2 /* NSString+FYTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FYTime.m"; sourceTree = "<group>"; };
 		49D399051DA10E7700E3F6A2 /* FYBannerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYBannerTableViewCell.h; sourceTree = "<group>"; };
 		49D399061DA10E7700E3F6A2 /* FYBannerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYBannerTableViewCell.m; sourceTree = "<group>"; };
+		49D7257B1DA897AF00DC1E1C /* FYCampaignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYCampaignViewController.h; sourceTree = "<group>"; };
+		49D7257C1DA897AF00DC1E1C /* FYCampaignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYCampaignViewController.m; sourceTree = "<group>"; };
+		49D7257E1DA89CB100DC1E1C /* FYCampaignData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYCampaignData.h; sourceTree = "<group>"; };
+		49D7257F1DA89CB100DC1E1C /* FYCampaignData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYCampaignData.m; sourceTree = "<group>"; };
+		49D725821DA89D6E00DC1E1C /* FYCampaignTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYCampaignTableViewCell.h; sourceTree = "<group>"; };
+		49D725831DA89D6E00DC1E1C /* FYCampaignTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYCampaignTableViewCell.m; sourceTree = "<group>"; };
 		49DA3E4B1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYAuthorSectionTableViewCell.h; sourceTree = "<group>"; };
 		49DA3E4C1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYAuthorSectionTableViewCell.m; sourceTree = "<group>"; };
 		49DA3E511DA4DF8C004B38A0 /* FYDailyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYDailyViewController.h; sourceTree = "<group>"; };
@@ -639,6 +654,41 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		49B82ABB1DA7AA3500E4CF6E /* HonrizontalScrollCard */ = {
+			isa = PBXGroup;
+			children = (
+				49B82ABC1DA7AA4D00E4CF6E /* Controller */,
+			);
+			path = HonrizontalScrollCard;
+			sourceTree = "<group>";
+		};
+		49B82ABC1DA7AA4D00E4CF6E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				49B82AC11DA7B0D200E4CF6E /* ChannelController */,
+				49B82AC01DA7B0AA00E4CF6E /* WebController */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		49B82AC01DA7B0AA00E4CF6E /* WebController */ = {
+			isa = PBXGroup;
+			children = (
+				49B82ABD1DA7AA8A00E4CF6E /* FYHonriZontalViewController.h */,
+				49B82ABE1DA7AA8A00E4CF6E /* FYHonriZontalViewController.m */,
+			);
+			path = WebController;
+			sourceTree = "<group>";
+		};
+		49B82AC11DA7B0D200E4CF6E /* ChannelController */ = {
+			isa = PBXGroup;
+			children = (
+				49B82AC21DA7B12500E4CF6E /* FYChannelViewController.h */,
+				49B82AC31DA7B12500E4CF6E /* FYChannelViewController.m */,
+			);
+			path = ChannelController;
+			sourceTree = "<group>";
+		};
 		49C597421DA23A350044C1C3 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -673,12 +723,51 @@
 			path = CollectionViewCell;
 			sourceTree = "<group>";
 		};
+		49D725781DA8977800DC1E1C /* CampaignDetail */ = {
+			isa = PBXGroup;
+			children = (
+				49D725791DA8978E00DC1E1C /* Controller */,
+				49D7257A1DA8979400DC1E1C /* Model */,
+				49D725811DA89D5700DC1E1C /* View */,
+			);
+			path = CampaignDetail;
+			sourceTree = "<group>";
+		};
+		49D725791DA8978E00DC1E1C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				49D7257B1DA897AF00DC1E1C /* FYCampaignViewController.h */,
+				49D7257C1DA897AF00DC1E1C /* FYCampaignViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		49D7257A1DA8979400DC1E1C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				49D7257E1DA89CB100DC1E1C /* FYCampaignData.h */,
+				49D7257F1DA89CB100DC1E1C /* FYCampaignData.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		49D725811DA89D5700DC1E1C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				49D725821DA89D6E00DC1E1C /* FYCampaignTableViewCell.h */,
+				49D725831DA89D6E00DC1E1C /* FYCampaignTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		49DA3E4E1DA4C32C004B38A0 /* Details */ = {
 			isa = PBXGroup;
 			children = (
 				49F113961DA64B59009803DB /* AuthorDetail */,
+				49D725781DA8977800DC1E1C /* CampaignDetail */,
 				49F1138D1DA64491009803DB /* CategoryDetail */,
 				49DA3E5B1DA4F751004B38A0 /* DailyDetail */,
+				49B82ABB1DA7AA3500E4CF6E /* HonrizontalScrollCard */,
 				49DA3E5D1DA507C6004B38A0 /* LightTopicDetail */,
 				49F1137B1DA60248009803DB /* RankingDetail */,
 				49F113841DA633C5009803DB /* TagDetail */,
@@ -1018,6 +1107,8 @@
 				49B1F7A81DA392980063AAC4 /* FYTitleTableViewCell.m in Sources */,
 				4957541A1D9E4B200090A18A /* AppDelegate.m in Sources */,
 				495754481D9E52B40090A18A /* FYBaseModel.m in Sources */,
+				49B82ABF1DA7AA8A00E4CF6E /* FYHonriZontalViewController.m in Sources */,
+				49D7257D1DA897AF00DC1E1C /* FYCampaignViewController.m in Sources */,
 				49F1139B1DA64B91009803DB /* FYAuthorViewController.m in Sources */,
 				49DA3E561DA4DFBC004B38A0 /* FYDailyData.m in Sources */,
 				495754A51D9E544F0090A18A /* FYUser.m in Sources */,
@@ -1052,6 +1143,7 @@
 				49DA3E591DA4DFD6004B38A0 /* FYIssueList.m in Sources */,
 				49B1F7B41DA3AD010063AAC4 /* NSString+FY_MD5.m in Sources */,
 				49C597461DA23B070044C1C3 /* FYViewAllCollectionViewCell.m in Sources */,
+				49B82AC41DA7B12500E4CF6E /* FYChannelViewController.m in Sources */,
 				4957549F1D9E54260090A18A /* AboutMe.text in Sources */,
 				49B1F7961DA3572D0063AAC4 /* FYTagCollectionViewCell.m in Sources */,
 				49AC55F41D9FBB8B008C5ADA /* FYHomeData.m in Sources */,
@@ -1067,6 +1159,8 @@
 				49F113831DA602C3009803DB /* FYRankingData.m in Sources */,
 				4957549A1D9E53C90090A18A /* NSUserDefaultsUtils.m in Sources */,
 				49F113951DA64730009803DB /* FYCategoryData.m in Sources */,
+				49D725841DA89D6E00DC1E1C /* FYCampaignTableViewCell.m in Sources */,
+				49D725801DA89CB100DC1E1C /* FYCampaignData.m in Sources */,
 				49D398FB1DA0BD7200E3F6A2 /* FYCategorySectionCell.m in Sources */,
 				495754171D9E4B200090A18A /* main.m in Sources */,
 				49DA3E4D1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m in Sources */,

@@ -10,5 +10,4 @@
 
 @interface FYAuthorViewController : FYBaseViewController
 @property (nonatomic, retain) NSNumber *pgcId;
-@property (nonatomic, copy) NSString *actionUrl;
 @end

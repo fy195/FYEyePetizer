@@ -62,7 +62,7 @@ UITableViewDataSource
     NSString *sub1 = [sub substringFromIndex:1];
     NSString *title = [sub1 substringToIndex:sub1.length - 1];
     self.navigationItem.title = title;
-    
+    [self createView];
     self.dataArray  = [NSMutableArray array];
     [self getData];
 }
@@ -79,7 +79,7 @@ UITableViewDataSource
         self.allData = [FYLightTopicData modelWithDic:responseObject];
         [_dataArray addObjectsFromArray:_allData.itemList];
         self.next = _allData.nextPageUrl;
-        [self createView];
+        [_tableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"网络请求失败");
     }];
@@ -121,7 +121,7 @@ UITableViewDataSource
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row >= _dataArray.count - 1) {
+    if (indexPath.row >= _dataArray.count - 2) {
         _tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(Loading)];
     }
 }

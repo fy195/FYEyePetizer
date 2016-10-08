@@ -13,6 +13,13 @@
 #import "FYHorizontalCardCollectionViewCell.h"
 #import "FYImageCollectionViewCell.h"
 #import "FYTagCollectionViewCell.h"
+#import "FYHonriZontalViewController.h"
+#import "FYChannelViewController.h"
+#import "FYCategoryViewController.h"
+#import "FYRankingViewController.h"
+#import "FYCampaignViewController.h"
+#import "FYLightTopicViewController.h"
+#import "FYTagViewController.h"
 
 static NSString *const horizontalCell = @"horizontalCell";
 static NSString *const imageCell = @"imageCell";
@@ -21,7 +28,8 @@ static NSString *const tagCell = @"tagCell";
 <
 UICollectionViewDelegate,
 UICollectionViewDataSource,
-UICollectionViewDelegateFlowLayout
+UICollectionViewDelegateFlowLayout,
+FYHonrizontalCellDelegate
 >
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, retain) FYDisData *AllData;
@@ -33,9 +41,7 @@ UICollectionViewDelegateFlowLayout
     [super dealloc];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+- (void)viewWillAppear:(BOOL)animated {
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0 , 100, 44)];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.font = [UIFont fontWithName:@"Lobster 1.4" size:20];
@@ -43,7 +49,12 @@ UICollectionViewDelegateFlowLayout
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = @"Eyepetizer";
     self.navigationItem.titleView = titleLabel;
-    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    [self createView];
     [self getData];
 }
 
@@ -52,7 +63,7 @@ UICollectionViewDelegateFlowLayout
     NSString *urlString = @"http://baobab.wandoujia.com/api/v3/discovery?_s=f8de34d32e8db0f6f4310967e800fb5e&f=iphone&net=wifi&p_product=EYEPETIZER_IOS&u=227c329b8529f03c7ec60f7bba44edcfe0b12021&v=2.7.0&vc=1305";
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         self.AllData = [FYDisData modelWithDic:responseObject];
-        [self createView];
+        [_collectionView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"网络请求失败");
     }];
@@ -96,6 +107,7 @@ UICollectionViewDelegateFlowLayout
     if ([itemList.type isEqualToString:@"horizontalScrollCard"]) {
         FYHorizontalCardCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:horizontalCell forIndexPath:indexPath];
         cell.data = itemList.data;
+        cell.delegate = self;
         return cell;
     }else if ([itemList.type isEqualToString:@"squareCard"]) {
         if ([itemData.title isEqualToString:@""]) {
@@ -113,6 +125,72 @@ UICollectionViewDelegateFlowLayout
     cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:itemData.image]]];
     return cell;
     
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    FYHomeItemList *itemList = _AllData.itemList[indexPath.item];
+    if ([itemList.data.dataId integerValue] == -1) {
+        FYRankingViewController *rankingViewController = [[FYRankingViewController alloc] init];
+        rankingViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:rankingViewController animated:YES];
+        [rankingViewController release];
+    }else if ([itemList.data.dataId integerValue] == 0){
+        FYCampaignViewController *campaignViewController = [[FYCampaignViewController alloc] init];
+        campaignViewController.actionUrl = itemList.data.actionUrl;
+        campaignViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:campaignViewController animated:YES];
+        [campaignViewController release];
+    }else if ([itemList.data.dataId integerValue] == 1) {
+        NSString *actionUrl = itemList.data.actionUrl;
+        NSString *str = [actionUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSRange start = [str rangeOfString:@"tag/"];
+        NSRange end = [str rangeOfString:@"/?"];
+        NSString *sub = [str substringWithRange:NSMakeRange(start.location, end.location - start.location)];
+        
+        FYTagViewController *tagViewController = [[FYTagViewController alloc] init];
+        NSInteger number = [[sub substringFromIndex:4] integerValue];
+        tagViewController.imageId = [NSNumber numberWithInteger:number];
+        tagViewController.actionUrl = actionUrl;
+        tagViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:tagViewController animated:YES];
+        [tagViewController release];
+        
+    }else {
+        FYCategoryViewController *categoryViewController = [[FYCategoryViewController alloc] init];
+        categoryViewController.categoryId = itemList.data.dataId;
+        categoryViewController.actionUrl = itemList.data.actionUrl;
+        categoryViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:categoryViewController animated:YES];
+        [categoryViewController release];
+    }
+}
+
+- (void)getBannerId:(NSNumber *)bannerId actionUrl:(NSString *)actionUrl {
+    if ([bannerId integerValue] != 14) {
+        if ([actionUrl hasSuffix:@"true"]) {
+            FYHonriZontalViewController *honrizontalViewController = [[FYHonriZontalViewController alloc] init];
+            honrizontalViewController.bannerId = bannerId;
+            honrizontalViewController.actionUrl = actionUrl;
+            honrizontalViewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:honrizontalViewController animated:YES];
+            [honrizontalViewController release];
+        }else if (![actionUrl hasPrefix:@"true"]) {
+            NSString *str = [actionUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSString *sub = [str substringWithRange:NSMakeRange(str.length - 2, 2)];
+            
+            FYLightTopicViewController *lightTopicViewController = [[FYLightTopicViewController alloc] init];
+            lightTopicViewController.imageId = [NSNumber numberWithInteger:[sub integerValue]];
+            lightTopicViewController.actionUrl = actionUrl;
+            lightTopicViewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:lightTopicViewController animated:YES];
+            [lightTopicViewController release];
+        }
+    }else {
+        FYChannelViewController *channelViewController = [[FYChannelViewController alloc] init];
+        channelViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:channelViewController animated:YES];
+        [channelViewController release];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

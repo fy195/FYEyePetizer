@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "FYHomeItemData.h"
 
+@protocol FYVideoTableViewCellDelegate <NSObject>
+@required
+- (void)getPgcId:(NSNumber *)pgcId actionUrl: (NSString *)actionUrl;
+
+@end
 @interface FYVideoCollectionTableViewCell : UITableViewCell
 
 @property (nonatomic, retain) UIImage *icon;
@@ -16,5 +21,6 @@
 @property (nonatomic, copy) NSString *subTitle;
 @property (nonatomic, copy) NSString *authorDescription;
 @property (nonatomic, retain) FYHomeItemData *data;
+@property (nonatomic, assign) id<FYVideoTableViewCellDelegate>delegate;
 
 @end
