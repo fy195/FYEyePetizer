@@ -27,6 +27,7 @@
 #import "FYTagViewController.h"
 #import "FYCategoryViewController.h"
 #import "FYAuthorViewController.h"
+#import "FYVideoViewController.h"
 
 @interface FYHomeViewController ()
 <
@@ -247,7 +248,6 @@ FYAuthorCellDelegete
         if (indexPath.row < sectionList.itemList.count) {
             FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
             FYHomeItemData *itemData = itemList.data;
-            FYHomeTags *tag = [itemData.tags firstObject];
             if ([itemData.dataType isEqualToString:@"TextHeader"]) {
                 static NSString *const textHeaderCell = @"textHeaderCell";
                 FYTextHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:textHeaderCell];
@@ -267,7 +267,7 @@ FYAuthorCellDelegete
                 cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"feed"]]]];
                 cell.title = itemData.title;
                 NSString *time = [NSString stringChangeWithTimeFormat:itemData.duration];
-                cell.text = [NSString stringWithFormat:@"#%@ / %@", tag.name, time];
+                cell.text = [NSString stringWithFormat:@"#%@ / %@", itemData.category, time];
                 return  cell;
             }else if ([itemList.type isEqualToString:@"banner"]){
                 static NSString *const bannerCell = @"bannerCell";
@@ -510,13 +510,38 @@ FYAuthorCellDelegete
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     FYHomeSectionList *sectionList = _dataArray[indexPath.section];
-    NSString *type = [sectionList.footer objectForKey:@"type"];
-    if ([type isEqualToString:@"forwardFooter"]) {
-        FYDailyViewController *dailyViewController = [[FYDailyViewController alloc] init];
-        dailyViewController.hidesBottomBarWhenPushed = YES;
-        dailyViewController.date = _homeData.date;
-        [self.navigationController pushViewController:dailyViewController animated:YES];
-        [dailyViewController release];
+    if (indexPath.row < sectionList.itemList.count) {
+        FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
+        FYHomeItemData *itemData = itemList.data;
+        if (![itemData.dataType isEqualToString:@"TextHeader"]) {
+            FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+            if (videoViewController.videoArray.count > 0) {
+                [videoViewController.videoArray removeAllObjects];
+            }
+            NSMutableArray *array = [NSMutableArray array];
+            [array addObjectsFromArray:sectionList.itemList];
+            NSInteger index = 0;
+            for (FYHomeItemList *list in array) {
+                if ([list.type isEqualToString:@"textHeader"]) {
+                    index = [array indexOfObject:list];
+                }
+            }
+            [array removeObjectAtIndex:index];
+            videoViewController.videoArray = [array mutableCopy];
+            videoViewController.videoIndex = indexPath.row;
+            videoViewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:videoViewController animated:YES];
+            [videoViewController release];
+        }
+    }else {
+        NSString *type = [sectionList.footer objectForKey:@"type"];
+        if ([type isEqualToString:@"forwardFooter"]) {
+            FYDailyViewController *dailyViewController = [[FYDailyViewController alloc] init];
+            dailyViewController.hidesBottomBarWhenPushed = YES;
+            dailyViewController.date = _homeData.date;
+            [self.navigationController pushViewController:dailyViewController animated:YES];
+            [dailyViewController release];
+        }
     }
 }
 

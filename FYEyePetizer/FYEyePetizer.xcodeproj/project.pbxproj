@@ -38,7 +38,6 @@
 		4957549A1D9E53C90090A18A /* NSUserDefaultsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 495754961D9E53C90090A18A /* NSUserDefaultsUtils.m */; };
 		4957549F1D9E54260090A18A /* AboutMe.text in Sources */ = {isa = PBXBuildFile; fileRef = 4957549E1D9E54260090A18A /* AboutMe.text */; };
 		495754A21D9E543D0090A18A /* FYHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 495754A11D9E543D0090A18A /* FYHomeViewController.m */; };
-		495754A51D9E544F0090A18A /* FYUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 495754A41D9E544F0090A18A /* FYUser.m */; };
 		495754A71D9E6A310090A18A /* Lobster 1.4.otf in Resources */ = {isa = PBXBuildFile; fileRef = 495754A61D9E6A310090A18A /* Lobster 1.4.otf */; };
 		495754AB1D9E83BA0090A18A /* FYGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 495754AA1D9E83BA0090A18A /* FYGuideViewController.m */; };
 		495754B11D9E85040090A18A /* FYDiscoveryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 495754B01D9E85040090A18A /* FYDiscoveryViewController.m */; };
@@ -76,6 +75,8 @@
 		49D7257D1DA897AF00DC1E1C /* FYCampaignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D7257C1DA897AF00DC1E1C /* FYCampaignViewController.m */; };
 		49D725801DA89CB100DC1E1C /* FYCampaignData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D7257F1DA89CB100DC1E1C /* FYCampaignData.m */; };
 		49D725841DA89D6E00DC1E1C /* FYCampaignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D725831DA89D6E00DC1E1C /* FYCampaignTableViewCell.m */; };
+		49D7259D1DA90FCF00DC1E1C /* FYVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D7259C1DA90FCF00DC1E1C /* FYVideoViewController.m */; };
+		49D725A31DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D725A21DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.m */; };
 		49DA3E4D1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E4C1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m */; };
 		49DA3E531DA4DF8C004B38A0 /* FYDailyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E521DA4DF8C004B38A0 /* FYDailyViewController.m */; };
 		49DA3E561DA4DFBC004B38A0 /* FYDailyData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DA3E551DA4DFBC004B38A0 /* FYDailyData.m */; };
@@ -158,8 +159,6 @@
 		4957549E1D9E54260090A18A /* AboutMe.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = AboutMe.text; sourceTree = "<group>"; };
 		495754A01D9E543D0090A18A /* FYHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYHomeViewController.h; sourceTree = "<group>"; };
 		495754A11D9E543D0090A18A /* FYHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYHomeViewController.m; sourceTree = "<group>"; };
-		495754A31D9E544F0090A18A /* FYUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYUser.h; sourceTree = "<group>"; };
-		495754A41D9E544F0090A18A /* FYUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYUser.m; sourceTree = "<group>"; };
 		495754A61D9E6A310090A18A /* Lobster 1.4.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lobster 1.4.otf"; sourceTree = "<group>"; };
 		495754A91D9E83BA0090A18A /* FYGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYGuideViewController.h; sourceTree = "<group>"; };
 		495754AA1D9E83BA0090A18A /* FYGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYGuideViewController.m; sourceTree = "<group>"; };
@@ -233,6 +232,10 @@
 		49D7257F1DA89CB100DC1E1C /* FYCampaignData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYCampaignData.m; sourceTree = "<group>"; };
 		49D725821DA89D6E00DC1E1C /* FYCampaignTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYCampaignTableViewCell.h; sourceTree = "<group>"; };
 		49D725831DA89D6E00DC1E1C /* FYCampaignTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYCampaignTableViewCell.m; sourceTree = "<group>"; };
+		49D7259B1DA90FCF00DC1E1C /* FYVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYVideoViewController.h; sourceTree = "<group>"; };
+		49D7259C1DA90FCF00DC1E1C /* FYVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYVideoViewController.m; sourceTree = "<group>"; };
+		49D725A11DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYVideoDetailCollectionViewCell.h; sourceTree = "<group>"; };
+		49D725A21DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYVideoDetailCollectionViewCell.m; sourceTree = "<group>"; };
 		49DA3E4B1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYAuthorSectionTableViewCell.h; sourceTree = "<group>"; };
 		49DA3E4C1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYAuthorSectionTableViewCell.m; sourceTree = "<group>"; };
 		49DA3E511DA4DF8C004B38A0 /* FYDailyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYDailyViewController.h; sourceTree = "<group>"; };
@@ -365,7 +368,6 @@
 				495754A81D9E83870090A18A /* GuidePage */,
 				4957549C1D9E54030090A18A /* Home */,
 				495754AE1D9E84E90090A18A /* Mine */,
-				4957549D1D9E540C0090A18A /* User */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -497,20 +499,12 @@
 		4957549C1D9E54030090A18A /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				49D7259E1DA910CD00DC1E1C /* Animation */,
 				49AC55EC1D9F6169008C5ADA /* Controller */,
 				49AC55EE1D9F61F7008C5ADA /* Model */,
 				49AC55ED1D9F61EF008C5ADA /* View */,
 			);
 			path = Home;
-			sourceTree = "<group>";
-		};
-		4957549D1D9E540C0090A18A /* User */ = {
-			isa = PBXGroup;
-			children = (
-				495754A31D9E544F0090A18A /* FYUser.h */,
-				495754A41D9E544F0090A18A /* FYUser.m */,
-			);
-			path = User;
 			sourceTree = "<group>";
 		};
 		495754A81D9E83870090A18A /* GuidePage */ = {
@@ -760,6 +754,31 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		49D7259E1DA910CD00DC1E1C /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
+		49D7259F1DA9234000DC1E1C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				49D7259B1DA90FCF00DC1E1C /* FYVideoViewController.h */,
+				49D7259C1DA90FCF00DC1E1C /* FYVideoViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		49D725A01DA9234700DC1E1C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				49D725A11DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.h */,
+				49D725A21DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		49DA3E4E1DA4C32C004B38A0 /* Details */ = {
 			isa = PBXGroup;
 			children = (
@@ -808,6 +827,8 @@
 		49DA3E5C1DA4F763004B38A0 /* VideoDetail */ = {
 			isa = PBXGroup;
 			children = (
+				49D7259F1DA9234000DC1E1C /* Controller */,
+				49D725A01DA9234700DC1E1C /* View */,
 			);
 			path = VideoDetail;
 			sourceTree = "<group>";
@@ -1110,8 +1131,8 @@
 				49B82ABF1DA7AA8A00E4CF6E /* FYHonriZontalViewController.m in Sources */,
 				49D7257D1DA897AF00DC1E1C /* FYCampaignViewController.m in Sources */,
 				49F1139B1DA64B91009803DB /* FYAuthorViewController.m in Sources */,
+				49D7259D1DA90FCF00DC1E1C /* FYVideoViewController.m in Sources */,
 				49DA3E561DA4DFBC004B38A0 /* FYDailyData.m in Sources */,
-				495754A51D9E544F0090A18A /* FYUser.m in Sources */,
 				495754791D9E532A0090A18A /* HttpClient.m in Sources */,
 				4957544B1D9E52EF0090A18A /* FYBaseView.m in Sources */,
 				4957546C1D9E530B0090A18A /* NSUserDefaults+Categories.m in Sources */,
@@ -1138,6 +1159,7 @@
 				495754661D9E530B0090A18A /* NSDate+Categories.m in Sources */,
 				495754691D9E530B0090A18A /* NSNumber+Extend.m in Sources */,
 				495754B11D9E85040090A18A /* FYDiscoveryViewController.m in Sources */,
+				49D725A31DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.m in Sources */,
 				49B1F7AE1DA392CA0063AAC4 /* FYVideoCollectionTableViewCell.m in Sources */,
 				49B1F7A51DA383CE0063AAC4 /* FYAuthorTableViewCell.m in Sources */,
 				49DA3E591DA4DFD6004B38A0 /* FYIssueList.m in Sources */,
