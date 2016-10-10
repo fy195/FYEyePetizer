@@ -13,16 +13,20 @@ static NSString *const videoDetailCell= @"collectionViewCell";
 #import "FYHomeItemList.h"
 #import "NSString+FYTime.h"
 #import "UIImageView+WebCache.h"
+#import "FYPlayViewController.h"
+#import <AVKit/AVKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import "FYPopAnimation.h"
 
 @interface FYVideoViewController ()
 <
 UICollectionViewDelegate,
 UICollectionViewDataSource,
-UIScrollViewDelegate
+UIScrollViewDelegate,
+UINavigationControllerDelegate
 >
-
+@property (nonatomic, retain) UIPercentDrivenInteractiveTransition *interaction;
 @property (nonatomic, retain) UIButton *backButton;
-@property (nonatomic, retain) UICollectionView *videoCollectionView;
 @property (nonatomic, retain) UIView *backView;
 @property (nonatomic, retain) UIImageView *downBackImageView;
 @property (nonatomic, retain) UILabel *titleLabel;
@@ -32,6 +36,7 @@ UIScrollViewDelegate
 @property (nonatomic, retain) UILabel *shareLabel;
 @property (nonatomic, retain) UILabel *commentLabel;
 @property (nonatomic, assign) CGFloat beginX;
+//@property (nonatomic, retain) UIScrollView *scrollView;
 
 @end
 
@@ -72,37 +77,72 @@ UIScrollViewDelegate
     _videoCollectionView.pagingEnabled = YES;
     _videoCollectionView.delegate = self;
     _videoCollectionView.dataSource = self;
+    _videoCollectionView.bounces = NO;
     [self.view addSubview:_videoCollectionView];
     [_videoCollectionView release];
     [_videoCollectionView registerClass:[FYVideoDetailCollectionViewCell class] forCellWithReuseIdentifier:videoDetailCell];
     [self.view bringSubviewToFront:_backButton];
     
     [_videoCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:_videoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    self.appearCell = [_videoCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:_videoIndex inSection:0]];
     
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panAction:)];
+    [_videoCollectionView addGestureRecognizer:pan];
+}
+
+- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {
+    return _interaction;
+}
+
+- (void)panAction:(UIPanGestureRecognizer *)pan {
+    CGFloat progress = [pan translationInView:pan.view].y / CGRectGetHeight(pan.view.frame);
+    if (progress > 0) {
+        switch (pan.state) {
+            case UIGestureRecognizerStateBegan:{
+                self.interaction = [[UIPercentDrivenInteractiveTransition alloc] init];
+                [self.navigationController popViewControllerAnimated:YES];
+                break;
+            }
+            case UIGestureRecognizerStateChanged:{
+                [_interaction updateInteractiveTransition:progress];
+                break;
+            }
+            case UIGestureRecognizerStateEnded:
+            case UIGestureRecognizerStateCancelled:{
+                if (progress > 0.5) {
+                    [_interaction finishInteractiveTransition];
+                }else {
+                    [_interaction cancelInteractiveTransition];
+                }
+                break;
+            }
+            default:
+                break;
+        }
     }
+    
+    
+}
 
 - (void)createDownView {
     // 下部分背景图
     if (_downBackImageView == nil) {
+//        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT * 0.45, SCREEN_WIDTH, SCREEN_HEIGHT * 0.55)];
+//        _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT * 0.55);
+//        [self.view addSubview:_scrollView];
+//        [_scrollView release];
+        
         self.downBackImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT * 0.45, SCREEN_WIDTH, SCREEN_HEIGHT * 0.55)];
         [self.view addSubview:_downBackImageView];
         [_downBackImageView release];
+    
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
         
-////         下部分毛玻璃效果
-//        UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-//        UIVisualEffectView *effectview = [[UIVisualEffectView alloc] initWithEffect:blur];
-//        [_downBackImageView addSubview:effectview];
-//        effectview.frame = _downBackImageView.bounds;
-//        [effectview mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.edges.equalTo(_downBackImageView);
-//        }];
-//        [effectview release];
-        UIView *blackView = [[UIView alloc] initWithFrame:_downBackImageView.bounds];
-        [_downBackImageView addSubview:blackView];
-        blackView.backgroundColor = [UIColor blackColor];
-        blackView.alpha = 0.5;
-        [blackView release];
+        UIVisualEffectView *visualView = [[UIVisualEffectView alloc]initWithEffect:blurEffect];
         
+        visualView.frame = _downBackImageView.bounds;
+        
+        [_downBackImageView addSubview:visualView];
 
     }
     if (_backView == nil) {
@@ -269,7 +309,24 @@ UIScrollViewDelegate
     return cell;
 }
 
-
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+//    FYPlayViewController *playViewController = [[FYPlayViewController alloc] init];
+//    playViewController.modalTransitionStyle = 2;
+//    playViewController.playArray = [_videoArray mutableCopy];
+//    playViewController.index = indexPath.item;
+//    [self.navigationController pushViewController:playViewController animated:YES];
+//    [playViewController release];
+    FYHomeItemList *itemList = _videoArray[indexPath.item];
+    FYHomeItemData *itemData = itemList.data;
+    AVPlayer *player = [AVPlayer playerWithURL:[NSURL URLWithString:itemData.playUrl]];
+    
+    AVPlayerViewController *playerVC = [[AVPlayerViewController alloc] init];
+    playerVC.player = player;
+    playerVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    [self presentViewController:playerVC animated:YES completion:nil];
+    
+    [playerVC.player play];
+}
 
 - (void)setVideoArray:(NSMutableArray *)videoArray {
     if (_videoArray != videoArray) {
@@ -283,10 +340,12 @@ UIScrollViewDelegate
     if (_videoIndex != videoIndex) {
         _videoIndex = videoIndex;
     }
-    [self createDownView];
     FYHomeItemList *itemList = _videoArray[videoIndex];
     FYHomeItemData *itemData = itemList.data;
-    _downBackImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"blurred"]]]];
+    [self createDownView];
+    [_downBackImageView sd_setImageWithURL:[NSURL URLWithString:[itemData.cover objectForKey:@"detail"]] placeholderImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"blurred"]]]]];
+    
+    
     _titleLabel.text = itemData.title;
     NSString *timeString = [NSString stringChangeWithTimeFormat:itemData.duration];
     _tagLabel.text = [NSString stringWithFormat:@"#%@ / %@", itemData.category, timeString];
@@ -299,26 +358,26 @@ UIScrollViewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     self.beginX = scrollView.contentOffset.x;
+    
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offsetX = scrollView.contentOffset.x;
     NSInteger page = offsetX / SCREEN_WIDTH;
     if (offsetX > 0 && offsetX <= scrollView.contentSize.width - SCREEN_WIDTH) {
-        
-        // 相对偏移量
-        offsetX -= page * SCREEN_WIDTH;
-        
         NSIndexPath *currentIndex = [NSIndexPath indexPathForItem:page inSection:0];
         NSIndexPath *nextIndex = [NSIndexPath indexPathForItem:page + 1 inSection:0];
-        
-        FYVideoDetailCollectionViewCell *currentCell = (FYVideoDetailCollectionViewCell *)[_videoCollectionView cellForItemAtIndexPath:currentIndex];
-        FYVideoDetailCollectionViewCell *nextCell = (FYVideoDetailCollectionViewCell *)[_videoCollectionView cellForItemAtIndexPath:nextIndex];
-        
+
+        FYVideoDetailCollectionViewCell *currentCell = (FYVideoDetailCollectionViewCell *)[self.videoCollectionView cellForItemAtIndexPath:currentIndex];
+        FYVideoDetailCollectionViewCell *nextCell = (FYVideoDetailCollectionViewCell *)[self.videoCollectionView cellForItemAtIndexPath:nextIndex];
+
         CGRect currentImageViewRect = currentCell.videoImageView.frame;
         CGRect nextImageViewRect = nextCell.videoImageView.frame;
-        currentImageViewRect.origin.x = offsetX * 4 / 5;
-        nextImageViewRect.origin.x = - (SCREEN_WIDTH - offsetX) * 4 / 5;
+
+        currentImageViewRect.origin.x = (offsetX - currentIndex.item * SCREEN_WIDTH) / 3;
+        nextImageViewRect.origin.x = - SCREEN_WIDTH / 3 + (offsetX - currentIndex.item * SCREEN_WIDTH) / 3;
+
         currentCell.videoImageView.frame = currentImageViewRect;
         nextCell.videoImageView.frame = nextImageViewRect;
     }
@@ -333,7 +392,7 @@ UIScrollViewDelegate
         _backView.alpha = alpha;
     }
     
-    // 视图跟随
+//    // 视图跟随
     if (offsetX <= 0) {
         CGRect rect = _downBackImageView.frame;
         rect.origin.x = -offsetX;
@@ -346,7 +405,33 @@ UIScrollViewDelegate
         _downBackImageView.frame = CGRectMake(0, SCREEN_HEIGHT * 0.45, SCREEN_WIDTH, SCREEN_HEIGHT * 0.55);
     }
     
+//    if (page + 1 < _videoArray.count) {
+//        FYHomeItemList *itemList = _videoArray[page];
+//        FYHomeItemData *itemData = itemList.data;
+//        [_downBackImageView sd_setImageWithURL:[NSURL URLWithString:[itemData.cover objectForKey:@"detail"]] placeholderImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"blurred"]]]]];
+//    }
+//    if (page > 0 ) {
+//        FYHomeItemList *itemList = _videoArray[page];
+//        FYHomeItemData *itemData = itemList.data;
+//        [_downBackImageView sd_setImageWithURL:[NSURL URLWithString:[itemData.cover objectForKey:@"detail"]] placeholderImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"blurred"]]]]];
+//    }
 
+    
+//    // 向右划
+//    UIImageView *aView = (UIImageView *)[self.view viewWithTag:1000];
+//    UIImageView *aView1 = (UIImageView *)[self.view viewWithTag:1001];
+//    
+//    if (scrollView.contentOffset.x > SCREEN_WIDTH * _videoIndex) {
+//        if (offsetX != 0) {
+//            aView.alpha = 1 - (scrollView.contentOffset.x - SCREEN_WIDTH * _videoIndex) / SCREEN_WIDTH;
+//            _downBackImageView.alpha = aView.alpha;
+//            aView1.alpha = 1;
+//        }
+//    }else if(scrollView.contentOffset.x < SCREEN_WIDTH * _videoIndex){
+//        aView.alpha = 1 - (SCREEN_WIDTH * _videoIndex - scrollView.contentOffset.x) / SCREEN_WIDTH;
+//        _downBackImageView.alpha = aView.alpha;
+//        aView1.alpha = 0;
+//    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -356,7 +441,7 @@ UIScrollViewDelegate
     FYHomeItemList *itemList = _videoArray[page];
     FYHomeItemData *itemData = itemList.data;
     
-    _downBackImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"blurred"]]]];
+    _downBackImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"detail"]]]];
     _titleLabel.text = itemData.title;
     NSString *timeString = [NSString stringChangeWithTimeFormat:itemData.duration];
     _tagLabel.text = [NSString stringWithFormat:@"#%@ / %@", itemData.category, timeString];
@@ -364,6 +449,17 @@ UIScrollViewDelegate
     _likeLabel.text = [NSString stringWithFormat:@"%ld",[[itemData.consumption objectForKey:@"collectionCount"] integerValue]];
     _shareLabel.text = [NSString stringWithFormat:@"%ld",[[itemData.consumption objectForKey:@"shareCount"] integerValue]];
     _commentLabel.text = [NSString stringWithFormat:@"%ld",[[itemData.consumption objectForKey:@"replyCount"] integerValue]];
+    
+//    UIImageView *aView = (UIImageView *)[self.view viewWithTag:1000];
+//    UIImageView *aView1 = (UIImageView *)[self.view viewWithTag:1001];
+//    UIImageView *aView2 = (UIImageView *)[self.view viewWithTag:1002];
+//    
+//    if (scrollView.contentOffset.x > SCREEN_WIDTH * _videoIndex) {
+//        aView.image = aView1.image;
+//    }else if(scrollView.contentOffset.x < SCREEN_WIDTH * _videoIndex){
+//        aView.image = aView2.image;
+//    }
+//    aView.alpha = 1;
 }
 
 - (void)didReceiveMemoryWarning {

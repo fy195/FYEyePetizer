@@ -13,4 +13,7 @@
 @property (nonatomic, retain) NSMutableArray *videoArray;
 
 @property (nonatomic, assign) NSInteger videoIndex;
+@property (nonatomic, retain) UICollectionViewCell *appearCell;
+@property (nonatomic, retain) UICollectionView *videoCollectionView;
+
 @end

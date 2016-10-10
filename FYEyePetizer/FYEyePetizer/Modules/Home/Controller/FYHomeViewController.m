@@ -28,6 +28,7 @@
 #import "FYCategoryViewController.h"
 #import "FYAuthorViewController.h"
 #import "FYVideoViewController.h"
+#import "FYPushAnimation.h"
 
 @interface FYHomeViewController ()
 <
@@ -36,12 +37,12 @@ UITableViewDataSource,
 UIScrollViewDelegate,
 FYLightTopicHeaderDelegate,
 FYCategoryCellDelegate,
-FYAuthorCellDelegete
+FYAuthorCellDelegete,
+UINavigationControllerDelegate
 >
 
 @property (nonatomic, retain) UILabel *timeLabel;
 @property (nonatomic, retain) UIImageView *headerView;
-@property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, retain) UIButton *headerButton;
 @property (nonatomic, retain) UIView *backView;
 @property (nonatomic, retain) FYHomeData *homeData;
@@ -57,6 +58,7 @@ FYAuthorCellDelegete
 - (void)dealloc {
     _tableView.delegate = nil;
     _tableView.dataSource = nil;
+    self.navigationController.delegate = nil;
     [_activityIndicatorView release];
     [_timeLabel release];
     [_headerView release];
@@ -70,6 +72,10 @@ FYAuthorCellDelegete
 
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBar.hidden = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    self.navigationController.delegate = self;
 }
 
 - (void)viewDidLoad {
@@ -520,13 +526,15 @@ FYAuthorCellDelegete
             }
             NSMutableArray *array = [NSMutableArray array];
             [array addObjectsFromArray:sectionList.itemList];
-            NSInteger index = 0;
+
             for (FYHomeItemList *list in array) {
+                NSInteger index = 0;
                 if ([list.type isEqualToString:@"textHeader"]) {
                     index = [array indexOfObject:list];
+                    [array removeObjectAtIndex:index];
                 }
             }
-            [array removeObjectAtIndex:index];
+            self.selectedCell = [tableView cellForRowAtIndexPath:indexPath];
             videoViewController.videoArray = [array mutableCopy];
             videoViewController.videoIndex = indexPath.row;
             videoViewController.hidesBottomBarWhenPushed = YES;
@@ -543,6 +551,14 @@ FYAuthorCellDelegete
             [dailyViewController release];
         }
     }
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
+    if (operation == UINavigationControllerOperationPush) {
+        FYPushAnimation *pushTransitionAnimation = [[FYPushAnimation alloc] init];
+        return pushTransitionAnimation;
+    }
+    return nil;
 }
 
 #pragma mark - scrollView代理方法

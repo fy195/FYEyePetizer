@@ -9,5 +9,6 @@
 #import "FYBaseViewController.h"
 
 @interface FYHomeViewController : FYBaseViewController
-
+@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) UITableViewCell *selectedCell;
 @end
