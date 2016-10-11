@@ -90,6 +90,7 @@
 		49D399011DA0F9DB00E3F6A2 /* FYTextHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D399001DA0F9DB00E3F6A2 /* FYTextHeaderTableViewCell.m */; };
 		49D399041DA10BB400E3F6A2 /* NSString+FYTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D399031DA10BB400E3F6A2 /* NSString+FYTime.m */; };
 		49D399071DA10E7700E3F6A2 /* FYBannerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D399061DA10E7700E3F6A2 /* FYBannerTableViewCell.m */; };
+		49D53F211DAC6C9300C1CB25 /* FYVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D53F201DAC6C9300C1CB25 /* FYVideoView.m */; };
 		49D7257D1DA897AF00DC1E1C /* FYCampaignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D7257C1DA897AF00DC1E1C /* FYCampaignViewController.m */; };
 		49D725801DA89CB100DC1E1C /* FYCampaignData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D7257F1DA89CB100DC1E1C /* FYCampaignData.m */; };
 		49D725841DA89D6E00DC1E1C /* FYCampaignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D725831DA89D6E00DC1E1C /* FYCampaignTableViewCell.m */; };
@@ -268,6 +269,8 @@
 		49D399031DA10BB400E3F6A2 /* NSString+FYTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FYTime.m"; sourceTree = "<group>"; };
 		49D399051DA10E7700E3F6A2 /* FYBannerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYBannerTableViewCell.h; sourceTree = "<group>"; };
 		49D399061DA10E7700E3F6A2 /* FYBannerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYBannerTableViewCell.m; sourceTree = "<group>"; };
+		49D53F1F1DAC6C9300C1CB25 /* FYVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYVideoView.h; sourceTree = "<group>"; };
+		49D53F201DAC6C9300C1CB25 /* FYVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYVideoView.m; sourceTree = "<group>"; };
 		49D7257B1DA897AF00DC1E1C /* FYCampaignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYCampaignViewController.h; sourceTree = "<group>"; };
 		49D7257C1DA897AF00DC1E1C /* FYCampaignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYCampaignViewController.m; sourceTree = "<group>"; };
 		49D7257E1DA89CB100DC1E1C /* FYCampaignData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYCampaignData.h; sourceTree = "<group>"; };
@@ -276,8 +279,8 @@
 		49D725831DA89D6E00DC1E1C /* FYCampaignTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYCampaignTableViewCell.m; sourceTree = "<group>"; };
 		49D7259B1DA90FCF00DC1E1C /* FYVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYVideoViewController.h; sourceTree = "<group>"; };
 		49D7259C1DA90FCF00DC1E1C /* FYVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYVideoViewController.m; sourceTree = "<group>"; };
-		49D725A11DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYVideoDetailCollectionViewCell.h; sourceTree = "<group>"; };
-		49D725A21DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYVideoDetailCollectionViewCell.m; sourceTree = "<group>"; };
+		49D725A11DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FYVideoDetailCollectionViewCell.h; path = ../../../Details/VideoDetail/View/FYVideoDetailCollectionViewCell.h; sourceTree = "<group>"; };
+		49D725A21DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FYVideoDetailCollectionViewCell.m; path = ../../../Details/VideoDetail/View/FYVideoDetailCollectionViewCell.m; sourceTree = "<group>"; };
 		49DA3E4B1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYAuthorSectionTableViewCell.h; sourceTree = "<group>"; };
 		49DA3E4C1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYAuthorSectionTableViewCell.m; sourceTree = "<group>"; };
 		49DA3E511DA4DF8C004B38A0 /* FYDailyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYDailyViewController.h; sourceTree = "<group>"; };
@@ -600,6 +603,7 @@
 		49AC55ED1D9F61EF008C5ADA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				49D53F1E1DAC6C7B00C1CB25 /* VideoView */,
 				49C597431DA23A460044C1C3 /* CollectionViewCell */,
 				49C597421DA23A350044C1C3 /* TableViewCell */,
 			);
@@ -837,6 +841,25 @@
 			path = CollectionViewCell;
 			sourceTree = "<group>";
 		};
+		49D53F1E1DAC6C7B00C1CB25 /* VideoView */ = {
+			isa = PBXGroup;
+			children = (
+				49D53F221DAC6C9F00C1CB25 /* VideoViewCell */,
+				49D53F1F1DAC6C9300C1CB25 /* FYVideoView.h */,
+				49D53F201DAC6C9300C1CB25 /* FYVideoView.m */,
+			);
+			name = VideoView;
+			sourceTree = "<group>";
+		};
+		49D53F221DAC6C9F00C1CB25 /* VideoViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				49D725A11DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.h */,
+				49D725A21DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.m */,
+			);
+			name = VideoViewCell;
+			sourceTree = "<group>";
+		};
 		49D725781DA8977800DC1E1C /* CampaignDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -886,8 +909,6 @@
 		49D725A01DA9234700DC1E1C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				49D725A11DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.h */,
-				49D725A21DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1241,6 +1262,7 @@
 				495754701D9E530B0090A18A /* UIView+Frame.m in Sources */,
 				49B1F7901DA356D40063AAC4 /* FYHorizontalCardCollectionViewCell.m in Sources */,
 				4957541D1D9E4B200090A18A /* ViewController.m in Sources */,
+				49D53F211DAC6C9300C1CB25 /* FYVideoView.m in Sources */,
 				49C597491DA2573E0044C1C3 /* FYCatogeryCollectionViewCell.m in Sources */,
 				495754B41D9E85130090A18A /* FYAuthorPageViewController.m in Sources */,
 				495754681D9E530B0090A18A /* NSDictionary+Categories.m in Sources */,

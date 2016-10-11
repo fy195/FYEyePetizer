@@ -13,6 +13,6 @@
 @property (nonatomic, retain) UIImage *image;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *text;
-
+@property (nonatomic, retain) UIView *backView;
 
 @end

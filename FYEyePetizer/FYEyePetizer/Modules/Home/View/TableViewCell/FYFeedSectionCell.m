@@ -13,7 +13,7 @@
 @property (nonatomic, retain) UIImageView *myImageView;
 @property (nonatomic, retain) UILabel *titleLabel;
 @property (nonatomic, retain) UILabel *tagLabel;
-@property (nonatomic, retain) UIView *backView;
+
 @end
 
 @implementation FYFeedSectionCell
