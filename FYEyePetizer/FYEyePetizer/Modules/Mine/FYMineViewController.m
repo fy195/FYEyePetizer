@@ -14,10 +14,7 @@
 
 @implementation FYMineViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
+- (void)viewWillAppear:(BOOL)animated {
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0 , 100, 44)];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.font = [UIFont fontWithName:@"Lobster 1.4" size:20];
@@ -25,6 +22,11 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = @"Eyepetizer";
     self.navigationItem.titleView = titleLabel;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
 
 }
 

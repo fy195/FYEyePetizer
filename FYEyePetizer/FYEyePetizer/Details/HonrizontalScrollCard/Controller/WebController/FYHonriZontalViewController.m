@@ -29,6 +29,7 @@
     self.navigationController.navigationBar.hidden = NO;
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
     self.navigationItem.leftBarButtonItem = leftButton;
+    [leftButton release];
     
     NSString *str = [_actionUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSRange start = [str rangeOfString:@"="];
@@ -44,6 +45,7 @@
     self.webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[subUrl substringFromIndex:4]]];
     [self.view addSubview:_webView];
+    [_webView release];
     [_webView loadRequest:request];
     _webView.allowsInlineMediaPlayback = YES;
     _webView.mediaPlaybackRequiresUserAction = NO;

@@ -36,6 +36,7 @@ UITableViewDataSource
     [_allData release];
     [_dataArray release];
     [_tableView release];
+    [_next release];
     [super dealloc];
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -53,6 +54,7 @@ UITableViewDataSource
     self.navigationController.navigationBar.hidden = NO;
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
     self.navigationItem.leftBarButtonItem = leftButton;
+    [leftButton release];
     
     NSString *str = [_actionUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSRange start = [str rangeOfString:@"="];

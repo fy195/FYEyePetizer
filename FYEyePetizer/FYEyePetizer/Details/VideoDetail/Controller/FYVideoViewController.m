@@ -305,8 +305,6 @@ FYVideoViewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     self.beginX = scrollView.contentOffset.x;
-    
-    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

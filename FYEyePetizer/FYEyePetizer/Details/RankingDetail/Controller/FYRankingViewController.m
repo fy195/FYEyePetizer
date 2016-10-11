@@ -51,6 +51,7 @@ UITableViewDataSource
     self.navigationItem.title = @"排行榜";
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
     self.navigationItem.leftBarButtonItem = leftButton;
+    [leftButton release];
     
     [self createView];
     self.segmentControl = [[UISegmentedControl alloc] initWithItems:@[@"周排行", @"月排行", @"总排行"]];

@@ -92,6 +92,7 @@ FYAuthorCellDelegete
 
     [_tableView release];
     
+    // 顶部视图
     self.headerView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Home_header"]];
     [self.view addSubview:_headerView];
     _headerView.userInteractionEnabled = YES;
@@ -99,6 +100,7 @@ FYAuthorCellDelegete
     _headerView.contentMode = UIViewContentModeScaleAspectFill;
     [_headerView release];
     
+    // 时间Label
     self.timeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _timeLabel.textColor = [UIColor whiteColor];
     _timeLabel.font = [UIFont fontWithName:@"Lobster 1.4" size:17];
@@ -163,6 +165,7 @@ FYAuthorCellDelegete
 
 }
 
+// 网络请求
 - (void)data {
     self.isRefresh = NO;
     NSDate *datenow =[NSDate date];
@@ -201,6 +204,7 @@ FYAuthorCellDelegete
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     FYHomeSectionList *sectionList = _dataArray[indexPath.section];
+    // 根据sectionList的type给cell不同的高度
     if ([sectionList.type isEqualToString:@"feedSection"] || [sectionList.type isEqualToString:@"recommendSection"]) {
         if (indexPath.row < sectionList.itemList.count) {
             FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
@@ -247,6 +251,7 @@ FYAuthorCellDelegete
         if (indexPath.row < sectionList.itemList.count) {
             FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
             FYHomeItemData *itemData = itemList.data;
+            // textHeader类型
             if ([itemData.dataType isEqualToString:@"TextHeader"]) {
                 static NSString *const textHeaderCell = @"textHeaderCell";
                 FYTextHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:textHeaderCell];
@@ -257,6 +262,7 @@ FYAuthorCellDelegete
                 cell.text = itemData.text;
                 return cell;
             }else if ([itemList.type isEqualToString:@"video"]){
+            // feedSection类型
                 static NSString *const feedCell = @"feedCell";
                 FYFeedSectionCell *cell = [tableView dequeueReusableCellWithIdentifier:feedCell];
                 if (nil == cell) {
@@ -269,6 +275,7 @@ FYAuthorCellDelegete
                 cell.text = [NSString stringWithFormat:@"#%@ / %@", itemData.category, time];
                 return  cell;
             }else if ([itemList.type isEqualToString:@"banner"]){
+            // banner类型
                 static NSString *const bannerCell = @"bannerCell";
                 FYBannerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bannerCell];
                 if (nil == cell) {
@@ -279,6 +286,7 @@ FYAuthorCellDelegete
                 return  cell;
             }
         }else if (indexPath.row >= sectionList.itemList.count) {
+        // 当有尾视图时，将尾视图设置成cell
             NSString *type = [sectionList.footer objectForKey:@"type"];
             NSDictionary *data = [sectionList.footer objectForKey:@"data"];
             if ([type isEqualToString:@"forwardFooter"]) {
@@ -302,6 +310,7 @@ FYAuthorCellDelegete
             }
         }
     }
+    // lightTop类型
     if ([sectionList.type isEqualToString:@"lightTopicSection"]) {
         if (indexPath.row < sectionList.itemList.count) {
             FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
@@ -341,6 +350,7 @@ FYAuthorCellDelegete
             }
         }
     }
+    // ranking 类型
     if ([sectionList.type isEqualToString:@"rankListSection"]) {
         if (indexPath.row < sectionList.itemList.count) {
             FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
@@ -556,6 +566,7 @@ FYAuthorCellDelegete
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if ([scrollView isEqual:_tableView]) {
         if (scrollView.contentOffset.y <= -200) {
+            // 将headerView置于最前
             [self.view bringSubviewToFront:_headerView];
             CGRect frame = _headerView.frame;
             frame.origin.y = 0;
@@ -563,6 +574,7 @@ FYAuthorCellDelegete
             _headerView.frame = frame;
             _backView.center = _headerView.center;
         }else if (scrollView.contentOffset.y > -200){
+            // 将headerView至于最后
             [self.view sendSubviewToBack:_headerView];
             CGFloat alpha = (scrollView.contentOffset.y + 200) / 300;
             _tableView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:alpha];

@@ -28,6 +28,7 @@ UIScrollViewDelegate
 @property (nonatomic, retain) NSMutableArray *shareArray;
 @property (nonatomic, copy) NSString *dateNext;
 @property (nonatomic, copy) NSString *shareNext;
+/** 两种排序方法*/
 @property (nonatomic, copy) NSString *currentStrategy;
 @property (nonatomic, retain) UIView *backView;
 @property (nonatomic, assign) CGFloat beginDragY;
@@ -66,6 +67,7 @@ UIScrollViewDelegate
     self.navigationController.navigationBar.hidden = NO;
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
     self.navigationItem.leftBarButtonItem = leftButton;
+    [leftButton release];
     
     self.dateArray = [NSMutableArray array];
     self.shareArray = [NSMutableArray array];
@@ -76,10 +78,12 @@ UIScrollViewDelegate
     _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT + 180);
     _scrollView.bounces = NO;
     [self.view addSubview:_scrollView];
+    [_scrollView release];
     
     [self getDataWithPgcId:_pgcId strategy:@"date"];
 }
 
+// 网络请求
 - (void)getDataWithPgcId:(NSNumber *)pgcId strategy:(NSString *)strategy{
     NSDate *datenow =[NSDate date];
     NSTimeZone *zone = [NSTimeZone systemTimeZone];
@@ -128,7 +132,7 @@ UIScrollViewDelegate
         static NSString *const videoCell = @"videoCell";
         FYFeedSectionCell *cell = [tableView dequeueReusableCellWithIdentifier:videoCell];
         if (nil == cell) {
-            cell = [[FYFeedSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:videoCell];
+            cell = [[[FYFeedSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:videoCell] autorelease];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"feed"]]]];
@@ -142,7 +146,7 @@ UIScrollViewDelegate
     static NSString *const videoCell = @"videoCell";
     FYFeedSectionCell *cell = [tableView dequeueReusableCellWithIdentifier:videoCell];
     if (nil == cell) {
-        cell = [[FYFeedSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:videoCell];
+        cell = [[[FYFeedSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:videoCell] autorelease];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"feed"]]]];
@@ -153,6 +157,7 @@ UIScrollViewDelegate
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // 判断当前排序方法，跳转到不同页面
     if ([_currentStrategy isEqualToString:@"date"]) {
         FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
         if (videoViewController.videoArray.count > 0) {
@@ -184,7 +189,7 @@ UIScrollViewDelegate
     [_scrollView addSubview:_backView];
     _backView.backgroundColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:1.00];
     [_backView release];
-    
+    // 头像
     UIImageView *iconImagView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[_allData.pgcInfo objectForKey:@"icon"]]]]];
     iconImagView.frame = CGRectMake(0, 0, 60, 60);
     iconImagView.clipsToBounds = YES;
@@ -192,7 +197,7 @@ UIScrollViewDelegate
     iconImagView.center = CGPointMake(SCREEN_WIDTH / 2, 30);
     [_backView addSubview:iconImagView];
     [iconImagView release];
-    
+    // 姓名
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 20)];
     nameLabel.center = CGPointMake(SCREEN_WIDTH / 2, iconImagView.y + iconImagView.height + 25);
     nameLabel.textColor = [UIColor blackColor];
@@ -200,7 +205,7 @@ UIScrollViewDelegate
     nameLabel.text = [_allData.pgcInfo objectForKey:@"name"];
     [_backView addSubview:nameLabel];
     [nameLabel release];
-    
+    // 简介
     UILabel *briefLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 75)];
     briefLabel.textColor = [UIColor lightGrayColor];
     briefLabel.text = [_allData.pgcInfo objectForKey:@"description"];
@@ -235,6 +240,7 @@ UIScrollViewDelegate
 }
 
 - (void)segmentedControlValueChanged:(UISegmentedControl *)segmentedControl {
+    // 根据排序策略进行不同的网络请求
     if (0 == segmentedControl.selectedSegmentIndex) {
         [self getDataWithPgcId:_pgcId strategy: @"date"];
     }else{
@@ -307,15 +313,17 @@ UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if ([scrollView isEqual:_scrollView]) {
         CGFloat offsetY = scrollView.contentOffset.y;
+        // 分类按钮未达到顶部之前打开scrollView的滑动，关闭tableView滑动
         if (offsetY >= 0 && offsetY < 180) {
             _scrollView.scrollEnabled = YES;
             _tableView.scrollEnabled = NO;
         }
+        // 分类按钮到达顶部之后关闭scrollView滑动，打开tableView滑动
         if (offsetY == 180) {
             _scrollView.scrollEnabled = NO;
             _tableView.scrollEnabled = YES;
         }
-        
+        // 导航栏名称改变
         if (offsetY >= 110) {
             self.navigationItem.title = [_allData.pgcInfo objectForKey:@"name"];
         }else {

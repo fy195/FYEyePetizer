@@ -38,6 +38,7 @@ UITableViewDataSource
     [_tableView release];
     [_allData release];
     [_dataArray release];
+    [_next release];
     [super dealloc];
 }
 
@@ -62,6 +63,7 @@ UITableViewDataSource
     rightLabel.textColor = [UIColor blackColor];
     rightLabel.font = [UIFont fontWithName:@"Lobster 1.4" size:17];
     [self.navigationController.navigationBar addSubview:rightLabel];
+    [rightLabel release];
     [self createView];
     self.dataArray = [NSMutableArray array];
     [self getData];
