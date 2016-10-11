@@ -28,10 +28,6 @@
 #import "FYCategoryViewController.h"
 #import "FYAuthorViewController.h"
 #import "FYVideoViewController.h"
-#import "FYPushAnimation.h"
-#import "FYVideoView.h"
-#import <AVKit/AVKit.h>
-#import <AVFoundation/AVFoundation.h>
 
 @interface FYHomeViewController ()
 <
@@ -40,9 +36,7 @@ UITableViewDataSource,
 UIScrollViewDelegate,
 FYLightTopicHeaderDelegate,
 FYCategoryCellDelegate,
-FYAuthorCellDelegete,
-FYVideoViewDelegate
-//UINavigationControllerDelegate
+FYAuthorCellDelegete
 >
 
 @property (nonatomic, retain) UILabel *timeLabel;
@@ -55,7 +49,6 @@ FYVideoViewDelegate
 @property (nonatomic, copy) NSString *next;
 @property (nonatomic, retain)UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, assign) BOOL isRefresh;
-@property (nonatomic, retain) FYVideoView *videoView;
 
 @end
 
@@ -64,7 +57,6 @@ FYVideoViewDelegate
 - (void)dealloc {
     _tableView.delegate = nil;
     _tableView.dataSource = nil;
-//    self.navigationController.delegate = nil;
     [_activityIndicatorView release];
     [_timeLabel release];
     [_headerView release];
@@ -79,10 +71,6 @@ FYVideoViewDelegate
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBar.hidden = YES;
 }
-
-//- (void)viewDidAppear:(BOOL)animated {
-//    self.navigationController.delegate = self;
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -521,90 +509,47 @@ FYVideoViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     FYHomeSectionList *sectionList = _dataArray[indexPath.section];
-    if (indexPath.row < sectionList.itemList.count) {
-        FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
-        FYHomeItemData *itemData = itemList.data;
-        if (![itemData.dataType isEqualToString:@"TextHeader"]) {
-//            FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
-//            if (videoViewController.videoArray.count > 0) {
-//                [videoViewController.videoArray removeAllObjects];
-            if (nil == _videoView) {
-                self.videoView = [[FYVideoView alloc] initWithFrame:CGRectZero];
-                [self.view addSubview:_videoView];
-            }
-            
-            if (_videoView.videoArray.count > 0) {
-                [_videoView.videoArray removeAllObjects];
-            }
-//            }
-            NSMutableArray *array = [NSMutableArray array];
-            [array addObjectsFromArray:sectionList.itemList];
-
-            for (FYHomeItemList *list in array) {
-                NSInteger index = 0;
-                if ([list.type isEqualToString:@"textHeader"]) {
-                    index = [array indexOfObject:list];
-                    [array removeObjectAtIndex:index];
+    if ([sectionList.type isEqualToString:@"feedSection"]) {
+        if (indexPath.row < sectionList.itemList.count) {
+            FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
+            FYHomeItemData *itemData = itemList.data;
+            if (![itemData.dataType isEqualToString:@"TextHeader"]) {
+                FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+                if (videoViewController.videoArray.count > 0) {
+                    [videoViewController.videoArray removeAllObjects];
                 }
+                NSMutableArray *array = [NSMutableArray array];
+                [array addObjectsFromArray:sectionList.itemList];
+                
+                for (FYHomeItemList *list in array) {
+                    NSInteger index = 0;
+                    if ([list.type isEqualToString:@"textHeader"]) {
+                        index = [array indexOfObject:list];
+                        [array removeObjectAtIndex:index];
+                    }
+                }
+                videoViewController.videoArray = [array mutableCopy];
+                videoViewController.videoIndex = indexPath.row;
+                videoViewController.hidesBottomBarWhenPushed = YES;
+                [videoViewController setModalTransitionStyle:2];
+                [self presentViewController:videoViewController animated:YES completion:nil];
+                [videoViewController release];
             }
-            self.selectedCell = (FYFeedSectionCell *)[tableView cellForRowAtIndexPath:indexPath];
-            _videoView.tag = 1001;
-            _videoView.delegate = self;
-            _videoView.videoArray = [array mutableCopy];
-            _videoView.videoIndex = indexPath.row;
-//            videoViewController.videoArray = [array mutableCopy];
-//            videoViewController.videoIndex = indexPath.row;
-//            videoViewController.hidesBottomBarWhenPushed = YES;
-//            [self.navigationController pushViewController:videoViewController animated:YES];
-//            [videoViewController release];
-//            UIView *snapView = [self.selectedCell snapshotViewAfterScreenUpdates:NO];
-//            [self.view addSubview:snapView];
-            _videoView.hidden = YES;
-            _videoView.frame = self.selectedCell.bounds;
-//            [snapView removeFromSuperview];
-            
-            [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                FYFeedSectionCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-                cell.backView.alpha = 0;
-            } completion:^(BOOL finished) {
-                [UIView animateWithDuration:1.0 delay:0.2 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                    _videoView.hidden = NO;
-                    _videoView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-                    self.tabBarController.tabBar.hidden = YES;
-                } completion:^(BOOL finished) {
-                    FYFeedSectionCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-                    cell.backView.alpha = 1;
-                }];
-            }];
+        }else {
+            NSString *type = [sectionList.footer objectForKey:@"type"];
+            if ([type isEqualToString:@"forwardFooter"]) {
+                FYDailyViewController *dailyViewController = [[FYDailyViewController alloc] init];
+                dailyViewController.hidesBottomBarWhenPushed = YES;
+                dailyViewController.date = _homeData.date;
+                [self.navigationController pushViewController:dailyViewController animated:YES];
+                [dailyViewController release];
+            }
         }
+
     }else {
-        NSString *type = [sectionList.footer objectForKey:@"type"];
-        if ([type isEqualToString:@"forwardFooter"]) {
-            FYDailyViewController *dailyViewController = [[FYDailyViewController alloc] init];
-            dailyViewController.hidesBottomBarWhenPushed = YES;
-            dailyViewController.date = _homeData.date;
-            [self.navigationController pushViewController:dailyViewController animated:YES];
-            [dailyViewController release];
-        }
+        
     }
-}
-
-//- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
-//    if (operation == UINavigationControllerOperationPush) {
-//        FYPushAnimation *pushTransitionAnimation = [[FYPushAnimation alloc] init];
-//        return pushTransitionAnimation;
-//    }
-//    return nil;
-//}
-
-- (void)getVideoFromPlayUrl:(NSString *)playUrl {
-    _videoView.hidden = YES;
-    AVPlayer *player = [AVPlayer playerWithURL:[NSURL URLWithString:playUrl]];
-    AVPlayerViewController *playerVC = [[AVPlayerViewController alloc] init];
-    playerVC.player = player;
-    playerVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    [self presentViewController:playerVC animated:YES completion:nil];
-    [playerVC.player play];
+    
 }
 
 #pragma mark - scrollView代理方法
@@ -716,6 +661,71 @@ FYVideoViewDelegate
 }
 
 #pragma mark - 代理方法
+- (void)getPgcArray:(NSArray *)videoArray {
+    FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+    if (videoViewController.videoArray.count > 0) {
+        [videoViewController.videoArray removeAllObjects];
+    }
+    videoViewController.videoArray = [videoArray mutableCopy];
+    videoViewController.videoIndex = 0;
+    videoViewController.hidesBottomBarWhenPushed = YES;
+    [videoViewController setModalTransitionStyle:2];
+    [self presentViewController:videoViewController animated:YES completion:nil];
+    [videoViewController release];
+}
+
+- (void)getCategoryArray:(NSArray *)videoArray WithIndex:(NSInteger)index {
+    FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+    if (videoViewController.videoArray.count > 0) {
+        [videoViewController.videoArray removeAllObjects];
+    }
+    videoViewController.videoArray = [videoArray mutableCopy];
+    videoViewController.videoIndex = index;
+    videoViewController.hidesBottomBarWhenPushed = YES;
+    [videoViewController setModalTransitionStyle:2];
+    [self presentViewController:videoViewController animated:YES completion:nil];
+    [videoViewController release];
+}
+
+- (void)getCurrentImageId:(NSNumber *)imageId actionUrl:(NSString *)actionUrl {
+    NSString *str = [actionUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSRange start = [str rangeOfString:@"tag"];
+    if (0 == [imageId integerValue]) {
+        FYRankingViewController *rankViewController = [[FYRankingViewController alloc] init];
+        rankViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:rankViewController animated:YES];
+        [rankViewController release];
+    }else if (start.length != 0){
+        FYTagViewController *tagViewController = [[FYTagViewController alloc] init];
+        tagViewController.actionUrl = actionUrl;
+        tagViewController.imageId = imageId;
+        tagViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:tagViewController animated:YES];
+        [tagViewController release];
+    }else {
+        FYLightTopicViewController *lightTopicViewController = [[FYLightTopicViewController alloc] init];
+        lightTopicViewController.imageId = imageId;
+        lightTopicViewController.actionUrl = actionUrl;
+        lightTopicViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:lightTopicViewController animated:YES];
+        [lightTopicViewController release];
+    }
+
+}
+
+- (void)getArrayFromCell:(NSArray *)videoArray {
+    FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+    if (videoViewController.videoArray.count > 0) {
+        [videoViewController.videoArray removeAllObjects];
+    }
+    videoViewController.videoArray = [videoArray mutableCopy];
+    videoViewController.videoIndex = 0;
+    videoViewController.hidesBottomBarWhenPushed = YES;
+    [videoViewController setModalTransitionStyle:2];
+    [self presentViewController:videoViewController animated:YES completion:nil];
+    [videoViewController release];
+}
+
 - (void)getPgcId:(NSNumber *)pgcId {
     FYAuthorViewController *authorViewController = [[FYAuthorViewController alloc] init];
     authorViewController.pgcId = pgcId;

@@ -10,8 +10,8 @@
 #import "UIImage+Categories.h"
 
 @interface FYVideoDetailCollectionViewCell ()
-@property (nonatomic, retain) UIImageView *playImage;
 @property (nonatomic, retain) UIScrollView *scrollView;
+@property (nonatomic, retain) UIImageView *playImage;
 @end
 
 @implementation FYVideoDetailCollectionViewCell
@@ -36,9 +36,14 @@
         [_scrollView addSubview:_videoImageView];
         [_videoImageView release];
         
-//        self.playImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"播放"]];
-//        [self.contentView addSubview:_playImage];
-//        [_playImage release];
+        self.playImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"播放"]];
+        _playImage.userInteractionEnabled = YES;
+        [self.contentView addSubview:_playImage];
+        [_playImage release];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+        [_playImage addGestureRecognizer:tap];
+        [tap release];
     }
     return self;
 }
@@ -49,6 +54,16 @@
         _videoImage = [videoImage retain];
     }
     _videoImageView.image = videoImage;
+}
+
+- (void)setIndex:(NSInteger)index {
+    if (_index != index) {
+        _index = index;
+    }
+}
+
+- (void)tapAction:(UITapGestureRecognizer *)tap {
+    [self.delegate getIndex:_index];
 }
 
 - (void)layoutSubviews {

@@ -13,6 +13,8 @@
 
 @required
 - (void)getCategoryId:(NSNumber *)categoryId;
+- (void)getCategoryArray:(NSArray *)videoArray WithIndex:(NSInteger)index;
+
 @end
 @interface FYCategorySectionCell : UITableViewCell
 

@@ -13,6 +13,7 @@
 
 @required
 - (void)getPgcId:(NSNumber *)pgcId;
+- (void)getPgcArray:(NSArray *)videoArray;
 @end
 
 @interface FYAuthorSectionTableViewCell : UITableViewCell

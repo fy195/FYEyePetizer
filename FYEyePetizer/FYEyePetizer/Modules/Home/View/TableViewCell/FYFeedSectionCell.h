@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface FYFeedSectionCell : UITableViewCell
 
 @property (nonatomic, retain) UIImage *image;

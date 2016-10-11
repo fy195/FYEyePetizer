@@ -15,6 +15,8 @@
 
 @required
 - (void)getInfoFromTouchImage:(NSNumber *)imageId sectionListType:(NSString *)type;
+- (void)getArrayFromCell:(NSArray *)videoArray;
+- (void)getCurrentImageId:(NSNumber *)imageId actionUrl:(NSString *)actionUrl;
 @end
 
 @interface FYLightTopicSectionCell : UITableViewCell

@@ -7,8 +7,9 @@
 //
 
 #import "FYBaseViewController.h"
+#import "FYFeedSectionCell.h"
 
 @interface FYHomeViewController : FYBaseViewController
 @property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, retain) UITableViewCell *selectedCell;
+@property (nonatomic, retain) FYFeedSectionCell *selectedCell;
 @end

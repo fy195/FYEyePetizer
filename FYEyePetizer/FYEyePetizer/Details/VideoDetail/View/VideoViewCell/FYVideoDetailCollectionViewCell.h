@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol FYVideoViewDelegate <NSObject>
+
+- (void)getIndex:(NSInteger)index;
+
+@end
+
 @interface FYVideoDetailCollectionViewCell : UICollectionViewCell
+
+@property (nonatomic, assign) NSInteger index;
 @property (nonatomic, retain) UIImageView *videoImageView;
-//@property (nonatomic, retain) UIImageView *downBackImageView;
 @property (nonatomic, retain) UIImage *videoImage;
-//@property (nonatomic, retain) UIImage *blurImage;
+@property (nonatomic, assign) id<FYVideoViewDelegate>delegate;
 
 @end

@@ -114,6 +114,16 @@ UICollectionViewDataSource
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    FYHomeItemList *itemList = _itemData.itemList[indexPath.section];
+    if ([itemList.type isEqualToString:@"video"]) {
+        [self.authorDelegate getPgcArray:_itemData.itemList];
+    }else {
+        [self.authorDelegate getPgcId:[_itemData.header objectForKey:@"id"]];
+    }
+    
+}
+
 - (void)tapAction:(UITapGestureRecognizer *)sender {
     [self.authorDelegate getPgcId:[_itemData.header objectForKey:@"id"]];
 }

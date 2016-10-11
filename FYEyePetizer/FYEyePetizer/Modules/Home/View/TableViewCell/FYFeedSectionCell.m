@@ -29,10 +29,21 @@
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.height)];
+        _myImageView.userInteractionEnabled = YES;
         [self addSubview:_myImageView];
         [_myImageView release];
         
+        // 长按手势
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)];
+        // 设置长按时间
+        longPress.minimumPressDuration = 0.5f;
+        // 允许用户长按时有多少像素的偏差
+        longPress.allowableMovement = 20.0f;
+        [_myImageView addGestureRecognizer:longPress];
+        [longPress release];
+        
         self.backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.height)];
+        _backView.hidden = NO;
         [_myImageView addSubview:_backView];
         _backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
         [_backView release];
@@ -90,6 +101,16 @@
     [_tagLabel sizeToFit];
     _tagLabel.center = CGPointMake(SCREEN_WIDTH / 2, _backView.height / 2 + _tagLabel.height / 2 + 5);
 }
+
+- (void)longPressAction:(UILongPressGestureRecognizer *)press{
+    if (UIGestureRecognizerStateBegan == press.state) {
+        _backView.hidden = YES;
+    }else if (UIGestureRecognizerStateEnded == press.state) {
+        _backView.hidden = NO;
+    }
+}
+
+
 
 - (void)awakeFromNib {
     // Initialization code

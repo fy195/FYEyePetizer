@@ -145,6 +145,10 @@ UICollectionViewDataSource
     return  cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.categoryDelegate getCategoryArray:_currentArray WithIndex:indexPath.section];
+}
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if ([scrollView isEqual:_collectionView]) {
         NSInteger pageCount;

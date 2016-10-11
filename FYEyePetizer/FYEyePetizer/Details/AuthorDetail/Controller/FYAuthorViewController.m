@@ -13,6 +13,7 @@
 #import "FYFeedSectionCell.h"
 #import "FYHomeItemData.h"
 #import "FYAuthorDetailData.h"
+#import "FYVideoViewController.h"
 
 @interface FYAuthorViewController ()
 <
@@ -151,6 +152,33 @@ UIScrollViewDelegate
     return  cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([_currentStrategy isEqualToString:@"date"]) {
+        FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+        if (videoViewController.videoArray.count > 0) {
+            [videoViewController.videoArray removeAllObjects];
+        }
+        videoViewController.videoArray = [_dateArray mutableCopy];
+        videoViewController.videoIndex = indexPath.row;
+        videoViewController.hidesBottomBarWhenPushed = YES;
+        [videoViewController setModalTransitionStyle:2];
+        [self presentViewController:videoViewController animated:YES completion:nil];
+        [videoViewController release];
+    }else {
+        FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+        if (videoViewController.videoArray.count > 0) {
+            [videoViewController.videoArray removeAllObjects];
+        }
+        videoViewController.videoArray = [_shareArray mutableCopy];
+        videoViewController.videoIndex = indexPath.row;
+        videoViewController.hidesBottomBarWhenPushed = YES;
+        [videoViewController setModalTransitionStyle:2];
+        [self presentViewController:videoViewController animated:YES completion:nil];
+        [videoViewController release];
+    }
+
+}
+
 - (void)createView {
     self.backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 220)];
     [_scrollView addSubview:_backView];
@@ -161,24 +189,24 @@ UIScrollViewDelegate
     iconImagView.frame = CGRectMake(0, 0, 60, 60);
     iconImagView.clipsToBounds = YES;
     iconImagView.layer.cornerRadius = 30.f;
-    iconImagView.center = CGPointMake(SCREEN_WIDTH / 2, 40);
+    iconImagView.center = CGPointMake(SCREEN_WIDTH / 2, 30);
     [_backView addSubview:iconImagView];
     [iconImagView release];
     
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 20)];
-    nameLabel.center = CGPointMake(SCREEN_WIDTH / 2, iconImagView.y + iconImagView.height + 30);
+    nameLabel.center = CGPointMake(SCREEN_WIDTH / 2, iconImagView.y + iconImagView.height + 25);
     nameLabel.textColor = [UIColor blackColor];
     nameLabel.textAlignment = NSTextAlignmentCenter;
     nameLabel.text = [_allData.pgcInfo objectForKey:@"name"];
     [_backView addSubview:nameLabel];
     [nameLabel release];
     
-    UILabel *briefLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
+    UILabel *briefLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 75)];
     briefLabel.textColor = [UIColor lightGrayColor];
     briefLabel.text = [_allData.pgcInfo objectForKey:@"description"];
     briefLabel.numberOfLines = 0;
     [briefLabel sizeToFit];
-    briefLabel.center = CGPointMake(SCREEN_WIDTH / 2, nameLabel.y + nameLabel.height + 20 + briefLabel.height / 2);
+    briefLabel.center = CGPointMake(SCREEN_WIDTH / 2, nameLabel.y + nameLabel.height + 20 + briefLabel.height / 2 - 15);
     [_backView addSubview:briefLabel];
     [briefLabel release];
     

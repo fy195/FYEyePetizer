@@ -88,6 +88,19 @@ UICollectionViewDataSource
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (nil != _itemData) {
+        FYHomeItemList *itemList = _itemData.itemList[indexPath.section];
+        if ([itemList.type isEqualToString:@"video"]) {
+            [self.tapDelegate getArrayFromCell:[NSArray arrayWithObject:itemList]];
+        }else {
+            FYHomeItemData *viewAllData = (FYHomeItemData *)[[_itemData.itemList lastObject] data];
+            [self.tapDelegate getCurrentImageId:[_itemData.header objectForKey:@"id"] actionUrl:viewAllData.actionUrl];
+        }
+    }
+
+}
+
 - (void)setTopicImage:(UIImage *)topicImage {
     if (_topicImage != topicImage) {
         [_topicImage release];

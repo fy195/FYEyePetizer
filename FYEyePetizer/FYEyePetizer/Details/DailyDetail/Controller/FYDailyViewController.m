@@ -16,6 +16,7 @@
 #import "NSString+FYTime.h"
 #import "NSString+FY_MD5.h"
 #import "FYHomeTags.h"
+#import "FYVideoViewController.h"
 
 @interface FYDailyViewController ()
 <
@@ -150,6 +151,20 @@ UITableViewDataSource
         cell.text = [NSString stringWithFormat:@"#%@ / %@", tag.name, time];
         return  cell;
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+    if (videoViewController.videoArray.count > 0) {
+        [videoViewController.videoArray removeAllObjects];
+    }
+    FYIssueList *issueList = _dataArray[indexPath.section];
+    videoViewController.videoArray = [issueList.itemList mutableCopy];
+    videoViewController.videoIndex = indexPath.row;
+    videoViewController.hidesBottomBarWhenPushed = YES;
+    [videoViewController setModalTransitionStyle:2];
+    [self presentViewController:videoViewController animated:YES completion:nil];
+    [videoViewController release];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

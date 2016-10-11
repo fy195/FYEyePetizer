@@ -13,22 +13,18 @@ static NSString *const videoDetailCell= @"collectionViewCell";
 #import "FYHomeItemList.h"
 #import "NSString+FYTime.h"
 #import "UIImageView+WebCache.h"
-#import "FYPlayViewController.h"
 #import <AVKit/AVKit.h>
 #import <AVFoundation/AVFoundation.h>
-#import "FYPopAnimation.h"
 
 @interface FYVideoViewController ()
 <
 UICollectionViewDelegate,
 UICollectionViewDataSource,
 UIScrollViewDelegate,
-UINavigationControllerDelegate
+UINavigationControllerDelegate,
+FYVideoViewDelegate
 >
-@property (nonatomic, retain) UIPercentDrivenInteractiveTransition *interaction;
 @property (nonatomic, retain) UIButton *backButton;
-@property (nonatomic, retain) UIView *backView;
-@property (nonatomic, retain) UIImageView *downBackImageView;
 @property (nonatomic, retain) UILabel *titleLabel;
 @property (nonatomic, retain) UILabel *tagLabel;
 @property (nonatomic, retain) UILabel *briefLabel;
@@ -36,7 +32,6 @@ UINavigationControllerDelegate
 @property (nonatomic, retain) UILabel *shareLabel;
 @property (nonatomic, retain) UILabel *commentLabel;
 @property (nonatomic, assign) CGFloat beginX;
-//@property (nonatomic, retain) UIScrollView *scrollView;
 
 @end
 
@@ -64,7 +59,7 @@ UINavigationControllerDelegate
     [_backButton setBackgroundImage:[UIImage imageNamed:@"箭头2下"] forState:UIControlStateNormal];
     [self.view addSubview:_backButton];
     [_backButton handleControlEvent:UIControlEventTouchUpInside withBlock:^{
-        [self.navigationController popViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -78,60 +73,18 @@ UINavigationControllerDelegate
     _videoCollectionView.delegate = self;
     _videoCollectionView.dataSource = self;
     _videoCollectionView.bounces = NO;
+    _videoCollectionView.allowsSelection = NO;
     [self.view addSubview:_videoCollectionView];
     [_videoCollectionView release];
     [_videoCollectionView registerClass:[FYVideoDetailCollectionViewCell class] forCellWithReuseIdentifier:videoDetailCell];
     [self.view bringSubviewToFront:_backButton];
     
     [_videoCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:_videoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-    self.appearCell = [_videoCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:_videoIndex inSection:0]];
-    
-    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panAction:)];
-    [_videoCollectionView addGestureRecognizer:pan];
-}
-
-- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {
-    return _interaction;
-}
-
-- (void)panAction:(UIPanGestureRecognizer *)pan {
-    CGFloat progress = [pan translationInView:pan.view].y / CGRectGetHeight(pan.view.frame);
-    if (progress > 0) {
-        switch (pan.state) {
-            case UIGestureRecognizerStateBegan:{
-                self.interaction = [[UIPercentDrivenInteractiveTransition alloc] init];
-                [self.navigationController popViewControllerAnimated:YES];
-                break;
-            }
-            case UIGestureRecognizerStateChanged:{
-                [_interaction updateInteractiveTransition:progress];
-                break;
-            }
-            case UIGestureRecognizerStateEnded:
-            case UIGestureRecognizerStateCancelled:{
-                if (progress > 0.5) {
-                    [_interaction finishInteractiveTransition];
-                }else {
-                    [_interaction cancelInteractiveTransition];
-                }
-                break;
-            }
-            default:
-                break;
-        }
-    }
-    
-    
 }
 
 - (void)createDownView {
     // 下部分背景图
     if (_downBackImageView == nil) {
-//        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT * 0.45, SCREEN_WIDTH, SCREEN_HEIGHT * 0.55)];
-//        _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT * 0.55);
-//        [self.view addSubview:_scrollView];
-//        [_scrollView release];
-        
         self.downBackImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT * 0.45, SCREEN_WIDTH, SCREEN_HEIGHT * 0.55)];
         [self.view addSubview:_downBackImageView];
         [_downBackImageView release];
@@ -219,7 +172,7 @@ UINavigationControllerDelegate
         [_likeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(likeImageView.mas_right).offset(10);
             make.bottom.equalTo(_backView).offset(-50);
-            make.width.equalTo(@30);
+            make.width.equalTo(@40);
             make.height.equalTo(@20);
         }];
         [_likeLabel release];
@@ -227,7 +180,7 @@ UINavigationControllerDelegate
         UIImageView *shareImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"上传"]];
         [_backView addSubview:shareImageView];
         [shareImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_likeLabel.mas_right).offset(50);
+            make.left.equalTo(_likeLabel.mas_right).offset(40);
             make.bottom.equalTo(_backView).offset(-50);
             make.width.equalTo(@20);
             make.height.equalTo(@20);
@@ -242,7 +195,7 @@ UINavigationControllerDelegate
         [_shareLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(shareImageView.mas_right).offset(10);
             make.bottom.equalTo(_backView).offset(-50);
-            make.width.equalTo(@30);
+            make.width.equalTo(@40);
             make.height.equalTo(@20);
         }];
         [_shareLabel release];
@@ -250,7 +203,7 @@ UINavigationControllerDelegate
         UIImageView *commentImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"评论"]];
         [_backView addSubview:commentImageView];
         [commentImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_shareLabel.mas_right).offset(50);
+            make.left.equalTo(_shareLabel.mas_right).offset(40);
             make.bottom.equalTo(_backView).offset(-50);
             make.width.equalTo(@20);
             make.height.equalTo(@20);
@@ -265,7 +218,7 @@ UINavigationControllerDelegate
         [_commentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(commentImageView.mas_right).offset(10);
             make.bottom.equalTo(_backView).offset(-50);
-            make.width.equalTo(@30);
+            make.width.equalTo(@40);
             make.height.equalTo(@20);
         }];
         [_commentLabel release];
@@ -273,7 +226,7 @@ UINavigationControllerDelegate
         UIImageView *downLoadImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"下载"]];
         [_backView addSubview:downLoadImageView];
         [downLoadImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_commentLabel.mas_right).offset(50);
+            make.left.equalTo(_commentLabel.mas_right).offset(40);
             make.bottom.equalTo(_backView).offset(-50);
             make.width.equalTo(@20);
             make.height.equalTo(@20);
@@ -306,25 +259,20 @@ UINavigationControllerDelegate
     FYHomeItemData *itemData = itemList.data;
     FYVideoDetailCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:videoDetailCell forIndexPath:indexPath];
     cell.videoImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"detail"]]]];
+    cell.index = indexPath.item;
+    cell.delegate = self;
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    FYPlayViewController *playViewController = [[FYPlayViewController alloc] init];
-//    playViewController.modalTransitionStyle = 2;
-//    playViewController.playArray = [_videoArray mutableCopy];
-//    playViewController.index = indexPath.item;
-//    [self.navigationController pushViewController:playViewController animated:YES];
-//    [playViewController release];
-    FYHomeItemList *itemList = _videoArray[indexPath.item];
+- (void)getIndex:(NSInteger)index {
+    FYHomeItemList *itemList = _videoArray[index];
     FYHomeItemData *itemData = itemList.data;
-    AVPlayer *player = [AVPlayer playerWithURL:[NSURL URLWithString:itemData.playUrl]];
     
+    AVPlayer *player = [AVPlayer playerWithURL:[NSURL URLWithString:itemData.playUrl]];
     AVPlayerViewController *playerVC = [[AVPlayerViewController alloc] init];
     playerVC.player = player;
     playerVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     [self presentViewController:playerVC animated:YES completion:nil];
-    
     [playerVC.player play];
 }
 
@@ -353,7 +301,6 @@ UINavigationControllerDelegate
     _likeLabel.text = [NSString stringWithFormat:@"%ld",[[itemData.consumption objectForKey:@"collectionCount"] integerValue]];
     _shareLabel.text = [NSString stringWithFormat:@"%ld",[[itemData.consumption objectForKey:@"shareCount"] integerValue]];
     _commentLabel.text = [NSString stringWithFormat:@"%ld",[[itemData.consumption objectForKey:@"replyCount"] integerValue]];
-    
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -384,54 +331,12 @@ UINavigationControllerDelegate
     
     CGFloat alpha;
     if (_beginX < scrollView.contentOffset.x) {
-        
         alpha = 1 - offsetX / (SCREEN_WIDTH * (page + 1)) * 1.0;
         _backView.alpha = alpha;
     }else {
         alpha = (offsetX - SCREEN_WIDTH *page) / SCREEN_WIDTH * 1.0f;
         _backView.alpha = alpha;
     }
-    
-//    // 视图跟随
-    if (offsetX <= 0) {
-        CGRect rect = _downBackImageView.frame;
-        rect.origin.x = -offsetX;
-        _downBackImageView.frame = rect;
-    }else if (offsetX >= (_videoArray.count - 1) * SCREEN_WIDTH) {
-        CGRect rect = _downBackImageView.frame;
-        rect.origin.x = (_videoArray.count - 1) * SCREEN_WIDTH - offsetX;
-        _downBackImageView.frame = rect;
-    }else {
-        _downBackImageView.frame = CGRectMake(0, SCREEN_HEIGHT * 0.45, SCREEN_WIDTH, SCREEN_HEIGHT * 0.55);
-    }
-    
-//    if (page + 1 < _videoArray.count) {
-//        FYHomeItemList *itemList = _videoArray[page];
-//        FYHomeItemData *itemData = itemList.data;
-//        [_downBackImageView sd_setImageWithURL:[NSURL URLWithString:[itemData.cover objectForKey:@"detail"]] placeholderImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"blurred"]]]]];
-//    }
-//    if (page > 0 ) {
-//        FYHomeItemList *itemList = _videoArray[page];
-//        FYHomeItemData *itemData = itemList.data;
-//        [_downBackImageView sd_setImageWithURL:[NSURL URLWithString:[itemData.cover objectForKey:@"detail"]] placeholderImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"blurred"]]]]];
-//    }
-
-    
-//    // 向右划
-//    UIImageView *aView = (UIImageView *)[self.view viewWithTag:1000];
-//    UIImageView *aView1 = (UIImageView *)[self.view viewWithTag:1001];
-//    
-//    if (scrollView.contentOffset.x > SCREEN_WIDTH * _videoIndex) {
-//        if (offsetX != 0) {
-//            aView.alpha = 1 - (scrollView.contentOffset.x - SCREEN_WIDTH * _videoIndex) / SCREEN_WIDTH;
-//            _downBackImageView.alpha = aView.alpha;
-//            aView1.alpha = 1;
-//        }
-//    }else if(scrollView.contentOffset.x < SCREEN_WIDTH * _videoIndex){
-//        aView.alpha = 1 - (SCREEN_WIDTH * _videoIndex - scrollView.contentOffset.x) / SCREEN_WIDTH;
-//        _downBackImageView.alpha = aView.alpha;
-//        aView1.alpha = 0;
-//    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -449,17 +354,6 @@ UINavigationControllerDelegate
     _likeLabel.text = [NSString stringWithFormat:@"%ld",[[itemData.consumption objectForKey:@"collectionCount"] integerValue]];
     _shareLabel.text = [NSString stringWithFormat:@"%ld",[[itemData.consumption objectForKey:@"shareCount"] integerValue]];
     _commentLabel.text = [NSString stringWithFormat:@"%ld",[[itemData.consumption objectForKey:@"replyCount"] integerValue]];
-    
-//    UIImageView *aView = (UIImageView *)[self.view viewWithTag:1000];
-//    UIImageView *aView1 = (UIImageView *)[self.view viewWithTag:1001];
-//    UIImageView *aView2 = (UIImageView *)[self.view viewWithTag:1002];
-//    
-//    if (scrollView.contentOffset.x > SCREEN_WIDTH * _videoIndex) {
-//        aView.image = aView1.image;
-//    }else if(scrollView.contentOffset.x < SCREEN_WIDTH * _videoIndex){
-//        aView.image = aView2.image;
-//    }
-//    aView.alpha = 1;
 }
 
 - (void)didReceiveMemoryWarning {

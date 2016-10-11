@@ -60,7 +60,6 @@
 		49B1F7B41DA3AD010063AAC4 /* NSString+FY_MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B1F7B31DA3AD010063AAC4 /* NSString+FY_MD5.m */; };
 		49B82ABF1DA7AA8A00E4CF6E /* FYHonriZontalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B82ABE1DA7AA8A00E4CF6E /* FYHonriZontalViewController.m */; };
 		49B82AC41DA7B12500E4CF6E /* FYChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B82AC31DA7B12500E4CF6E /* FYChannelViewController.m */; };
-		49C000A71DAB26BF006812B3 /* FYPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C000A61DAB26BF006812B3 /* FYPlayViewController.m */; };
 		49C001131DAB2DCE006812B3 /* BH_AVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C000F71DAB2DCE006812B3 /* BH_AVPlayerView.m */; };
 		49C001141DAB2DCE006812B3 /* BH_PlayProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C000F91DAB2DCE006812B3 /* BH_PlayProgressView.m */; };
 		49C001151DAB2DCE006812B3 /* icon_full@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 49C000FA1DAB2DCE006812B3 /* icon_full@2x.png */; };
@@ -75,9 +74,6 @@
 		49C0011E1DAB2DCE006812B3 /* icon_progress@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 49C001031DAB2DCE006812B3 /* icon_progress@3x.png */; };
 		49C0011F1DAB2DCE006812B3 /* icon_repeat_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 49C001041DAB2DCE006812B3 /* icon_repeat_video@2x.png */; };
 		49C001201DAB2DCE006812B3 /* icon_repeat_video@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 49C001051DAB2DCE006812B3 /* icon_repeat_video@3x.png */; };
-		49C001271DAB4488006812B3 /* FYPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C001261DAB4488006812B3 /* FYPlayerView.m */; };
-		49C0012B1DABBAB7006812B3 /* FYPushAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C0012A1DABBAB7006812B3 /* FYPushAnimation.m */; };
-		49C0012E1DABBAC6006812B3 /* FYPopAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C0012D1DABBAC6006812B3 /* FYPopAnimation.m */; };
 		49C597411DA20BCE0044C1C3 /* FYFooterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C597401DA20BCE0044C1C3 /* FYFooterTableViewCell.m */; };
 		49C597461DA23B070044C1C3 /* FYViewAllCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C597451DA23B070044C1C3 /* FYViewAllCollectionViewCell.m */; };
 		49C597491DA2573E0044C1C3 /* FYCatogeryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49C597481DA2573E0044C1C3 /* FYCatogeryCollectionViewCell.m */; };
@@ -90,7 +86,6 @@
 		49D399011DA0F9DB00E3F6A2 /* FYTextHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D399001DA0F9DB00E3F6A2 /* FYTextHeaderTableViewCell.m */; };
 		49D399041DA10BB400E3F6A2 /* NSString+FYTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D399031DA10BB400E3F6A2 /* NSString+FYTime.m */; };
 		49D399071DA10E7700E3F6A2 /* FYBannerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D399061DA10E7700E3F6A2 /* FYBannerTableViewCell.m */; };
-		49D53F211DAC6C9300C1CB25 /* FYVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D53F201DAC6C9300C1CB25 /* FYVideoView.m */; };
 		49D7257D1DA897AF00DC1E1C /* FYCampaignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D7257C1DA897AF00DC1E1C /* FYCampaignViewController.m */; };
 		49D725801DA89CB100DC1E1C /* FYCampaignData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D7257F1DA89CB100DC1E1C /* FYCampaignData.m */; };
 		49D725841DA89D6E00DC1E1C /* FYCampaignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D725831DA89D6E00DC1E1C /* FYCampaignTableViewCell.m */; };
@@ -221,8 +216,6 @@
 		49B82ABE1DA7AA8A00E4CF6E /* FYHonriZontalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYHonriZontalViewController.m; sourceTree = "<group>"; };
 		49B82AC21DA7B12500E4CF6E /* FYChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYChannelViewController.h; sourceTree = "<group>"; };
 		49B82AC31DA7B12500E4CF6E /* FYChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYChannelViewController.m; sourceTree = "<group>"; };
-		49C000A51DAB26BF006812B3 /* FYPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYPlayViewController.h; sourceTree = "<group>"; };
-		49C000A61DAB26BF006812B3 /* FYPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYPlayViewController.m; sourceTree = "<group>"; };
 		49C000F61DAB2DCE006812B3 /* BH_AVPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BH_AVPlayerView.h; sourceTree = "<group>"; };
 		49C000F71DAB2DCE006812B3 /* BH_AVPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BH_AVPlayerView.m; sourceTree = "<group>"; };
 		49C000F81DAB2DCE006812B3 /* BH_PlayProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BH_PlayProgressView.h; sourceTree = "<group>"; };
@@ -239,12 +232,6 @@
 		49C001031DAB2DCE006812B3 /* icon_progress@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_progress@3x.png"; sourceTree = "<group>"; };
 		49C001041DAB2DCE006812B3 /* icon_repeat_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_repeat_video@2x.png"; sourceTree = "<group>"; };
 		49C001051DAB2DCE006812B3 /* icon_repeat_video@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_repeat_video@3x.png"; sourceTree = "<group>"; };
-		49C001251DAB4488006812B3 /* FYPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYPlayerView.h; sourceTree = "<group>"; };
-		49C001261DAB4488006812B3 /* FYPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYPlayerView.m; sourceTree = "<group>"; };
-		49C001291DABBAB7006812B3 /* FYPushAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYPushAnimation.h; sourceTree = "<group>"; };
-		49C0012A1DABBAB7006812B3 /* FYPushAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYPushAnimation.m; sourceTree = "<group>"; };
-		49C0012C1DABBAC6006812B3 /* FYPopAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYPopAnimation.h; sourceTree = "<group>"; };
-		49C0012D1DABBAC6006812B3 /* FYPopAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYPopAnimation.m; sourceTree = "<group>"; };
 		49C5973F1DA20BCE0044C1C3 /* FYFooterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYFooterTableViewCell.h; sourceTree = "<group>"; };
 		49C597401DA20BCE0044C1C3 /* FYFooterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYFooterTableViewCell.m; sourceTree = "<group>"; };
 		49C597441DA23B070044C1C3 /* FYViewAllCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYViewAllCollectionViewCell.h; sourceTree = "<group>"; };
@@ -269,8 +256,6 @@
 		49D399031DA10BB400E3F6A2 /* NSString+FYTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FYTime.m"; sourceTree = "<group>"; };
 		49D399051DA10E7700E3F6A2 /* FYBannerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYBannerTableViewCell.h; sourceTree = "<group>"; };
 		49D399061DA10E7700E3F6A2 /* FYBannerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYBannerTableViewCell.m; sourceTree = "<group>"; };
-		49D53F1F1DAC6C9300C1CB25 /* FYVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYVideoView.h; sourceTree = "<group>"; };
-		49D53F201DAC6C9300C1CB25 /* FYVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYVideoView.m; sourceTree = "<group>"; };
 		49D7257B1DA897AF00DC1E1C /* FYCampaignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYCampaignViewController.h; sourceTree = "<group>"; };
 		49D7257C1DA897AF00DC1E1C /* FYCampaignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYCampaignViewController.m; sourceTree = "<group>"; };
 		49D7257E1DA89CB100DC1E1C /* FYCampaignData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYCampaignData.h; sourceTree = "<group>"; };
@@ -279,8 +264,8 @@
 		49D725831DA89D6E00DC1E1C /* FYCampaignTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYCampaignTableViewCell.m; sourceTree = "<group>"; };
 		49D7259B1DA90FCF00DC1E1C /* FYVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYVideoViewController.h; sourceTree = "<group>"; };
 		49D7259C1DA90FCF00DC1E1C /* FYVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYVideoViewController.m; sourceTree = "<group>"; };
-		49D725A11DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FYVideoDetailCollectionViewCell.h; path = ../../../Details/VideoDetail/View/FYVideoDetailCollectionViewCell.h; sourceTree = "<group>"; };
-		49D725A21DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FYVideoDetailCollectionViewCell.m; path = ../../../Details/VideoDetail/View/FYVideoDetailCollectionViewCell.m; sourceTree = "<group>"; };
+		49D725A11DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYVideoDetailCollectionViewCell.h; sourceTree = "<group>"; };
+		49D725A21DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYVideoDetailCollectionViewCell.m; sourceTree = "<group>"; };
 		49DA3E4B1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYAuthorSectionTableViewCell.h; sourceTree = "<group>"; };
 		49DA3E4C1DA4AFAF004B38A0 /* FYAuthorSectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYAuthorSectionTableViewCell.m; sourceTree = "<group>"; };
 		49DA3E511DA4DF8C004B38A0 /* FYDailyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYDailyViewController.h; sourceTree = "<group>"; };
@@ -545,7 +530,6 @@
 		4957549C1D9E54030090A18A /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				49C001281DABBA9C006812B3 /* Animation */,
 				49AC55EC1D9F6169008C5ADA /* Controller */,
 				49AC55EE1D9F61F7008C5ADA /* Model */,
 				49AC55ED1D9F61EF008C5ADA /* View */,
@@ -603,7 +587,6 @@
 		49AC55ED1D9F61EF008C5ADA /* View */ = {
 			isa = PBXGroup;
 			children = (
-				49D53F1E1DAC6C7B00C1CB25 /* VideoView */,
 				49C597431DA23A460044C1C3 /* CollectionViewCell */,
 				49C597421DA23A350044C1C3 /* TableViewCell */,
 			);
@@ -730,33 +713,6 @@
 			path = ChannelController;
 			sourceTree = "<group>";
 		};
-		49C000A31DAB2695006812B3 /* Play */ = {
-			isa = PBXGroup;
-			children = (
-				49C000A81DAB27EF006812B3 /* View */,
-				49C000A41DAB26A0006812B3 /* Controller */,
-			);
-			name = Play;
-			sourceTree = "<group>";
-		};
-		49C000A41DAB26A0006812B3 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				49C000A51DAB26BF006812B3 /* FYPlayViewController.h */,
-				49C000A61DAB26BF006812B3 /* FYPlayViewController.m */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		49C000A81DAB27EF006812B3 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				49C001251DAB4488006812B3 /* FYPlayerView.h */,
-				49C001261DAB4488006812B3 /* FYPlayerView.m */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
 		49C000EC1DAB2DCE006812B3 /* LC_AVPlayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -796,17 +752,6 @@
 			path = BH_AVPlayer;
 			sourceTree = "<group>";
 		};
-		49C001281DABBA9C006812B3 /* Animation */ = {
-			isa = PBXGroup;
-			children = (
-				49C001291DABBAB7006812B3 /* FYPushAnimation.h */,
-				49C0012A1DABBAB7006812B3 /* FYPushAnimation.m */,
-				49C0012C1DABBAC6006812B3 /* FYPopAnimation.h */,
-				49C0012D1DABBAC6006812B3 /* FYPopAnimation.m */,
-			);
-			name = Animation;
-			sourceTree = "<group>";
-		};
 		49C597421DA23A350044C1C3 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -841,23 +786,13 @@
 			path = CollectionViewCell;
 			sourceTree = "<group>";
 		};
-		49D53F1E1DAC6C7B00C1CB25 /* VideoView */ = {
-			isa = PBXGroup;
-			children = (
-				49D53F221DAC6C9F00C1CB25 /* VideoViewCell */,
-				49D53F1F1DAC6C9300C1CB25 /* FYVideoView.h */,
-				49D53F201DAC6C9300C1CB25 /* FYVideoView.m */,
-			);
-			name = VideoView;
-			sourceTree = "<group>";
-		};
 		49D53F221DAC6C9F00C1CB25 /* VideoViewCell */ = {
 			isa = PBXGroup;
 			children = (
 				49D725A11DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.h */,
 				49D725A21DA9236700DC1E1C /* FYVideoDetailCollectionViewCell.m */,
 			);
-			name = VideoViewCell;
+			path = VideoViewCell;
 			sourceTree = "<group>";
 		};
 		49D725781DA8977800DC1E1C /* CampaignDetail */ = {
@@ -909,6 +844,7 @@
 		49D725A01DA9234700DC1E1C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				49D53F221DAC6C9F00C1CB25 /* VideoViewCell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -916,7 +852,6 @@
 		49DA3E4E1DA4C32C004B38A0 /* Details */ = {
 			isa = PBXGroup;
 			children = (
-				49C000A31DAB2695006812B3 /* Play */,
 				49F113961DA64B59009803DB /* AuthorDetail */,
 				49D725781DA8977800DC1E1C /* CampaignDetail */,
 				49F1138D1DA64491009803DB /* CategoryDetail */,
@@ -1262,7 +1197,6 @@
 				495754701D9E530B0090A18A /* UIView+Frame.m in Sources */,
 				49B1F7901DA356D40063AAC4 /* FYHorizontalCardCollectionViewCell.m in Sources */,
 				4957541D1D9E4B200090A18A /* ViewController.m in Sources */,
-				49D53F211DAC6C9300C1CB25 /* FYVideoView.m in Sources */,
 				49C597491DA2573E0044C1C3 /* FYCatogeryCollectionViewCell.m in Sources */,
 				495754B41D9E85130090A18A /* FYAuthorPageViewController.m in Sources */,
 				495754681D9E530B0090A18A /* NSDictionary+Categories.m in Sources */,
@@ -1275,7 +1209,6 @@
 				49D398F81DA0BD5B00E3F6A2 /* FYLightTopicSectionCell.m in Sources */,
 				49B1F7A81DA392980063AAC4 /* FYTitleTableViewCell.m in Sources */,
 				4957541A1D9E4B200090A18A /* AppDelegate.m in Sources */,
-				49C000A71DAB26BF006812B3 /* FYPlayViewController.m in Sources */,
 				495754481D9E52B40090A18A /* FYBaseModel.m in Sources */,
 				49B82ABF1DA7AA8A00E4CF6E /* FYHonriZontalViewController.m in Sources */,
 				49D7257D1DA897AF00DC1E1C /* FYCampaignViewController.m in Sources */,
@@ -1291,7 +1224,6 @@
 				49B1F7B11DA395840063AAC4 /* FYVideoCollectionViewCell.m in Sources */,
 				4957543A1D9E51640090A18A /* XLImagePageDetailCell.m in Sources */,
 				49C597411DA20BCE0044C1C3 /* FYFooterTableViewCell.m in Sources */,
-				49C0012E1DABBAC6006812B3 /* FYPopAnimation.m in Sources */,
 				4957546B1D9E530B0090A18A /* NSString+Regex.m in Sources */,
 				495754AB1D9E83BA0090A18A /* FYGuideViewController.m in Sources */,
 				49F1137A1DA5F646009803DB /* FYLightTopicData.m in Sources */,
@@ -1321,12 +1253,10 @@
 				49B1F7961DA3572D0063AAC4 /* FYTagCollectionViewCell.m in Sources */,
 				49AC55F41D9FBB8B008C5ADA /* FYHomeData.m in Sources */,
 				49D399011DA0F9DB00E3F6A2 /* FYTextHeaderTableViewCell.m in Sources */,
-				49C001271DAB4488006812B3 /* FYPlayerView.m in Sources */,
 				49DA3E531DA4DF8C004B38A0 /* FYDailyViewController.m in Sources */,
 				49D399071DA10E7700E3F6A2 /* FYBannerTableViewCell.m in Sources */,
 				4957546D1D9E530B0090A18A /* UIButton+Block.m in Sources */,
 				49C001131DAB2DCE006812B3 /* BH_AVPlayerView.m in Sources */,
-				49C0012B1DABBAB7006812B3 /* FYPushAnimation.m in Sources */,
 				49B1F78D1DA353470063AAC4 /* FYDisData.m in Sources */,
 				495754B71D9E851F0090A18A /* FYMineViewController.m in Sources */,
 				49D398FE1DA0DB7700E3F6A2 /* FYTopicCollectionViewCell.m in Sources */,

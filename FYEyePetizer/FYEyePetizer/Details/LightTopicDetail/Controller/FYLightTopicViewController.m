@@ -14,6 +14,7 @@
 #import "FYFeedSectionCell.h"
 #import "NSString+FYTime.h"
 #import "FYHomeTags.h"
+#import "FYVideoViewController.h"
 
 @interface FYLightTopicViewController ()
 <
@@ -58,7 +59,7 @@ UITableViewDataSource
     NSString *str = [_actionUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSRange start = [str rangeOfString:@"="];
     NSRange end = [str rangeOfString:@"&"];
-    NSString *sub = [str substringWithRange:NSMakeRange(start.location, end.location-start.location+1)];
+    NSString *sub = [str substringWithRange:NSMakeRange(start.location, end.location- start.location + 1)];
     NSString *sub1 = [sub substringFromIndex:1];
     NSString *title = [sub1 substringToIndex:sub1.length - 1];
     self.navigationItem.title = title;
@@ -118,6 +119,19 @@ UITableViewDataSource
     NSString *time = [NSString stringChangeWithTimeFormat:itemData.duration];
     cell.text = [NSString stringWithFormat:@"#%@ / %@", itemData.category, time];
     return  cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+    if (videoViewController.videoArray.count > 0) {
+        [videoViewController.videoArray removeAllObjects];
+    }
+    videoViewController.videoArray = [_dataArray mutableCopy];
+    videoViewController.videoIndex = indexPath.row;
+    videoViewController.hidesBottomBarWhenPushed = YES;
+    [videoViewController setModalTransitionStyle:2];
+    [self presentViewController:videoViewController animated:YES completion:nil];
+    [videoViewController release];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
