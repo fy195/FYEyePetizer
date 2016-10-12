@@ -43,6 +43,9 @@
 		495754B11D9E85040090A18A /* FYDiscoveryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 495754B01D9E85040090A18A /* FYDiscoveryViewController.m */; };
 		495754B41D9E85130090A18A /* FYAuthorPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 495754B31D9E85130090A18A /* FYAuthorPageViewController.m */; };
 		495754B71D9E851F0090A18A /* FYMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 495754B61D9E851F0090A18A /* FYMineViewController.m */; };
+		497338CA1DADD46E00521702 /* FYLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 497338C91DADD46E00521702 /* FYLoginViewController.m */; };
+		497338CE1DADE8B400521702 /* FYContributeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 497338CD1DADE8B400521702 /* FYContributeViewController.m */; };
+		497338D21DAE183B00521702 /* FYFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 497338D11DAE183B00521702 /* FYFeedbackViewController.m */; };
 		49AC55F41D9FBB8B008C5ADA /* FYHomeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC55F31D9FBB8B008C5ADA /* FYHomeData.m */; };
 		49AC55FA1D9FBCC2008C5ADA /* FYHomeItemList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC55F91D9FBCC2008C5ADA /* FYHomeItemList.m */; };
 		49AC55FD1D9FBCE7008C5ADA /* FYHomeSectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC55FC1D9FBCE7008C5ADA /* FYHomeSectionList.m */; };
@@ -182,6 +185,12 @@
 		495754B31D9E85130090A18A /* FYAuthorPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYAuthorPageViewController.m; sourceTree = "<group>"; };
 		495754B51D9E851F0090A18A /* FYMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYMineViewController.h; sourceTree = "<group>"; };
 		495754B61D9E851F0090A18A /* FYMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYMineViewController.m; sourceTree = "<group>"; };
+		497338C81DADD46E00521702 /* FYLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYLoginViewController.h; sourceTree = "<group>"; };
+		497338C91DADD46E00521702 /* FYLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYLoginViewController.m; sourceTree = "<group>"; };
+		497338CC1DADE8B400521702 /* FYContributeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYContributeViewController.h; sourceTree = "<group>"; };
+		497338CD1DADE8B400521702 /* FYContributeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYContributeViewController.m; sourceTree = "<group>"; };
+		497338D01DAE183B00521702 /* FYFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYFeedbackViewController.h; sourceTree = "<group>"; };
+		497338D11DAE183B00521702 /* FYFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYFeedbackViewController.m; sourceTree = "<group>"; };
 		49AC55F21D9FBB8B008C5ADA /* FYHomeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYHomeData.h; sourceTree = "<group>"; };
 		49AC55F31D9FBB8B008C5ADA /* FYHomeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYHomeData.m; sourceTree = "<group>"; };
 		49AC55F81D9FBCC2008C5ADA /* FYHomeItemList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYHomeItemList.h; sourceTree = "<group>"; };
@@ -393,6 +402,9 @@
 		4957542F1D9E51170090A18A /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				497338CF1DAE17F300521702 /* Feedback */,
+				497338CB1DADE81B00521702 /* Contribute */,
+				497338C71DADD43A00521702 /* Login */,
 				495754AD1D9E84DF0090A18A /* Author */,
 				495754AC1D9E84D00090A18A /* Discovery */,
 				495754A81D9E83870090A18A /* GuidePage */,
@@ -573,6 +585,33 @@
 				495754B61D9E851F0090A18A /* FYMineViewController.m */,
 			);
 			path = Mine;
+			sourceTree = "<group>";
+		};
+		497338C71DADD43A00521702 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				497338C81DADD46E00521702 /* FYLoginViewController.h */,
+				497338C91DADD46E00521702 /* FYLoginViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		497338CB1DADE81B00521702 /* Contribute */ = {
+			isa = PBXGroup;
+			children = (
+				497338CC1DADE8B400521702 /* FYContributeViewController.h */,
+				497338CD1DADE8B400521702 /* FYContributeViewController.m */,
+			);
+			name = Contribute;
+			sourceTree = "<group>";
+		};
+		497338CF1DAE17F300521702 /* Feedback */ = {
+			isa = PBXGroup;
+			children = (
+				497338D01DAE183B00521702 /* FYFeedbackViewController.h */,
+				497338D11DAE183B00521702 /* FYFeedbackViewController.m */,
+			);
+			name = Feedback;
 			sourceTree = "<group>";
 		};
 		49AC55EC1D9F6169008C5ADA /* Controller */ = {
@@ -1198,6 +1237,7 @@
 				49B1F7901DA356D40063AAC4 /* FYHorizontalCardCollectionViewCell.m in Sources */,
 				4957541D1D9E4B200090A18A /* ViewController.m in Sources */,
 				49C597491DA2573E0044C1C3 /* FYCatogeryCollectionViewCell.m in Sources */,
+				497338D21DAE183B00521702 /* FYFeedbackViewController.m in Sources */,
 				495754B41D9E85130090A18A /* FYAuthorPageViewController.m in Sources */,
 				495754681D9E530B0090A18A /* NSDictionary+Categories.m in Sources */,
 				49D399041DA10BB400E3F6A2 /* NSString+FYTime.m in Sources */,
@@ -1226,11 +1266,13 @@
 				49C597411DA20BCE0044C1C3 /* FYFooterTableViewCell.m in Sources */,
 				4957546B1D9E530B0090A18A /* NSString+Regex.m in Sources */,
 				495754AB1D9E83BA0090A18A /* FYGuideViewController.m in Sources */,
+				497338CE1DADE8B400521702 /* FYContributeViewController.m in Sources */,
 				49F1137A1DA5F646009803DB /* FYLightTopicData.m in Sources */,
 				49AC55FA1D9FBCC2008C5ADA /* FYHomeItemList.m in Sources */,
 				4957546E1D9E530B0090A18A /* UIColor+Categories.m in Sources */,
 				495754A21D9E543D0090A18A /* FYHomeViewController.m in Sources */,
 				495754671D9E530B0090A18A /* NSDate+EasyExtend.mm in Sources */,
+				497338CA1DADD46E00521702 /* FYLoginViewController.m in Sources */,
 				49D398F21DA0AD9500E3F6A2 /* FYHomeTags.m in Sources */,
 				495754981D9E53C90090A18A /* AppStoreUtils.m in Sources */,
 				49B1F7931DA3571F0063AAC4 /* FYImageCollectionViewCell.m in Sources */,

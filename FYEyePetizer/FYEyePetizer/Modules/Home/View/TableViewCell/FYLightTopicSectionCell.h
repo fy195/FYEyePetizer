@@ -14,7 +14,7 @@
 @protocol FYLightTopicHeaderDelegate <NSObject>
 
 @required
-- (void)getInfoFromTouchImage:(NSNumber *)imageId sectionListType:(NSString *)type;
+- (void)getInfoFromTouchImage:(NSNumber *)imageId sectionListType:(NSString *)type actionUrl:(NSString *)actionUrl;
 - (void)getArrayFromCell:(NSArray *)videoArray;
 - (void)getCurrentImageId:(NSNumber *)imageId actionUrl:(NSString *)actionUrl;
 @end

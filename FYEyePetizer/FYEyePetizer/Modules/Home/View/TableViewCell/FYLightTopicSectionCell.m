@@ -149,7 +149,7 @@ UICollectionViewDataSource
 }
 
 - (void)tapAction:(UITapGestureRecognizer *)sender {
-    [self.tapDelegate getInfoFromTouchImage:[_itemData.header objectForKey:@"id"] sectionListType:_sectionList.type];
+    [self.tapDelegate getInfoFromTouchImage:[_itemData.header objectForKey:@"id"] sectionListType:_sectionList.type actionUrl:[_itemData.header objectForKey:@"actionUrl"]];
 }
 
 - (void)awakeFromNib {

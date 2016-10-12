@@ -28,6 +28,7 @@
 #import "FYCategoryViewController.h"
 #import "FYAuthorViewController.h"
 #import "FYVideoViewController.h"
+#import "FYHonriZontalViewController.h"
 
 @interface FYHomeViewController ()
 <
@@ -274,7 +275,7 @@ FYAuthorCellDelegete
                 NSString *time = [NSString stringChangeWithTimeFormat:itemData.duration];
                 cell.text = [NSString stringWithFormat:@"#%@ / %@", itemData.category, time];
                 return  cell;
-            }else if ([itemList.type isEqualToString:@"banner"]){
+            }else if ([itemList.type isEqualToString:@"banner1"]){
             // banner类型
                 static NSString *const bannerCell = @"bannerCell";
                 FYBannerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bannerCell];
@@ -522,7 +523,8 @@ FYAuthorCellDelegete
     if ([sectionList.type isEqualToString:@"feedSection"]) {
         if (indexPath.row < sectionList.itemList.count) {
             FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
-            FYHomeItemData *itemData = itemList.data;
+            if ([itemList.type isEqualToString:@"video"]){
+                FYHomeItemData *itemData = itemList.data;
             if (![itemData.dataType isEqualToString:@"TextHeader"]) {
                 FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
                 if (videoViewController.videoArray.count > 0) {
@@ -530,20 +532,33 @@ FYAuthorCellDelegete
                 }
                 NSMutableArray *array = [NSMutableArray array];
                 [array addObjectsFromArray:sectionList.itemList];
+                NSArray *listArray = [NSArray arrayWithArray:array];
                 
-                for (FYHomeItemList *list in array) {
+                for (FYHomeItemList *list in listArray) {
                     NSInteger index = 0;
                     if ([list.type isEqualToString:@"textHeader"]) {
                         index = [array indexOfObject:list];
                         [array removeObjectAtIndex:index];
                     }
+                    if ([list.type isEqualToString:@"banner1"]) {
+                        index = [array indexOfObject:list];
+                        [array removeObjectAtIndex:index];
+                    }
                 }
                 videoViewController.videoArray = [array mutableCopy];
-                videoViewController.videoIndex = indexPath.row;
+                videoViewController.videoIndex = indexPath.row - 1;
                 videoViewController.hidesBottomBarWhenPushed = YES;
                 [videoViewController setModalTransitionStyle:2];
                 [self presentViewController:videoViewController animated:YES completion:nil];
                 [videoViewController release];
+            }
+            }else {
+                FYHonriZontalViewController *honrizontalViewController = [[FYHonriZontalViewController alloc] init];
+                honrizontalViewController.bannerId = itemList.data.dataId;
+                honrizontalViewController.actionUrl = itemList.data.actionUrl;
+                honrizontalViewController.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:honrizontalViewController animated:YES];
+                [honrizontalViewController release];
             }
         }else {
             NSString *type = [sectionList.footer objectForKey:@"type"];
@@ -746,32 +761,20 @@ FYAuthorCellDelegete
     [authorViewController release];
 }
 
-- (void)getCategoryId:(NSNumber *)categoryId {
+- (void)getCategoryId:(NSNumber *)categoryId actionUrl:(NSString *)actionUrl{
     FYCategoryViewController *categoryViewController = [[FYCategoryViewController alloc] init];
     categoryViewController.categoryId = categoryId;
+    categoryViewController.actionUrl = actionUrl;
     categoryViewController.hidesBottomBarWhenPushed = YES;
-    for (FYHomeSectionList *sectionList in _dataArray) {
-        for (FYHomeItemList *itemList in sectionList.itemList) {
-            if ([itemList.data.header objectForKey:@"id"] == categoryId) {
-                categoryViewController.actionUrl = [itemList.data.header objectForKey:@"actionUrl"];
-            }
-        }
-    }
     [self.navigationController pushViewController:categoryViewController animated:YES];
     [categoryViewController release];
 }
 
-- (void)getInfoFromTouchImage:(NSNumber *)imageId sectionListType:(NSString *)type {
+- (void)getInfoFromTouchImage:(NSNumber *)imageId sectionListType:(NSString *)type actionUrl:(NSString *)actionUrl{
     if ([type isEqualToString:@"lightTopicSection"]) {
         FYLightTopicViewController *lightTopicViewController = [[FYLightTopicViewController alloc] init];
         lightTopicViewController.imageId = imageId;
-        for (FYHomeSectionList *sectionList in _dataArray) {
-            for (FYHomeItemList *itemList in sectionList.itemList) {
-                if ([itemList.data.header objectForKey:@"id"] == imageId) {
-                    lightTopicViewController.actionUrl = [itemList.data.header objectForKey:@"actionUrl"];
-                }
-            }
-        }
+        lightTopicViewController.actionUrl = actionUrl;
         lightTopicViewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:lightTopicViewController animated:YES];
         [lightTopicViewController release];
@@ -788,13 +791,7 @@ FYAuthorCellDelegete
         FYTagViewController *tagViewController = [[FYTagViewController alloc] init];
         tagViewController.hidesBottomBarWhenPushed = YES;
         tagViewController.imageId = imageId;
-        for (FYHomeSectionList *sectionList in _dataArray) {
-            for (FYHomeItemList *itemList in sectionList.itemList) {
-                if ([itemList.data.header objectForKey:@"id"] == imageId) {
-                    tagViewController.actionUrl = [itemList.data.header objectForKey:@"actionUrl"];
-                }
-            }
-        }
+        tagViewController.actionUrl = actionUrl;
         [self.navigationController pushViewController:tagViewController animated:YES];
         [tagViewController release];
     }

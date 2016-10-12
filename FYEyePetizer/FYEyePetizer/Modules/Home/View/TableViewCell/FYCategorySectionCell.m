@@ -168,7 +168,7 @@ UICollectionViewDataSource
 }
 
 - (void)tapAction:(UITapGestureRecognizer *)sender {
-    [self.categoryDelegate getCategoryId:[_itemData.header objectForKey:@"id"]];
+    [self.categoryDelegate getCategoryId:[_itemData.header objectForKey:@"id"] actionUrl:[_itemData.header objectForKey:@"actionUrl"]];
 }
 
 - (void)layoutSubviews {

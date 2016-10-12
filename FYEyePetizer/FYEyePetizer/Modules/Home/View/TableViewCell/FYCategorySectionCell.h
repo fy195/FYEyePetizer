@@ -12,7 +12,7 @@
 @protocol FYCategoryCellDelegate <NSObject>
 
 @required
-- (void)getCategoryId:(NSNumber *)categoryId;
+- (void)getCategoryId:(NSNumber *)categoryId actionUrl:(NSString *)actionUrl;
 - (void)getCategoryArray:(NSArray *)videoArray WithIndex:(NSInteger)index;
 
 @end
