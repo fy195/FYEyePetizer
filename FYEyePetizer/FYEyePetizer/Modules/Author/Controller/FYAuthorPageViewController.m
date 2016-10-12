@@ -17,6 +17,7 @@ static NSString *const videoCell = @"videoCell";
 #import "FYVideoCollectionTableViewCell.h"
 #import "NSString+FY_MD5.h"
 #import "FYAuthorViewController.h"
+#import "FYVideoViewController.h"
 
 @interface FYAuthorPageViewController ()
 <
@@ -33,6 +34,8 @@ FYVideoTableViewCellDelegate
 
 @implementation FYAuthorPageViewController
 - (void)dealloc {
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
     [_tableView release];
     [_AllData release];
     [_next release];
@@ -163,6 +166,17 @@ FYVideoTableViewCellDelegate
     authorController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:authorController animated:YES];
     [authorController release];
+}
+
+- (void)getVideoArray:(NSArray *)videoArray index:(NSInteger)index {
+    FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+    if (videoViewController.videoArray.count > 0) {
+        [videoViewController.videoArray removeAllObjects];
+    }
+    videoViewController.videoArray = [videoArray mutableCopy];
+    videoViewController.videoIndex = index;
+    [self presentViewController:videoViewController animated:YES completion:nil];
+    [videoViewController release];
 }
 
 - (void)Loading{

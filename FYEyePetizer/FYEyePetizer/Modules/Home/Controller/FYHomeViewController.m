@@ -520,7 +520,7 @@ FYAuthorCellDelegete
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     FYHomeSectionList *sectionList = _dataArray[indexPath.section];
-    if ([sectionList.type isEqualToString:@"feedSection"]) {
+    if ([sectionList.type isEqualToString:@"feedSection"] ) {
         if (indexPath.row < sectionList.itemList.count) {
             FYHomeItemList *itemList = sectionList.itemList[indexPath.row];
             if ([itemList.type isEqualToString:@"video"]){
@@ -570,9 +570,17 @@ FYAuthorCellDelegete
                 [dailyViewController release];
             }
         }
-
     }else {
-        
+        FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+        if (videoViewController.videoArray.count > 0) {
+            [videoViewController.videoArray removeAllObjects];
+        }
+        videoViewController.videoArray = [sectionList.itemList mutableCopy];
+        videoViewController.videoIndex = indexPath.row;
+        videoViewController.hidesBottomBarWhenPushed = YES;
+        [videoViewController setModalTransitionStyle:2];
+        [self presentViewController:videoViewController animated:YES completion:nil];
+        [videoViewController release];
     }
     
 }

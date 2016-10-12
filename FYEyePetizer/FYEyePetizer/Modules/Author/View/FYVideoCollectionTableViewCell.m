@@ -76,10 +76,11 @@ UICollectionViewDataSource
         [_button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [_backView addSubview:_button];
         
-        [self createView];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
         [_backView addGestureRecognizer:tap];
         [tap release];
+        
+        [self createView];
     }
     return  self;
 }
@@ -110,7 +111,6 @@ UICollectionViewDataSource
         if ([itemList.type isEqualToString:@"video"]) {
             FYVideoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:videoCell forIndexPath:indexPath];
             FYHomeItemData *cellData = itemList.data;
-            
             cell.coverImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[cellData.cover objectForKey:@"feed"]]]];
             cell.title = cellData.title;
             NSString *time = [NSString stringChangeWithTimeFormat:cellData.duration];
@@ -124,7 +124,7 @@ UICollectionViewDataSource
 
 - (void)createView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake(SCREEN_WIDTH - 65, self.height - _backView.height - 20);
+    flowLayout.itemSize = CGSizeMake(SCREEN_WIDTH - 65, 240);
     flowLayout.minimumLineSpacing = 0;
     flowLayout.minimumInteritemSpacing = 0;
     flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -142,7 +142,6 @@ UICollectionViewDataSource
     [flowLayout release];
     [_videoCollectionView release];
 }
-
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -224,6 +223,12 @@ UICollectionViewDataSource
 
 - (void)tapAction:(UITapGestureRecognizer *)sender {
     [self.delegate getPgcId:[_data.header objectForKey:@"id"] actionUrl:[_data.header objectForKey:@"actionUrl"]];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (_data != nil) {
+        [self.delegate getVideoArray:_data.itemList index:indexPath.row];
+    }
 }
 
 - (void)awakeFromNib {

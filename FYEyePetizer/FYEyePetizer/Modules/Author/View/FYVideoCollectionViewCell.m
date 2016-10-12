@@ -25,6 +25,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.cover = [[UIImageView alloc] initWithFrame:CGRectZero];
+        _cover.userInteractionEnabled = YES;
         [self addSubview:_cover];
         [_cover release];
         

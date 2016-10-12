@@ -46,6 +46,7 @@
 		497338CA1DADD46E00521702 /* FYLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 497338C91DADD46E00521702 /* FYLoginViewController.m */; };
 		497338CE1DADE8B400521702 /* FYContributeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 497338CD1DADE8B400521702 /* FYContributeViewController.m */; };
 		497338D21DAE183B00521702 /* FYFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 497338D11DAE183B00521702 /* FYFeedbackViewController.m */; };
+		497338D91DAE67A300521702 /* FYSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 497338D81DAE67A300521702 /* FYSearchViewController.m */; };
 		49AC55F41D9FBB8B008C5ADA /* FYHomeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC55F31D9FBB8B008C5ADA /* FYHomeData.m */; };
 		49AC55FA1D9FBCC2008C5ADA /* FYHomeItemList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC55F91D9FBCC2008C5ADA /* FYHomeItemList.m */; };
 		49AC55FD1D9FBCE7008C5ADA /* FYHomeSectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC55FC1D9FBCE7008C5ADA /* FYHomeSectionList.m */; };
@@ -177,6 +178,8 @@
 		497338CD1DADE8B400521702 /* FYContributeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYContributeViewController.m; sourceTree = "<group>"; };
 		497338D01DAE183B00521702 /* FYFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYFeedbackViewController.h; sourceTree = "<group>"; };
 		497338D11DAE183B00521702 /* FYFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYFeedbackViewController.m; sourceTree = "<group>"; };
+		497338D71DAE67A300521702 /* FYSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYSearchViewController.h; sourceTree = "<group>"; };
+		497338D81DAE67A300521702 /* FYSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYSearchViewController.m; sourceTree = "<group>"; };
 		49AC55F21D9FBB8B008C5ADA /* FYHomeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYHomeData.h; sourceTree = "<group>"; };
 		49AC55F31D9FBB8B008C5ADA /* FYHomeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FYHomeData.m; sourceTree = "<group>"; };
 		49AC55F81D9FBCC2008C5ADA /* FYHomeItemList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FYHomeItemList.h; sourceTree = "<group>"; };
@@ -583,6 +586,15 @@
 			path = Feedback;
 			sourceTree = "<group>";
 		};
+		497338D31DAE630600521702 /* SearchViewController */ = {
+			isa = PBXGroup;
+			children = (
+				497338D71DAE67A300521702 /* FYSearchViewController.h */,
+				497338D81DAE67A300521702 /* FYSearchViewController.m */,
+			);
+			name = SearchViewController;
+			sourceTree = "<group>";
+		};
 		49AC55EC1D9F6169008C5ADA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -623,6 +635,7 @@
 		49B1F7881DA34FDD0063AAC4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				497338D31DAE630600521702 /* SearchViewController */,
 				495754AF1D9E85040090A18A /* FYDiscoveryViewController.h */,
 				495754B01D9E85040090A18A /* FYDiscoveryViewController.m */,
 			);
@@ -1166,6 +1179,7 @@
 				49F1139E1DA64BA1009803DB /* FYAuthorDetailData.m in Sources */,
 				49D398F81DA0BD5B00E3F6A2 /* FYLightTopicSectionCell.m in Sources */,
 				49B1F7A81DA392980063AAC4 /* FYTitleTableViewCell.m in Sources */,
+				497338D91DAE67A300521702 /* FYSearchViewController.m in Sources */,
 				4957541A1D9E4B200090A18A /* AppDelegate.m in Sources */,
 				495754481D9E52B40090A18A /* FYBaseModel.m in Sources */,
 				49B82ABF1DA7AA8A00E4CF6E /* FYHonriZontalViewController.m in Sources */,

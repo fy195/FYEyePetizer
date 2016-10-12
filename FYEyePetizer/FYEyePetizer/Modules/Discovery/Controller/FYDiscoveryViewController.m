@@ -20,6 +20,8 @@
 #import "FYCampaignViewController.h"
 #import "FYLightTopicViewController.h"
 #import "FYTagViewController.h"
+#import "FYSearchViewController.h"
+#import "NSString+FY_MD5.h"
 
 static NSString *const horizontalCell = @"horizontalCell";
 static NSString *const imageCell = @"imageCell";
@@ -37,6 +39,7 @@ FYHonrizontalCellDelegate
 
 @implementation FYDiscoveryViewController
 - (void)dealloc {
+    [_AllData release];
     [_collectionView release];
     [super dealloc];
 }
@@ -49,6 +52,10 @@ FYHonrizontalCellDelegate
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = @"Eyepetizer";
     self.navigationItem.titleView = titleLabel;
+    
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"搜索"] style:UIBarButtonItemStylePlain target:self action:@selector(searchAction)];
+    self.navigationItem.rightBarButtonItem = rightButton;
+    [rightButton release];
 }
 
 - (void)viewDidLoad {
@@ -59,8 +66,13 @@ FYHonrizontalCellDelegate
 }
 
 - (void)getData {
+    NSDate *datenow =[NSDate date];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate:datenow];
+    NSDate *localeDate = [datenow  dateByAddingTimeInterval: interval];
+    NSString *timeStamp = [NSString stringWithFormat:@"%ld", (long)[localeDate timeIntervalSince1970]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlString = @"http://baobab.wandoujia.com/api/v3/discovery?_s=f8de34d32e8db0f6f4310967e800fb5e&f=iphone&net=wifi&p_product=EYEPETIZER_IOS&u=227c329b8529f03c7ec60f7bba44edcfe0b12021&v=2.7.0&vc=1305";
+    NSString *urlString = [NSString stringWithFormat:@"http://baobab.wandoujia.com/api/v3/discovery?_s=%@&f=iphone&net=wifi&p_product=EYEPETIZER_IOS&u=227c329b8529f03c7ec60f7bba44edcfe0b12021&v=2.7.0&vc=1305", [timeStamp fy_stringByMD5Bit32]];
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         self.AllData = [FYDisData modelWithDic:responseObject];
         [_collectionView reloadData];
@@ -68,7 +80,6 @@ FYHonrizontalCellDelegate
         NSLog(@"网络请求失败");
     }];
     [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
-
 }
 
 - (void)createView {
@@ -191,6 +202,15 @@ FYHonrizontalCellDelegate
         [self.navigationController pushViewController:channelViewController animated:YES];
         [channelViewController release];
     }
+}
+
+- (void)searchAction{
+    FYSearchViewController *searchViewController = [[FYSearchViewController alloc] init];
+//    self.definesPresentationContext = YES;
+    searchViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    searchViewController.hidesBottomBarWhenPushed = YES;
+    [self presentViewController:searchViewController animated:YES completion:nil];
+    [searchViewController release];
 }
 
 - (void)didReceiveMemoryWarning {

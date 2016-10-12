@@ -12,7 +12,7 @@
 @protocol FYVideoTableViewCellDelegate <NSObject>
 @required
 - (void)getPgcId:(NSNumber *)pgcId actionUrl: (NSString *)actionUrl;
-
+- (void)getVideoArray:(NSArray *)videoArray index:(NSInteger)index;
 @end
 @interface FYVideoCollectionTableViewCell : UITableViewCell
 
