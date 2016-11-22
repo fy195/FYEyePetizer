@@ -81,7 +81,7 @@ UITableViewDataSource
         self.next = _allData.nextPageUrl;
         [_tableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"网络请求失败");
+        //NSLog(@"网络请求失败");
     }];
     [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
 }
@@ -95,7 +95,7 @@ UITableViewDataSource
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 240;
+    return 200;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -109,7 +109,7 @@ UITableViewDataSource
     if (nil == cell) {
         cell = [[[FYCampaignTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:campaignCell] autorelease];
     }
-    cell.campaignImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:itemData.image]]];
+    cell.campaignImage = itemData.image;
     return  cell;
 }
 
@@ -166,7 +166,7 @@ UITableViewDataSource
             [_dataArray addObjectsFromArray:_allData.itemList];
             [_tableView reloadData];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"网络请求失败");
+            //NSLog(@"网络请求失败");
         }];
         [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
 }

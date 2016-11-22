@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface FYCampaignTableViewCell : UITableViewCell
-@property (nonatomic, retain) UIImage *campaignImage;
+@property (nonatomic, retain) NSString *campaignImage;
 @end

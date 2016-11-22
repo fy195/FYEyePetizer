@@ -11,6 +11,7 @@
 #import "FYCatogeryCollectionViewCell.h"
 #import "FYHomeItemList.h"
 #import "NSString+FYTime.h"
+#import "FYBannerTableViewCell.h"
 
 static NSString *const categoryCell = @"categoryCell";
 @interface FYCategorySectionCell ()
@@ -135,7 +136,7 @@ UICollectionViewDataSource
     if (nil != _itemData) {
         FYHomeItemList *itemList = _currentArray[indexPath.section];
         FYCatogeryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:categoryCell forIndexPath:indexPath];
-        cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemList.data.cover objectForKey:@"feed"]]]];
+        cell.image = [itemList.data.cover objectForKey:@"feed"];
         cell.itemTitle = itemList.data.title;
         NSString *time = [NSString stringChangeWithTimeFormat:itemList.data.duration];
         cell.itemTag = [NSString stringWithFormat:@"#%@ / %@", itemList.data.category, time];

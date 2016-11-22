@@ -38,5 +38,6 @@
 @property (nonatomic, copy) NSString *actionUrl;
 @property (nonatomic, copy) NSString *icon;
 @property (nonatomic, copy) NSString *subTitle;
+@property (nonatomic, copy) NSString *content;
 
 @end

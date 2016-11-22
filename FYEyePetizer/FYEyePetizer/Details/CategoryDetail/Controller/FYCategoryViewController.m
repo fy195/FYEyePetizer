@@ -14,6 +14,8 @@
 #import "FYFeedSectionCell.h"
 #import "NSString+FYTime.h"
 #import "FYVideoViewController.h"
+#import "FYBannerTableViewCell.h"
+#import "FYHonriZontalViewController.h"
 
 @interface FYCategoryViewController ()
 <
@@ -108,13 +110,13 @@ UITableViewDataSource
         }
         [_tableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"网络请求失败");
+        //NSLog(@"网络请求失败");
     }];
     [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 220;
+    return 200;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -127,6 +129,15 @@ UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([_currentStrategy isEqualToString:@"date"]) {
         FYHomeItemList *itemList = _dateArray[indexPath.row];
+        if ([itemList.type isEqualToString:@"banner1"]) {
+            static NSString *const bannerCell = @"bannerCell";
+            FYBannerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bannerCell];
+            if (nil == cell) {
+                cell = [[[FYBannerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:bannerCell] autorelease];
+            }
+            cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:itemList.data.image]]];
+            return cell;
+        }
         FYHomeItemData *itemData = itemList.data;
         static NSString *const videoCell = @"videoCell";
         FYFeedSectionCell *cell = [tableView dequeueReusableCellWithIdentifier:videoCell];
@@ -134,13 +145,23 @@ UITableViewDataSource
             cell = [[FYFeedSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:videoCell];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"feed"]]]];
+        cell.image = [itemData.cover objectForKey:@"feed"];
         cell.title = itemData.title;
         NSString *time = [NSString stringChangeWithTimeFormat:itemData.duration];
         cell.text = [NSString stringWithFormat:@"#%@ / %@", itemData.category, time];
         return  cell;
     }
+    
     FYHomeItemList *itemList = _shareArray[indexPath.row];
+    if ([itemList.type isEqualToString:@"banner1"]) {
+        static NSString *const bannerCell = @"bannerCell";
+        FYBannerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bannerCell];
+        if (nil == cell) {
+            cell = [[[FYBannerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:bannerCell] autorelease];
+        }
+        cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:itemList.data.image]]];
+        return cell;
+    }
     FYHomeItemData *itemData = itemList.data;
     static NSString *const videoCell = @"videoCell";
     FYFeedSectionCell *cell = [tableView dequeueReusableCellWithIdentifier:videoCell];
@@ -148,7 +169,7 @@ UITableViewDataSource
         cell = [[FYFeedSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:videoCell];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"feed"]]]];
+    cell.image = [itemData.cover objectForKey:@"feed"];
     cell.title = itemData.title;
     NSString *time = [NSString stringChangeWithTimeFormat:itemData.duration];
     cell.text = [NSString stringWithFormat:@"#%@ / %@", itemData.category, time];
@@ -157,29 +178,47 @@ UITableViewDataSource
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([_currentStrategy isEqualToString:@"date"]) {
-        FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
-        if (videoViewController.videoArray.count > 0) {
-            [videoViewController.videoArray removeAllObjects];
+        FYHomeItemList *itemList = _dateArray[indexPath.row];
+        if ([itemList.type isEqualToString:@"banner1"]) {
+            FYHonriZontalViewController *honrizontalViewController = [[FYHonriZontalViewController alloc] init];
+            honrizontalViewController.bannerId = itemList.data.dataId;
+            honrizontalViewController.actionUrl = itemList.data.actionUrl;
+            [self.navigationController pushViewController:honrizontalViewController animated:YES];
+            [honrizontalViewController release];
+        }else {
+            FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+            if (videoViewController.videoArray.count > 0) {
+                [videoViewController.videoArray removeAllObjects];
+            }
+            videoViewController.videoArray = [_dateArray mutableCopy];
+            videoViewController.videoIndex = indexPath.row;
+            videoViewController.hidesBottomBarWhenPushed = YES;
+            [videoViewController setModalTransitionStyle:2];
+            [self presentViewController:videoViewController animated:YES completion:nil];
+            [videoViewController release];
         }
-        videoViewController.videoArray = [_dateArray mutableCopy];
-        videoViewController.videoIndex = indexPath.row;
-        videoViewController.hidesBottomBarWhenPushed = YES;
-        [videoViewController setModalTransitionStyle:2];
-        [self presentViewController:videoViewController animated:YES completion:nil];
-        [videoViewController release];
     }else {
-        FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
-        if (videoViewController.videoArray.count > 0) {
-            [videoViewController.videoArray removeAllObjects];
-        }
-        videoViewController.videoArray = [_shareArray mutableCopy];
-        videoViewController.videoIndex = indexPath.row;
-        videoViewController.hidesBottomBarWhenPushed = YES;
-        [videoViewController setModalTransitionStyle:2];
-        [self presentViewController:videoViewController animated:YES completion:nil];
-        [videoViewController release];
-    }
+        FYHomeItemList *itemList = _shareArray[indexPath.row];
+        if ([itemList.type isEqualToString:@"banner1"]) {
+            FYHonriZontalViewController *honrizontalViewController = [[FYHonriZontalViewController alloc] init];
+            honrizontalViewController.bannerId = itemList.data.dataId;
+            honrizontalViewController.actionUrl = itemList.data.actionUrl;
+            [self.navigationController pushViewController:honrizontalViewController animated:YES];
+            [honrizontalViewController release];
+        }else {
 
+            FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+            if (videoViewController.videoArray.count > 0) {
+                [videoViewController.videoArray removeAllObjects];
+            }
+            videoViewController.videoArray = [_shareArray mutableCopy];
+            videoViewController.videoIndex = indexPath.row;
+            videoViewController.hidesBottomBarWhenPushed = YES;
+            [videoViewController setModalTransitionStyle:2];
+            [self presentViewController:videoViewController animated:YES completion:nil];
+            [videoViewController release];
+        }
+    }
 }
 
 - (void)createView {

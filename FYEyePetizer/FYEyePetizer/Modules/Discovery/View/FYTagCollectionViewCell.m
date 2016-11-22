@@ -7,6 +7,7 @@
 //
 
 #import "FYTagCollectionViewCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface FYTagCollectionViewCell ()
 @property (nonatomic, retain) UIImageView *tagImageView;
@@ -47,12 +48,12 @@
     return self;
 }
 
-- (void)setImage:(UIImage *)image {
+- (void)setImage:(NSString *)image {
     if (_image != image) {
         [_image release];
         _image = [image retain];
     }
-    _tagImageView.image = image;
+    [_tagImageView sd_setImageWithURL:[NSURL URLWithString:image]];
 }
 
 - (void)setItemTag:(NSString *)itemTag {

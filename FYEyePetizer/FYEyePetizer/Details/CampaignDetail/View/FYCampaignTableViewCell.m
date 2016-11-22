@@ -7,6 +7,7 @@
 //
 
 #import "FYCampaignTableViewCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface FYCampaignTableViewCell ()
 @property (nonatomic, retain) UIImageView *campaignImageView;
@@ -32,12 +33,12 @@
     _campaignImageView.frame = CGRectMake(0, 0, SCREEN_WIDTH, self.height);
 }
 
-- (void)setCampaignImage:(UIImage *)campaignImage {
+- (void)setCampaignImage:(NSString *)campaignImage {
     if (_campaignImage != campaignImage) {
         [_campaignImage release];
         _campaignImage = [campaignImage retain];
     }
-    _campaignImageView.image = _campaignImage;
+    [_campaignImageView sd_setImageWithURL:[NSURL URLWithString:campaignImage]];
 }
 
 - (void)awakeFromNib {

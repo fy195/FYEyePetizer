@@ -13,7 +13,7 @@
 #define DEBUG 1
 
 #ifdef DEBUG
-#define DLog(fmt, ...) NSLog((fmt), ##__VA_ARGS__);
+#define DLog(fmt, ...) //NSLog((fmt), ##__VA_ARGS__);
 #else
 #define DLog(...)
 #endif

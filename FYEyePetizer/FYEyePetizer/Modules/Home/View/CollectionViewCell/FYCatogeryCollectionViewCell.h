@@ -10,7 +10,7 @@
 
 @interface FYCatogeryCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, retain) UIImage *image;
+@property (nonatomic, retain) NSString *image;
 @property (nonatomic, copy) NSString *itemTitle;
 @property (nonatomic, copy) NSString *itemTag;
 

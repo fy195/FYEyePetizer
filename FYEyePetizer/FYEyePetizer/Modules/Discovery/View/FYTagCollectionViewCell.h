@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface FYTagCollectionViewCell : UICollectionViewCell
-@property (nonatomic, retain) UIImage *image;
+@property (nonatomic, retain) NSString *image;
 @property (nonatomic, copy) NSString *itemTag;
 @end

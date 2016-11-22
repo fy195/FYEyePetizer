@@ -90,14 +90,13 @@ FYAuthorCellDelegete
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
     [self.view addSubview:_tableView];
-
     [_tableView release];
     
     // 顶部视图
     self.headerView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Home_header"]];
     [self.view addSubview:_headerView];
     _headerView.userInteractionEnabled = YES;
-    _headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 200);
+    _headerView.frame = CGRectMake(0, 20, SCREEN_WIDTH, 200);
     _headerView.contentMode = UIViewContentModeScaleAspectFill;
     [_headerView release];
     
@@ -183,7 +182,7 @@ FYAuthorCellDelegete
         [_tableView reloadData];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"网络请求失败");
+        //NSLog(@"网络请求失败");
     }];
     [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
 }
@@ -270,7 +269,7 @@ FYAuthorCellDelegete
                     cell = [[[FYFeedSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:feedCell] autorelease];
                 }
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"feed"]]]];
+                cell.image = [itemData.cover objectForKey:@"feed"];
                 cell.title = itemData.title;
                 NSString *time = [NSString stringChangeWithTimeFormat:itemData.duration];
                 cell.text = [NSString stringWithFormat:@"#%@ / %@", itemData.category, time];
@@ -546,7 +545,7 @@ FYAuthorCellDelegete
                     }
                 }
                 videoViewController.videoArray = [array mutableCopy];
-                videoViewController.videoIndex = indexPath.row - 1;
+                videoViewController.videoIndex = indexPath.row;
                 videoViewController.hidesBottomBarWhenPushed = YES;
                 [videoViewController setModalTransitionStyle:2];
                 [self presentViewController:videoViewController animated:YES completion:nil];
@@ -678,8 +677,23 @@ FYAuthorCellDelegete
             [_tableView reloadData];
             [_activityIndicatorView stopAnimating];
             [_activityIndicatorView removeFromSuperview];
+            UILabel *endLabel = [self.view viewWithTag:1002];
+            if (endLabel != nil) {
+                [endLabel removeFromSuperview];
+            }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"网络请求失败");
+            [UIView animateWithDuration:0.2 delay:2 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                [_activityIndicatorView stopAnimating];
+                [_activityIndicatorView removeFromSuperview];
+            }completion:nil];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT / 2, SCREEN_WIDTH,40)];
+            label.tag = 1002;
+            label.textAlignment = NSTextAlignmentCenter;
+            label.backgroundColor = [UIColor clearColor];
+            label.text = @"网络链接失败";
+            label.textColor = [UIColor colorWithWhite:0.421 alpha:1.000];
+            label.font = [UIFont fontWithName:@"Thonburi-Bold" size:17];
+            [self.view addSubview:label];
         }];
         [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
     }

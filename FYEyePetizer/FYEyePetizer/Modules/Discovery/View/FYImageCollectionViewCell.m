@@ -7,6 +7,7 @@
 //
 
 #import "FYImageCollectionViewCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface FYImageCollectionViewCell ()
 @property (nonatomic, retain) UIImageView *imageView;
@@ -29,12 +30,12 @@
     return  self;
 }
 
-- (void)setImage:(UIImage *)image {
+- (void)setImage:(NSString *)image {
     if (_image != image) {
         [_image release];
         _image = [image retain];
     }
-    _imageView.image = image;
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:image]];
 }
 
 - (void)layoutSubviews {

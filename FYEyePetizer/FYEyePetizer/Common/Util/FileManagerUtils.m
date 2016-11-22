@@ -171,7 +171,7 @@
     NSError *error = nil;
     BOOL flag = [fileManager moveItemAtPath:pathString toPath:toPathString error:&error];
     if(error){
-        NSLog(@"%@",error.userInfo);
+        //NSLog(@"%@",error.userInfo);
     }
     return flag;
 }
@@ -194,7 +194,7 @@
     NSError *error = nil;
     BOOL flag = [fileManager copyItemAtPath:pathString toPath:toPathString error:nil];
     if(error){
-        NSLog(@"%@",error.userInfo);
+        //NSLog(@"%@",error.userInfo);
     }
     return flag;
 }
@@ -210,7 +210,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     [fileManager copyItemAtPath:path toPath:toPath error:&error];
     if (error != nil) {
-        NSLog(@"error : %@", error);
+        //NSLog(@"error : %@", error);
     }
 }
 

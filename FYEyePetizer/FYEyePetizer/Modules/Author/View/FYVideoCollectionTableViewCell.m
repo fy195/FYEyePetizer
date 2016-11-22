@@ -10,6 +10,7 @@ static NSString *const videoCell = @"videoCell";
 #import "FYHomeItemList.h"
 #import "FYVideoCollectionViewCell.h"
 #import "NSString+FYTime.h"
+#import "UIImageView+WebCache.h"
 
 @interface FYVideoCollectionTableViewCell ()
 <
@@ -111,7 +112,7 @@ UICollectionViewDataSource
         if ([itemList.type isEqualToString:@"video"]) {
             FYVideoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:videoCell forIndexPath:indexPath];
             FYHomeItemData *cellData = itemList.data;
-            cell.coverImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[cellData.cover objectForKey:@"feed"]]]];
+            cell.coverImage = [cellData.cover objectForKey:@"feed"];
             cell.title = cellData.title;
             NSString *time = [NSString stringChangeWithTimeFormat:cellData.duration];
             cell.cellTag = [NSString stringWithFormat:@"#%@ / %@", cellData.category, time];
@@ -189,12 +190,12 @@ UICollectionViewDataSource
     _videoCollectionView.frame = CGRectMake(0, _backView.y + _backView.height + 20, SCREEN_WIDTH, self.height - _backView.height - 20);
 }
 
-- (void)setIcon:(UIImage *)icon {
+- (void)setIcon:(NSString *)icon {
     if (_icon != icon) {
         [_icon release];
         _icon = [icon retain];
     }
-    _authorImageView.image = icon;
+    [_authorImageView sd_setImageWithURL:[NSURL URLWithString:icon]];
 }
 
 - (void)setTitle:(NSString *)title {

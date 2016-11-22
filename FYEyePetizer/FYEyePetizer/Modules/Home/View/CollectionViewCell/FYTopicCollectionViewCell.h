@@ -11,7 +11,7 @@
 
 @interface FYTopicCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, retain) UIImage *coverImage;
+@property (nonatomic, retain) NSString *coverImage;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *cellTag;
 

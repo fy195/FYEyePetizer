@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface FYImageCollectionViewCell : UICollectionViewCell
-@property (nonatomic, retain) UIImage *image;
+@property (nonatomic, retain) NSString *image;
 @end

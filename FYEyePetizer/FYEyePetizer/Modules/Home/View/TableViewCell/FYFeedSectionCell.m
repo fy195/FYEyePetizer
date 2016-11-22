@@ -7,6 +7,7 @@
 //
 
 #import "FYFeedSectionCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface FYFeedSectionCell ()
 
@@ -66,12 +67,12 @@
     return  self;
 }
 
-- (void)setImage:(UIImage *)image {
+- (void)setImage:(NSString *)image {
     if (_image != image) {
         [_image release];
         _image = [image retain];
     }
-    _myImageView.image = image;
+    [_myImageView sd_setImageWithURL:[NSURL URLWithString:image]];
 }
 
 - (void)setTitle:(NSString *)title {

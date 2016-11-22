@@ -7,6 +7,7 @@
 //
 
 #import "FYTopicCollectionViewCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface FYTopicCollectionViewCell ()
 
@@ -54,12 +55,12 @@
     _tagLabel.frame = CGRectMake(10, _titleLabel.y + _titleLabel.height + 5, self.width - 5, 20);
 }
 
-- (void)setCoverImage:(UIImage *)coverImage {
+- (void)setCoverImage:(NSString *)coverImage {
     if (_coverImage != coverImage) {
         [_coverImage release];
         _coverImage = [coverImage retain];
     }
-    _cover.image = _coverImage;
+    [_cover sd_setImageWithURL:[NSURL URLWithString:coverImage]];
 }
 
 - (void)setTitle:(NSString *)title {

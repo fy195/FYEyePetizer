@@ -10,7 +10,7 @@
 
 @interface FYAuthorTableViewCell : UITableViewCell
 
-@property (nonatomic, retain) UIImage *icon;
+@property (nonatomic, retain) NSString *icon;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subTitle;
 @property (nonatomic, copy) NSString *authorDescription;

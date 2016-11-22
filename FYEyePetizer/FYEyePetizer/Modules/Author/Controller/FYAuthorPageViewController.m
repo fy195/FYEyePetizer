@@ -70,7 +70,7 @@ FYVideoTableViewCellDelegate
         self.next = _AllData.nextPageUrl;
         [_tableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"网络请求失败");
+        //NSLog(@"网络请求失败");
     }];
     [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
 }
@@ -109,7 +109,7 @@ FYVideoTableViewCellDelegate
         if (nil == cell) {
             cell = [[[FYAuthorTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:authorCell] autorelease];
         }
-        cell.icon = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:itemData.icon]]];
+        cell.icon = itemData.icon;
         cell.title = itemData.title;
         cell.subTitle = itemData.subTitle;
         cell.authorDescription = itemData.dataDescription;
@@ -127,7 +127,7 @@ FYVideoTableViewCellDelegate
             cell = [[[FYVideoCollectionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:videoCell] autorelease];
         }
         cell.delegate = self;
-        cell.icon = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.header objectForKey:@"icon"]]]];
+        cell.icon = [itemData.header objectForKey:@"icon"];
         cell.title = [itemData.header objectForKey:@"title"];
         cell.subTitle = [itemData.header objectForKey:@"subTitle"];
         cell.authorDescription = [itemData.header objectForKey:@"description"];
@@ -155,7 +155,7 @@ FYVideoTableViewCellDelegate
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row >= _dataArray.count - 1) {
+    if (indexPath.row == _dataArray.count-1) {
         _tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(Loading)];
     }
 }

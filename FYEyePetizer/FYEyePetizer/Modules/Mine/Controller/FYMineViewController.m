@@ -9,9 +9,11 @@
 static NSString *const tableViewCell = @"cell";
 
 #import "FYMineViewController.h"
-#import "FYLoginViewController.h"
 #import "FYContributeViewController.h"
 #import "FYFeedbackViewController.h"
+#import "SDImageCache.h"
+#import "UIImageView+WebCache.h"
+
 
 @interface FYMineViewController ()
 <
@@ -44,7 +46,7 @@ UITableViewDataSource
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.textArray = @[@"我的收藏", @"我的评论", @"我的消息", @"我的缓存", @"功能开关", @"我要投稿", @"意见反馈"];
+    self.textArray = @[@"我的缓存", @"我要投稿", @"意见反馈"];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 104) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -54,7 +56,7 @@ UITableViewDataSource
     [self.view addSubview:_tableView];
     [_tableView release];
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
     headerView.userInteractionEnabled = YES;
     headerView.backgroundColor = [UIColor whiteColor];
     _tableView.tableHeaderView = headerView;
@@ -73,16 +75,8 @@ UITableViewDataSource
     [button setImage:[UIImage imageNamed:@"眼睛"] forState:UIControlStateNormal];
     button.backgroundColor = [UIColor clearColor];
     button.frame = CGRectMake(25, 35, 50, 30);
-    [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [backView addSubview:button];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30)];
-    label.center = CGPointMake(SCREEN_WIDTH / 2, 160);
-    label.backgroundColor = [UIColor clearColor];
-    label.text = @"点击登录后可以评论";
-    label.font = [UIFont systemFontOfSize:14];
-    label.textAlignment = NSTextAlignmentCenter;
-    [headerView addSubview:label];
+    [backView addSubview:button];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -101,27 +95,49 @@ UITableViewDataSource
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < 3) {
-        FYLoginViewController *loginViewController = [[FYLoginViewController alloc] init];
-        [self presentViewController:loginViewController animated:YES completion:nil];
-        [loginViewController release];
-    }else if (indexPath.row == 5){
+    if (indexPath.row == 0) {
+        NSString *message = [NSString stringWithFormat:@"清除%.2fM缓存。", [self getCacheSize]];
+            //1.删除SDWebimage缓存
+            [[SDImageCache sharedImageCache]clearMemory];//清除内存缓存
+            [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];//清除磁盘
+            
+            //2.界面下载的缓存
+            NSString *myPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches/MyCaches"];
+            // 删除文件
+            [[NSFileManager defaultManager]removeItemAtPath:myPath error:nil];
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }];
+            [alertController addAction:cancelAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+
+    }else if (indexPath.row == 1){
         FYContributeViewController *contributeViewController = [[FYContributeViewController alloc] init];
         [self.navigationController pushViewController:contributeViewController animated:YES];
         [contributeViewController release];
-    }else if (indexPath.row == 6){
+    }else if (indexPath.row == 2){
         FYFeedbackViewController *feedbackViewController = [[FYFeedbackViewController alloc] init];
         [self.navigationController pushViewController:feedbackViewController animated:YES];
         [feedbackViewController release];
-    }else {
-        
     }
 }
-
-- (void)buttonAction:(UIButton *)button {
-    FYLoginViewController *loginViewController = [[FYLoginViewController alloc] init];
-    [self presentViewController:loginViewController animated:YES completion:nil];
-    [loginViewController release];
+         
+- (CGFloat)getCacheSize {
+    CGFloat sdSize = [[SDImageCache sharedImageCache] getSize];
+    NSString *myPath = [NSHomeDirectory()stringByAppendingPathComponent:@"Library/Caches/MyCaches"];
+    // 获取文件夹中的所有文件
+    NSArray *arr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:myPath error:nil];
+    unsigned long long size = 0;
+    for (NSString *fileName in arr) {
+        NSString *filePath = [myPath stringByAppendingPathComponent:fileName];
+        NSDictionary *dict = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
+        size += dict.fileSize;
+    }
+             // 1M = 1024K = 1024 * 1024 字节
+    CGFloat totalSize = (sdSize + size) / 1024.0 / 1024.0;
+    return totalSize;
 }
 
 - (void)didReceiveMemoryWarning {

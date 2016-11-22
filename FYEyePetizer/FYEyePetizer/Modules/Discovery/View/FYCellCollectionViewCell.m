@@ -7,6 +7,7 @@
 //
 
 #import "FYCellCollectionViewCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface FYCellCollectionViewCell ()
 
@@ -26,10 +27,10 @@
     return self;
 }
 
-- (void)setCarouselImage:(UIImage *)carouselImage {
+- (void)setCarouselImage:(NSString *)carouselImage {
     if (_carouselImage != carouselImage) {
         _carouselImage = carouselImage;
-        _imageView.image = carouselImage;
+        [_imageView sd_setImageWithURL:[NSURL URLWithString:carouselImage]];
     }
 }
 @end

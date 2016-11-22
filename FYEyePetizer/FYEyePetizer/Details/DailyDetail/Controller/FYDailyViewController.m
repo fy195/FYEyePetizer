@@ -17,6 +17,8 @@
 #import "NSString+FY_MD5.h"
 #import "FYHomeTags.h"
 #import "FYVideoViewController.h"
+#import "FYBannerTableViewCell.h"
+#import "FYHonriZontalViewController.h"
 
 @interface FYDailyViewController ()
 <
@@ -83,7 +85,7 @@ UITableViewDataSource
         self.next = _allData.nextPageUrl;
         [_tableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"网络请求失败");
+        //NSLog(@"网络请求失败");
     }];
     [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
 }
@@ -110,7 +112,7 @@ UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     FYIssueList *issueList = _dataArray[indexPath.section];
     FYHomeItemList *itemList = issueList.itemList[indexPath.row];
-    if ([itemList.type isEqualToString:@"video"]) {
+    if ([itemList.type isEqualToString:@"video"] || [itemList.type isEqualToString:@"banner1"]) {
         return 200;
     }else {
         return 50;
@@ -122,6 +124,16 @@ UITableViewDataSource
     FYHomeItemList *itemList = issueList.itemList[indexPath.row];
     FYHomeItemData *itemData = itemList.data;
     FYHomeTags *tag = [itemData.tags firstObject];
+    if ([itemList.type isEqualToString:@"banner1"]){
+        static NSString *const bannerCell = @"bannerCell";
+        FYBannerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bannerCell];
+        if (nil == cell) {
+            cell = [[[FYBannerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:bannerCell] autorelease];
+        }
+        cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:itemData.image]]];
+        return cell;
+    }
+    
     if ([itemList.type isEqualToString:@"textHeader"]) {
         static NSString *const textCell = @"textCell";
         FYTextHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:textCell];
@@ -147,7 +159,7 @@ UITableViewDataSource
             cell = [[FYFeedSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:videoCell];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"feed"]]]];
+        cell.image = [itemData.cover objectForKey:@"feed"];
         cell.title = itemData.title;
         NSString *time = [NSString stringChangeWithTimeFormat:itemData.duration];
         cell.text = [NSString stringWithFormat:@"#%@ / %@", tag.name, time];
@@ -156,17 +168,28 @@ UITableViewDataSource
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
-    if (videoViewController.videoArray.count > 0) {
-        [videoViewController.videoArray removeAllObjects];
-    }
     FYIssueList *issueList = _dataArray[indexPath.section];
-    videoViewController.videoArray = [issueList.itemList mutableCopy];
-    videoViewController.videoIndex = indexPath.row;
-    videoViewController.hidesBottomBarWhenPushed = YES;
-    [videoViewController setModalTransitionStyle:2];
-    [self presentViewController:videoViewController animated:YES completion:nil];
-    [videoViewController release];
+    FYHomeItemList *itemList = issueList.itemList[indexPath.row];
+
+    if ([itemList.type isEqualToString:@"banner1"]) {
+        FYHonriZontalViewController *honrizontalViewController = [[FYHonriZontalViewController alloc] init];
+        honrizontalViewController.bannerId = itemList.data.dataId;
+        honrizontalViewController.actionUrl = itemList.data.actionUrl;
+        honrizontalViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:honrizontalViewController animated:YES];
+        [honrizontalViewController release];
+    }else {
+        FYVideoViewController *videoViewController = [[FYVideoViewController alloc] init];
+        if (videoViewController.videoArray.count > 0) {
+            [videoViewController.videoArray removeAllObjects];
+        }
+        videoViewController.videoArray = [issueList.itemList mutableCopy];
+        videoViewController.videoIndex = indexPath.row;
+        videoViewController.hidesBottomBarWhenPushed = YES;
+        [videoViewController setModalTransitionStyle:2];
+        [self presentViewController:videoViewController animated:YES completion:nil];
+        [videoViewController release];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

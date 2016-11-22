@@ -11,7 +11,7 @@
 
 @interface FYFeedSectionCell : UITableViewCell
 
-@property (nonatomic, retain) UIImage *image;
+@property (nonatomic, retain) NSString *image;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, retain) UIView *backView;

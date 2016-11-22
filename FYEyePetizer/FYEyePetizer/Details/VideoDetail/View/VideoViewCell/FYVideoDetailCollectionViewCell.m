@@ -8,6 +8,7 @@
 
 #import "FYVideoDetailCollectionViewCell.h"
 #import "UIImage+Categories.h"
+#import "UIImageView+WebCache.h"
 
 @interface FYVideoDetailCollectionViewCell ()
 @property (nonatomic, retain) UIScrollView *scrollView;
@@ -48,12 +49,12 @@
     return self;
 }
 
-- (void)setVideoImage:(UIImage *)videoImage {
+- (void)setVideoImage:(NSString *)videoImage {
     if (_videoImage != videoImage) {
         [_videoImage release];
         _videoImage = [videoImage retain];
     }
-    _videoImageView.image = videoImage;
+    [_videoImageView sd_setImageWithURL:[NSURL URLWithString:videoImage]];
 }
 
 - (void)setIndex:(NSInteger)index {

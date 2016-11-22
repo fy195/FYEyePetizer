@@ -9,7 +9,9 @@
 #import "FYContributeViewController.h"
 
 @interface FYContributeViewController ()
-
+@property (nonatomic, retain) UITextView *nameTextView;
+@property (nonatomic, retain) UITextView *emailTextView;
+@property (nonatomic, retain) UITextView *videoTextView;
 @end
 
 @implementation FYContributeViewController
@@ -29,47 +31,47 @@
     self.navigationItem.rightBarButtonItem = rightButton;
     [rightButton release];
     
-    UITextView *nameTextView = [[UITextView alloc] initWithFrame:CGRectMake(20, 20, SCREEN_WIDTH - 40, 50)];
-    [self.view addSubview:nameTextView];
-    nameTextView.backgroundColor = [UIColor whiteColor];
-    nameTextView.layer.borderWidth = 1.0;
-    nameTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    [nameTextView becomeFirstResponder];
-    [nameTextView release];
+    self.nameTextView = [[UITextView alloc] initWithFrame:CGRectMake(20, 20, SCREEN_WIDTH - 40, 50)];
+    [self.view addSubview:_nameTextView];
+    _nameTextView.backgroundColor = [UIColor whiteColor];
+    _nameTextView.layer.borderWidth = 1.0;
+    _nameTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [_nameTextView becomeFirstResponder];
+    [_nameTextView release];
     
     UILabel *placeholderLabel = [[UILabel alloc] init];
-    [nameTextView addSubview:placeholderLabel];
-    [nameTextView setValue:placeholderLabel forKey:@"_placeholderLabel"];
+    [_nameTextView addSubview:placeholderLabel];
+    [_nameTextView setValue:placeholderLabel forKey:@"_placeholderLabel"];
     placeholderLabel.text = @"昵称";
     placeholderLabel.textColor = [UIColor lightGrayColor];
     [placeholderLabel release];
     
-    UITextView *emailTextView = [[UITextView alloc] initWithFrame:CGRectMake(20, 90, SCREEN_WIDTH - 40, 50)];
-    [self.view addSubview:emailTextView];
-    emailTextView.backgroundColor = [UIColor whiteColor];
-    emailTextView.layer.borderWidth = 1.0;
-    emailTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    [emailTextView becomeFirstResponder];
-    [emailTextView release];
+    self.emailTextView = [[UITextView alloc] initWithFrame:CGRectMake(20, 90, SCREEN_WIDTH - 40, 50)];
+    [self.view addSubview:_emailTextView];
+    _emailTextView.backgroundColor = [UIColor whiteColor];
+    _emailTextView.layer.borderWidth = 1.0;
+    _emailTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [_emailTextView becomeFirstResponder];
+    [_emailTextView release];
     
     UILabel *placeholderLabel1 = [[UILabel alloc] init];
-    [emailTextView addSubview:placeholderLabel1];
-    [emailTextView setValue:placeholderLabel1 forKey:@"_placeholderLabel"];
+    [_emailTextView addSubview:placeholderLabel1];
+    [_emailTextView setValue:placeholderLabel1 forKey:@"_placeholderLabel"];
     placeholderLabel1.text = @"邮箱(必填)";
     placeholderLabel1.textColor = [UIColor lightGrayColor];
     [placeholderLabel1 release];
     
-    UITextView *videoTextView = [[UITextView alloc] initWithFrame:CGRectMake(20, 160, SCREEN_WIDTH - 40, 200)];
-    [self.view addSubview:videoTextView];
-    videoTextView.backgroundColor = [UIColor whiteColor];
-    videoTextView.layer.borderWidth = 1.0;
-    videoTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    [videoTextView becomeFirstResponder];
-    [videoTextView release];
+    self.videoTextView = [[UITextView alloc] initWithFrame:CGRectMake(20, 160, SCREEN_WIDTH - 40, 200)];
+    [self.view addSubview:_videoTextView];
+    _videoTextView.backgroundColor = [UIColor whiteColor];
+    _videoTextView.layer.borderWidth = 1.0;
+    _videoTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [_videoTextView becomeFirstResponder];
+    [_videoTextView release];
     
     UILabel *placeholderLabel2 = [[UILabel alloc] init];
-    [videoTextView addSubview:placeholderLabel2];
-    [videoTextView setValue:placeholderLabel2 forKey:@"_placeholderLabel"];
+    [_videoTextView addSubview:placeholderLabel2];
+    [_videoTextView setValue:placeholderLabel2 forKey:@"_placeholderLabel"];
     placeholderLabel2.text = @"视频名称 & 视频播放链接(必填)";
     placeholderLabel2.textColor = [UIColor lightGrayColor];
     [placeholderLabel2 release];
@@ -96,7 +98,18 @@
 }
 
 - (void)rightAction{
-    NSLog(@"投稿");
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"投稿成功" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alert addAction:action1];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [_nameTextView resignFirstResponder];
+    [_emailTextView resignFirstResponder];
+    [_videoTextView resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {

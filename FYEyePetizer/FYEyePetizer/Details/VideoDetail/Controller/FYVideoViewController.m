@@ -15,6 +15,7 @@ static NSString *const videoDetailCell= @"collectionViewCell";
 #import "UIImageView+WebCache.h"
 #import <AVKit/AVKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "VideoPlayViewController.h"
 
 @interface FYVideoViewController ()
 <
@@ -90,13 +91,10 @@ FYVideoViewDelegate
         [_downBackImageView release];
     
         UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-        
         UIVisualEffectView *visualView = [[UIVisualEffectView alloc]initWithEffect:blurEffect];
-        
         visualView.frame = _downBackImageView.bounds;
-        
         [_downBackImageView addSubview:visualView];
-
+        [visualView release];
     }
     if (_backView == nil) {
         self.backView = [[UIView alloc] initWithFrame:_downBackImageView.bounds];
@@ -258,7 +256,7 @@ FYVideoViewDelegate
     FYHomeItemList *itemList = _videoArray[indexPath.item];
     FYHomeItemData *itemData = itemList.data;
     FYVideoDetailCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:videoDetailCell forIndexPath:indexPath];
-    cell.videoImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"detail"]]]];
+    cell.videoImage = [itemData.cover objectForKey:@"detail"];
     cell.index = indexPath.item;
     cell.delegate = self;
     return cell;
@@ -268,12 +266,11 @@ FYVideoViewDelegate
     FYHomeItemList *itemList = _videoArray[index];
     FYHomeItemData *itemData = itemList.data;
     
-    AVPlayer *player = [AVPlayer playerWithURL:[NSURL URLWithString:itemData.playUrl]];
-    AVPlayerViewController *playerVC = [[AVPlayerViewController alloc] init];
-    playerVC.player = player;
-    playerVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    VideoPlayViewController *playerVC = [[VideoPlayViewController alloc] init];
+    playerVC.UrlString = itemData.playUrl;
+    playerVC.titleStr = itemData.title;
+    playerVC.duration = [itemData.duration doubleValue];
     [self presentViewController:playerVC animated:YES completion:nil];
-    [playerVC.player play];
 }
 
 - (void)setVideoArray:(NSMutableArray *)videoArray {

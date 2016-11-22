@@ -77,7 +77,7 @@ FYHonrizontalCellDelegate
         self.AllData = [FYDisData modelWithDic:responseObject];
         [_collectionView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"网络请求失败");
+        //NSLog(@"网络请求失败");
     }];
     [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
 }
@@ -123,17 +123,17 @@ FYHonrizontalCellDelegate
     }else if ([itemList.type isEqualToString:@"squareCard"]) {
         if ([itemData.title isEqualToString:@""]) {
             FYImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:imageCell forIndexPath:indexPath];
-            cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:itemData.image]]];
+            cell.image = itemData.image;
             return cell;
         }else {
             FYTagCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:tagCell forIndexPath:indexPath];
-            cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:itemData.image]]];
+            cell.image = itemData.image;
             cell.itemTag = itemData.title;
             return  cell;
         }
     }
     FYImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:imageCell forIndexPath:indexPath];
-    cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:itemData.image]]];
+    cell.image = itemData.image;
     return cell;
     
 }
@@ -206,9 +206,8 @@ FYHonrizontalCellDelegate
 
 - (void)searchAction{
     FYSearchViewController *searchViewController = [[FYSearchViewController alloc] init];
-//    self.definesPresentationContext = YES;
     searchViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    searchViewController.hidesBottomBarWhenPushed = YES;
+//    searchViewController.hidesBottomBarWhenPushed = YES;
     [self presentViewController:searchViewController animated:YES completion:nil];
     [searchViewController release];
 }

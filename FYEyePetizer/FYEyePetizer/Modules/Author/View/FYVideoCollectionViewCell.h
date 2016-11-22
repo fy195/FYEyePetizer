@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface FYVideoCollectionViewCell : UICollectionViewCell
-@property (nonatomic, retain) UIImage *coverImage;
+@property (nonatomic, retain) NSString *coverImage;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *cellTag;
 @end

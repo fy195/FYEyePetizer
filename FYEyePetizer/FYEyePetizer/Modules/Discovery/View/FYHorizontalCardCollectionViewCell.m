@@ -115,7 +115,7 @@ UICollectionViewDataSource
     FYHomeItemList *itemList = _currentArray[indexPath.section];
     FYCellCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionViewCell forIndexPath:indexPath];
     if (_currentArray.count > 1) {
-        cell.carouselImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:itemList.data.image]]];
+        cell.carouselImage = itemList.data.image;
     }
     return cell;
 }

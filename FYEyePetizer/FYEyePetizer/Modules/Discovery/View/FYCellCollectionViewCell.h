@@ -10,6 +10,6 @@
 
 @interface FYCellCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, retain) UIImage *carouselImage;
+@property (nonatomic, retain) NSString *carouselImage;
 
 @end

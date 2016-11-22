@@ -98,7 +98,7 @@ UICollectionViewDataSource
         if ([itemList.type isEqualToString:@"video"]) {
             FYTopicCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionViewCell forIndexPath:indexPath];
             FYHomeItemData *cellData = itemList.data;
-            cell.coverImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[cellData.cover objectForKey:@"feed"]]]];
+            cell.coverImage = [cellData.cover objectForKey:@"feed"];
             cell.title = cellData.title;
             NSString *time = [NSString stringChangeWithTimeFormat:cellData.duration];
             cell.cellTag = [NSString stringWithFormat:@"#%@ / %@", cellData.category, time];
@@ -170,7 +170,7 @@ UICollectionViewDataSource
 
 - (void)createView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake(SCREEN_WIDTH - 65, self.height - _topicImageView.height);
+    flowLayout.itemSize = CGSizeMake(SCREEN_WIDTH - 65, 240);
     flowLayout.minimumLineSpacing = 0;
     flowLayout.minimumInteritemSpacing = 0;
     flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;

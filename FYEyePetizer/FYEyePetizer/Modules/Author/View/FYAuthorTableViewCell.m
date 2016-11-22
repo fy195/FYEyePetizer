@@ -7,6 +7,7 @@
 //
 
 #import "FYAuthorTableViewCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface FYAuthorTableViewCell ()
 @property (nonatomic, retain) UIImageView *authorImageView;
@@ -115,12 +116,12 @@
     
 }
 
-- (void)setIcon:(UIImage *)icon {
+- (void)setIcon:(NSString *)icon {
     if (_icon != icon) {
         [_icon release];
         _icon = [icon retain];
     }
-    _authorImageView.image = icon;
+    [_authorImageView sd_setImageWithURL:[NSURL URLWithString:icon]];
 }
 
 - (void)setTitle:(NSString *)title {

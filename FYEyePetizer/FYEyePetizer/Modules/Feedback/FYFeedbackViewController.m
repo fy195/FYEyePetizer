@@ -9,7 +9,8 @@
 #import "FYFeedbackViewController.h"
 
 @interface FYFeedbackViewController ()
-
+@property (nonatomic, retain) UITextView *nameTextView;
+@property (nonatomic, retain) UITextView *emailTextView;
 @end
 
 @implementation FYFeedbackViewController
@@ -29,32 +30,32 @@
     self.navigationItem.rightBarButtonItem = rightButton;
     [rightButton release];
     
-    UITextView *nameTextView = [[UITextView alloc] initWithFrame:CGRectMake(20, 100, SCREEN_WIDTH - 40, 200)];
-    [self.view addSubview:nameTextView];
-    nameTextView.backgroundColor = [UIColor whiteColor];
-    nameTextView.layer.borderWidth = 1.0;
-    nameTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    [nameTextView becomeFirstResponder];
-    [nameTextView release];
+    self.nameTextView = [[UITextView alloc] initWithFrame:CGRectMake(20, 100, SCREEN_WIDTH - 40, 200)];
+    [self.view addSubview:_nameTextView];
+    _nameTextView.backgroundColor = [UIColor whiteColor];
+    _nameTextView.layer.borderWidth = 1.0;
+    _nameTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [_nameTextView becomeFirstResponder];
+    [_nameTextView release];
     
     UILabel *placeholderLabel = [[UILabel alloc] init];
-    [nameTextView addSubview:placeholderLabel];
-    [nameTextView setValue:placeholderLabel forKey:@"_placeholderLabel"];
+    [_nameTextView addSubview:placeholderLabel];
+    [_nameTextView setValue:placeholderLabel forKey:@"_placeholderLabel"];
     placeholderLabel.text = @"请告诉我们你遇到的问题或想反馈的意见";
     placeholderLabel.textColor = [UIColor lightGrayColor];
     [placeholderLabel release];
     
-    UITextView *emailTextView = [[UITextView alloc] initWithFrame:CGRectMake(20, 320, SCREEN_WIDTH - 40, 50)];
-    [self.view addSubview:emailTextView];
-    emailTextView.backgroundColor = [UIColor whiteColor];
-    emailTextView.layer.borderWidth = 1.0;
-    emailTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    [emailTextView becomeFirstResponder];
-    [emailTextView release];
+    self.emailTextView = [[UITextView alloc] initWithFrame:CGRectMake(20, 320, SCREEN_WIDTH - 40, 50)];
+    [self.view addSubview:_emailTextView];
+    _emailTextView.backgroundColor = [UIColor whiteColor];
+    _emailTextView.layer.borderWidth = 1.0;
+    _emailTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [_emailTextView becomeFirstResponder];
+    [_emailTextView release];
     
     UILabel *placeholderLabel1 = [[UILabel alloc] init];
-    [emailTextView addSubview:placeholderLabel1];
-    [emailTextView setValue:placeholderLabel1 forKey:@"_placeholderLabel"];
+    [_emailTextView addSubview:placeholderLabel1];
+    [_emailTextView setValue:placeholderLabel1 forKey:@"_placeholderLabel"];
     placeholderLabel1.text = @"邮箱(必填)";
     placeholderLabel1.textColor = [UIColor lightGrayColor];
     [placeholderLabel1 release];
@@ -66,7 +67,17 @@
 }
 
 - (void)rightAction{
-    NSLog(@"发送");
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"发送成功" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alert addAction:action1];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [_emailTextView resignFirstResponder];
+    [_nameTextView resignFirstResponder];
 }
 
 

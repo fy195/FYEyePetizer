@@ -109,13 +109,13 @@ UIScrollViewDelegate
             [_tableView reloadData];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"网络请求失败");
+        //NSLog(@"网络请求失败");
     }];
     [manager.requestSerializer setValue:@"baobab.wandoujia.com" forHTTPHeaderField:@"Host"];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 220;
+    return 200;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -135,7 +135,7 @@ UIScrollViewDelegate
             cell = [[[FYFeedSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:videoCell] autorelease];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"feed"]]]];
+        cell.image = [itemData.cover objectForKey:@"feed"];
         cell.title = itemData.title;
         NSString *time = [NSString stringChangeWithTimeFormat:itemData.duration];
         cell.text = [NSString stringWithFormat:@"#%@ / %@", itemData.category, time];
@@ -149,7 +149,7 @@ UIScrollViewDelegate
         cell = [[[FYFeedSectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:videoCell] autorelease];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[itemData.cover objectForKey:@"feed"]]]];
+    cell.image = [itemData.cover objectForKey:@"feed"];
     cell.title = itemData.title;
     NSString *time = [NSString stringChangeWithTimeFormat:itemData.duration];
     cell.text = [NSString stringWithFormat:@"#%@ / %@", itemData.category, time];

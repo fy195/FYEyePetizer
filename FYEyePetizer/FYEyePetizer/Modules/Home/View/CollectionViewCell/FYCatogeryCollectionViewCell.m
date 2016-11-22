@@ -7,6 +7,8 @@
 //
 
 #import "FYCatogeryCollectionViewCell.h"
+#import "UIImageView+WebCache.h"
+
 
 @interface FYCatogeryCollectionViewCell ()
 
@@ -48,12 +50,12 @@
     _tagLabel.frame = CGRectMake(10, _titleLabel.y + _titleLabel.height + 5, self.width - 10, 20);
 }
 
-- (void)setImage:(UIImage *)image {
+- (void)setImage:(NSString *)image {
     if (_image != image) {
         [_image release];
         _image = [image retain];
     }
-    _imageView.image = _image;
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:image]];
 }
 
 - (void)setItemTitle:(NSString *)itemTitle {

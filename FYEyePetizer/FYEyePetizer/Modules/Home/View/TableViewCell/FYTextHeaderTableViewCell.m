@@ -22,6 +22,7 @@
         _label.textColor = [UIColor blackColor];
         _label.font = [UIFont fontWithName:@"Lobster 1.4" size:17];
         [self addSubview:_label];
+        [_label release];
     }
     return  self;
 }
